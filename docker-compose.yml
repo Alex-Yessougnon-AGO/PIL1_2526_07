@@ -1,0 +1,113 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: mentorlink
+      POSTGRES_USER: mentorlink
+      POSTGRES_PASSWORD: mentorlink
+      POSTGRES_HOST_AUTH_METHOD: trust
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mentorlink"]
+      interval: 3s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6380:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 3s
+      retries: 10
+
+  app:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    command: daphne -b 0.0.0.0 -p 8000 config.asgi:application
+    ports:
+      - "8001:8000"
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings
+      DB_NAME: mentorlink
+      DB_USER: mentorlink
+      DB_PASSWORD: mentorlink
+      DB_HOST: db
+      DB_PORT: 5432
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: change-me-in-production
+      DEBUG: "True"
+      SENTRY_DSN: "${SENTRY_DSN:-}"
+      SENTRY_ENVIRONMENT: "${SENTRY_ENVIRONMENT:-development}"
+      SENTRY_TRACES_SAMPLE_RATE: "${SENTRY_TRACES_SAMPLE_RATE:-1.0}"
+      SENTRY_PROFILES_SAMPLE_RATE: "${SENTRY_PROFILES_SAMPLE_RATE:-1.0}"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+      - media:/app/media
+
+  celery_worker:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    command: celery -A config worker -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings
+      DB_NAME: mentorlink
+      DB_USER: mentorlink
+      DB_PASSWORD: mentorlink
+      DB_HOST: db
+      DB_PORT: 5432
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: change-me-in-production
+      DEBUG: "True"
+      SENTRY_DSN: "${SENTRY_DSN:-}"
+      SENTRY_ENVIRONMENT: "${SENTRY_ENVIRONMENT:-development}"
+      SENTRY_TRACES_SAMPLE_RATE: "${SENTRY_TRACES_SAMPLE_RATE:-1.0}"
+      SENTRY_PROFILES_SAMPLE_RATE: "${SENTRY_PROFILES_SAMPLE_RATE:-1.0}"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+
+  celery_beat:
+    build:
+      context: ./backend
+      dockerfile: docker/Dockerfile
+    command: celery -A config beat -l info
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings
+      DB_NAME: mentorlink
+      DB_USER: mentorlink
+      DB_PASSWORD: mentorlink
+      DB_HOST: db
+      DB_PORT: 5432
+      REDIS_URL: redis://redis:6379/0
+      SECRET_KEY: change-me-in-production
+      DEBUG: "True"
+      SENTRY_DSN: "${SENTRY_DSN:-}"
+      SENTRY_ENVIRONMENT: "${SENTRY_ENVIRONMENT:-development}"
+      SENTRY_TRACES_SAMPLE_RATE: "${SENTRY_TRACES_SAMPLE_RATE:-1.0}"
+      SENTRY_PROFILES_SAMPLE_RATE: "${SENTRY_PROFILES_SAMPLE_RATE:-1.0}"
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+
+volumes:
+  pgdata:
+  media:
