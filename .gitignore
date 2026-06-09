@@ -18,6 +18,9 @@ venv/
 *.swp
 *.swo
 
+# AI Agent workspace
+.opencode/
+
 # Django
 *.mo
 *.po
