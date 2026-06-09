@@ -1,0 +1,98 @@
+{% extends "admin/base_site.html" %}
+{% load i18n admin_urls static %}
+
+{% block extrahead %}
+{{ block.super }}
+{{ media }}
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+  .reject-form { max-width: 700px; }
+  .reject-form .form-row { margin-bottom: 15px; }
+  .reject-form .form-row label { display: block; font-weight: 600; margin-bottom: 5px; }
+  .reject-form .form-row textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; }
+  .reject-form .form-row .help { font-size: 12px; color: #666; margin-top: 3px; }
+  .reject-form .form-row .errorlist { color: #ba2121; list-style: none; padding: 0; margin: 5px 0; }
+  .doc-list { margin: 20px 0; }
+  .doc-list table { width: 100%; border-collapse: collapse; }
+  .doc-list th, .doc-list td { padding: 8px 10px; text-align: left; border-bottom: 1px solid #eee; }
+  .doc-list th { background: #f5f5f5; font-weight: 600; }
+  .submit-row { margin-top: 20px; padding: 10px 0; }
+  .submit-row input, .submit-row a { padding: 10px 20px; border-radius: 4px; font-size: 14px; cursor: pointer; }
+  .submit-row input[type="submit"] { background: #ba2121; color: #fff; border: none; }
+  .submit-row input[type="submit"]:hover { background: #a41515; }
+  .submit-row a { background: #ccc; color: #333; text-decoration: none; margin-left: 10px; }
+  .submit-row a:hover { background: #bbb; }
+</style>
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+  &rsaquo; <a href="{% url 'admin:app_list' app_label=opts.app_label %}">{{ opts.app_config.verbose_name }}</a>
+  &rsaquo; <a href="{% url opts|admin_urlname:'changelist' %}">{{ opts.verbose_name_plural|capfirst }}</a>
+  &rsaquo; {% translate 'Reject documents' %}
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="reject-form">
+  <h1>Reject {{ doc_count }} verification document(s)</h1>
+
+  <div class="doc-list">
+    <p>You are about to reject the following verification documents:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Status</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for doc in documents %}
+        <tr>
+          <td>{{ doc.user.email }}</td>
+          <td>
+            <span style="color: orange; font-weight: bold;">{{ doc.get_status_display }}</span>
+          </td>
+          <td>{{ doc.created_at|date:"Y-m-d H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3">No pending documents selected.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <form action="" method="post">
+    {% csrf_token %}
+
+    {% for field in form %}
+    <div class="form-row">
+      {{ field.errors }}
+      <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+      {{ field }}
+      {% if field.help_text %}
+      <div class="help">{{ field.help_text }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+
+    {% for id in selected_ids %}
+    <input type="hidden" name="{{ action_checkbox_name }}" value="{{ id }}">
+    {% endfor %}
+    <input type="hidden" name="action" value="{{ action }}">
+    <input type="hidden" name="apply_rejection" value="1">
+
+    <div class="submit-row">
+      <input type="submit" value="{% translate 'Reject documents' %}">
+      <a href="{% url opts|admin_urlname:'changelist' %}">{% translate 'Cancel' %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

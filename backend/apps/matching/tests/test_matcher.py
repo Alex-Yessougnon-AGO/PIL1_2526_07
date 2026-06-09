@@ -64,7 +64,7 @@ class TestMatcher:
     def test_matching_api(self, api_client):
         mentor, mentee, _, _ = setup_users_and_skills()
 
-        reg_data = {"first_name": "Test", "last_name": "User", "email": "test@test.com", "password": "testpass123"}
+        reg_data = {"first_name": "Test", "last_name": "User", "email": "test@test.com", "password": "testpass123", "terms_accepted": True}
         reg = api_client.post(reverse("register"), reg_data, format="json")
         token = reg.json()["data"]["access"]
 

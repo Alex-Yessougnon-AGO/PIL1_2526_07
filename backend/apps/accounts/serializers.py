@@ -9,6 +9,7 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     phone = serializers.CharField(max_length=20, required=False, allow_blank=True)
     password = serializers.CharField(min_length=8, write_only=True)
+    terms_accepted = serializers.BooleanField()
 
     def validate_email(self, value):
         if User.objects.filter(email=value).exists():
@@ -18,6 +19,11 @@ class RegisterSerializer(serializers.Serializer):
     def validate_phone(self, value):
         if value and User.objects.filter(phone=value).exists():
             raise serializers.ValidationError("Phone already registered")
+        return value
+
+    def validate_terms_accepted(self, value):
+        if not value:
+            raise serializers.ValidationError("You must accept the terms of service")
         return value
 
 

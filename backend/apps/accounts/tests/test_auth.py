@@ -19,6 +19,7 @@ def user_data():
         "email": "john@example.com",
         "password": "testpass123",
         "phone": "+2250101020304",
+        "terms_accepted": True,
     }
 
 

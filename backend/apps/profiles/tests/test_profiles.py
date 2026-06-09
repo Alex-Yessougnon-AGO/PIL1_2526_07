@@ -13,7 +13,13 @@ def api_client():
 
 @pytest.fixture
 def authed_client(api_client):
-    data = {"first_name": "Jane", "last_name": "Doe", "email": "jane@example.com", "password": "testpass123"}
+    data = {
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "email": "jane@example.com",
+        "password": "testpass123",
+        "terms_accepted": True,
+    }
     reg = api_client.post(reverse("register"), data, format="json")
     token = reg.json()["data"]["access"]
     api_client.credentials(HTTP_AUTHORIZATION=f"Bearer {token}")

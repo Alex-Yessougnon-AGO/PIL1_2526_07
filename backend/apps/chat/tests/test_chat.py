@@ -12,7 +12,7 @@ def api_client():
 
 
 def create_user(client, i=1):
-    data = {"first_name": f"User{i}", "last_name": "Test", "email": f"chatuser{i}@example.com", "password": "testpass123"}
+    data = {"first_name": f"User{i}", "last_name": "Test", "email": f"chatuser{i}@example.com", "password": "testpass123", "terms_accepted": True}
     reg = client.post(reverse("register"), data, format="json")
     token = reg.json()["data"]["access"]
     return token, User.objects.get(email=f"chatuser{i}@example.com")

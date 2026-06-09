@@ -13,7 +13,7 @@ def api_client():
 
 
 def create_user_and_login(client, i=1):
-    data = {"first_name": f"NotifUser{i}", "last_name": "Test", "email": f"notifuser{i}@example.com", "password": "testpass123"}
+    data = {"first_name": f"NotifUser{i}", "last_name": "Test", "email": f"notifuser{i}@example.com", "password": "testpass123", "terms_accepted": True}
     reg = client.post(reverse("register"), data, format="json")
     token = reg.json()["data"]["access"]
     return token, User.objects.get(email=f"notifuser{i}@example.com")

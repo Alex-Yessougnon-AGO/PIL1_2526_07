@@ -11,10 +11,12 @@ class Notification(BaseModel):
         ("NEW_MATCH", "New Match"),
         ("MATCH_ACCEPTED", "Match Accepted"),
         ("MATCH_REJECTED", "Match Rejected"),
+        ("VERIFICATION_APPROVED", "Verification Approved"),
+        ("VERIFICATION_REJECTED", "Verification Rejected"),
     ]
 
     user = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="notifications")
-    type = models.CharField(max_length=20, choices=NOTIFICATION_TYPES)
+    type = models.CharField(max_length=30, choices=NOTIFICATION_TYPES)
     title = models.CharField(max_length=255)
     content = models.TextField()
     is_read = models.BooleanField(default=False)

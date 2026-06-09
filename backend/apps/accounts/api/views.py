@@ -25,7 +25,15 @@ class AuthViewSet(ViewSet):
         if not serializer.is_valid():
             return error_response("Validation failed", serializer.errors, status.HTTP_400_BAD_REQUEST)
 
-        result = AuthService.register(**serializer.validated_data)
+        validated = serializer.validated_data
+        result = AuthService.register(
+            first_name=validated["first_name"],
+            last_name=validated["last_name"],
+            email=validated["email"],
+            password=validated["password"],
+            phone=validated.get("phone"),
+            terms_accepted=validated.get("terms_accepted", False),
+        )
         return success_response(result, "Registration successful", status.HTTP_201_CREATED)
 
     @action(detail=False, methods=["post"])
@@ -71,6 +79,30 @@ class AuthViewSet(ViewSet):
             except Exception:
                 pass
         return success_response(None, "Logged out successfully")
+
+    @action(detail=False, methods=["get", "post"])
+    def verify_email(self, request):
+        from django.core.cache import cache
+
+        token = request.GET.get("token") or request.data.get("token")
+        if not token:
+            return error_response("Token required", status=status.HTTP_400_BAD_REQUEST)
+
+        user_id = cache.get(f"email_verify_{token}")
+        if not user_id:
+            return error_response("Invalid or expired verification token", status=status.HTTP_400_BAD_REQUEST)
+
+        from apps.accounts.models import User
+
+        user = User.objects.filter(id=user_id).first()
+        if not user:
+            return error_response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        user.is_verified = True
+        user.save(update_fields=["is_verified"])
+        cache.delete(f"email_verify_{token}")
+
+        return success_response(None, "Email verified successfully")
 
     @action(detail=False, methods=["post"])
     def request_reset(self, request):

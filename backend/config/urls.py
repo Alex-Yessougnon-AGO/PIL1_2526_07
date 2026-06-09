@@ -6,6 +6,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/v1/auth/", include("apps.accounts.api.urls")),
     path("api/v1/", include("apps.profiles.api.urls")),
+    path("api/v1/", include("apps.onboarding.api.urls")),
     path("api/v1/", include("apps.mentoring.api.urls")),
     path("api/v1/", include("apps.matching.urls")),
     path("api/v1/", include("apps.chat.api.urls")),
