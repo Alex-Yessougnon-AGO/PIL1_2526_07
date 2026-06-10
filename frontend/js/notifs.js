@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 	await updateUserHeader();
 
 	const notifContainer = document.querySelector('.space-y-3');
-	const markAllReadBtn = document.querySelector('.flex.items-center.gap-2 button:first-child');
+	const markAllReadBtn = Array.from(document.querySelectorAll('button')).find(btn => /tout marquer lu/i.test(btn.textContent || ''));
 	const badge = document.querySelector('.sidebar-item.active .ml-auto');
 
 	// --- Load Notifications ---
@@ -34,6 +34,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 			card.style.animationDelay = `${index * 0.05}s`;
 			
 			const icon = getNotificationIcon(notif.type);
+			const route = getNotificationRoute(notif.type);
+			card.dataset.notificationId = String(notif.id || '');
+			card.dataset.route = route;
 			
 			card.innerHTML = `
 				<div class="relative flex-shrink-0">
@@ -49,12 +52,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 					</div>
 					<p class="text-slate-600 text-sm leading-relaxed">${notif.content}</p>
 					<div class="flex gap-3 mt-3">
-						<button class="text-sm bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition-all">Voir</button>
+						<button type="button" class="view-notif-btn text-sm bg-blue-600 text-white px-4 py-1.5 rounded-lg hover:bg-blue-700 transition-all">Voir</button>
 					</div>
 				</div>
 			`;
 			
-			card.addEventListener('click', async () => {
+			const markAsRead = async () => {
 				try {
 					await apiRequest('/notifications/read', {
 						method: 'POST',
@@ -63,13 +66,45 @@ document.addEventListener('DOMContentLoaded', async () => {
 					card.classList.remove('unread');
 					const dot = card.querySelector('.pulse-dot');
 					if (dot) dot.remove();
+					if (badge) {
+						const unread = document.querySelectorAll('.notif-card.unread').length;
+						badge.textContent = String(unread);
+					}
 				} catch (e) {
 					console.error("Error marking notification as read", e);
+				}
+			};
+
+			card.addEventListener('click', (event) => {
+				if (event.target.closest('.view-notif-btn')) return;
+				markAsRead();
+			});
+
+			card.querySelector('.view-notif-btn')?.addEventListener('click', (event) => {
+				event.preventDefault();
+				event.stopPropagation();
+				markAsRead();
+				const targetRoute = card.dataset.route || route;
+				if (targetRoute) {
+					window.location.assign(targetRoute);
 				}
 			});
 			
 			notifContainer.appendChild(card);
 		});
+	}
+
+	function getNotificationRoute(type) {
+		switch (type) {
+			case 'NEW_MESSAGE':
+			case 'MATCH_ACCEPTED':
+			case 'MATCH_REJECTED':
+				return 'message.html';
+			case 'NEW_MATCH':
+				return 'matching-results.html';
+			default:
+				return 'mon-profile.html';
+		}
 	}
 
 	function getNotificationIcon(type) {
@@ -94,19 +129,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 	if (markAllReadBtn) {
 		markAllReadBtn.addEventListener('click', async () => {
-			const unreadIds = Array.from(document.querySelectorAll('.notif-card.unread'))
-				.map((_, index) => {
-					// This is a bit hacky, we should store IDs on the elements
-					return `id-${index}`; 
-				});
-			
-			// In a real scenario, we'd collect real IDs. For now, we'll just call the API
+			const unreadCards = Array.from(document.querySelectorAll('.notif-card.unread'));
+			const unreadIds = unreadCards
+				.map(card => card.dataset.notificationId)
+				.filter(Boolean);
+
 			try {
 				await apiRequest('/notifications/read', {
 					method: 'POST',
-					body: JSON.stringify({ ids: [] }), // Sending empty implies all or we should fetch IDs first
+					body: JSON.stringify({ ids: unreadIds }),
 				});
-				document.querySelectorAll('.notif-card.unread').forEach(card => {
+				unreadCards.forEach(card => {
 					card.classList.remove('unread');
 					const dot = card.querySelector('.pulse-dot');
 					if (dot) dot.remove();

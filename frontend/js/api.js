@@ -1,6 +1,6 @@
 // --- Configuration ---
 const API_PORT = '8001';
-const API_HOST = window.location.hostname || '192.168.50.120';
+const API_HOST = window.location.hostname || 'localhost';
 // Toujours utiliser http: pour les appels API, meme si la page est ouverte en file://
 const API_BASE = `http://${API_HOST}:${API_PORT}/api/v1`;
 
@@ -133,38 +133,31 @@ async function fetchWithAuth(endpoint, options = {}) {
  */
 async function apiRequest(endpoint, options = {}) {
     const result = await fetchWithAuth(endpoint, options);
-    
-    // Handle paginated responses that include both success/data and count/next/previous
-    if (result.payload) {
-        if (result.payload.success === true) {
-            return {
-                success: true,
-                data: result.payload.data,
-                message: result.payload.message,
-                count: result.payload.count,
-                next: result.payload.next,
-                previous: result.payload.previous,
-                status: result.status,
-                ok: result.ok,
-            };
-        }
-        // Fallback: if there's no "success" field but there is data
-        if (result.payload.data !== undefined) {
-            return {
-                success: result.ok,
-                data: result.payload.data,
-                message: result.payload.message,
-                count: result.payload.count,
-                status: result.status,
-                ok: result.ok,
-            };
-        }
+    const payload = result.payload || {};
+    const data = payload.data !== undefined ? payload.data : (payload.results !== undefined ? payload.results : payload);
+
+    if (payload.success === true || result.ok) {
+        return {
+            success: true,
+            data,
+            results: payload.results ?? data,
+            message: payload.message,
+            count: payload.count ?? (Array.isArray(data) ? data.length : undefined),
+            next: payload.next,
+            previous: payload.previous,
+            status: result.status,
+            ok: result.ok,
+        };
     }
-    
-    // Last resort: just return the raw payload
+
     return {
         success: result.ok,
-        data: result.payload,
+        data,
+        results: payload.results ?? data,
+        message: payload.message,
+        count: payload.count,
+        next: payload.next,
+        previous: payload.previous,
         status: result.status,
         ok: result.ok,
     };

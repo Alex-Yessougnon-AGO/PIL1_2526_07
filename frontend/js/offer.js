@@ -1,5 +1,23 @@
 import { apiRequest, requireAuth } from './api.js';
 
+function normalizeFormat(value) {
+	const normalized = String(value || '').trim().toLowerCase();
+	if (normalized === 'presentiel' || normalized === 'physical') return 'PHYSICAL';
+	if (normalized === 'hybride' || normalized === 'both') return 'BOTH';
+	return 'ONLINE';
+}
+
+function dayLabelFromIndex(index) {
+	const days = ['MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY', 'SUNDAY'];
+	return days[index] || 'MONDAY';
+}
+
+function nextSlotTime(time) {
+	const times = ['08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];
+	const currentIndex = times.indexOf(time);
+	return times[currentIndex + 1] || '20:00';
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	if (!requireAuth()) return;
 	const gridContainer = document.getElementById('availability-grid');
@@ -38,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
 			button.classList.add('active', 'bg-blue-600', 'text-white', 'shadow-md');
 			button.classList.remove('bg-white', 'text-slate-700');
 			if (formatInput) {
-				formatInput.value = button.dataset.format || 'online';
+				formatInput.value = normalizeFormat(button.dataset.format || 'online');
 			}
 		});
 	});
@@ -69,6 +87,15 @@ document.addEventListener('DOMContentLoaded', () => {
 		});
 	}
 
+	const availabilityCells = document.querySelectorAll('.avail-cell');
+	availabilityCells.forEach(cell => {
+		cell.addEventListener('click', () => {
+			cell.classList.toggle('selected');
+			cell.classList.toggle('bg-blue-100');
+			cell.classList.toggle('border-blue-400');
+		});
+	});
+
 	const form = document.getElementById('mentor-form');
 	if (form) {
 		form.addEventListener('submit', async (e) => {
@@ -82,17 +109,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
 			const formData = new FormData(form);
 			const tags = Array.from(form.querySelectorAll('.skill-tag')).map(tag => tag.childNodes[0]?.textContent?.trim()).filter(Boolean);
+			const selectedAvailability = Array.from(document.querySelectorAll('.avail-cell.selected'));
+			const formatValue = normalizeFormat(String(formData.get('format') || 'online'));
 			const data = {
 				type: 'OFFER',
 				subject: formData.get('subject'),
 				description: formData.get('description'),
-				format: String(formData.get('format') || 'online').toUpperCase(),
+				format: formatValue,
 				domain: formData.get('domain'),
 				max_students: Number(formData.get('max_students')) || 1,
 				tags,
 			};
 
 			try {
+				await Promise.all(selectedAvailability.map(async (cell) => {
+					const row = cell.closest('tr');
+					const rowIndex = row ? Array.from(row.parentElement.children).indexOf(row) : 0;
+					const colIndex = row ? Array.from(row.children).indexOf(cell) - 1 : 0;
+					const start = row?.children[0]?.textContent?.trim() || '08:00';
+					const end = nextSlotTime(start);
+					await apiRequest('/me/availability', {
+						method: 'POST',
+						body: JSON.stringify({ day: dayLabelFromIndex(colIndex), start, end }),
+					});
+				}));
+
 				const result = await apiRequest('/posts', {
 					method: 'POST',
 					body: JSON.stringify(data),

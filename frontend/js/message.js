@@ -153,8 +153,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 			messageInput.value = '';
 
 			try {
+				if (!chatSocket || chatSocket.readyState !== WebSocket.OPEN) {
+					throw new Error('La connexion de chat n\'est pas ouverte');
+				}
 				sendChatSocketMessage(content);
-				appendMessage({ sender_id: currentUserId, content, created_at: new Date().toISOString() });
 			} catch (error) {
 				console.error('WebSocket send failed', error);
 				alert('Unable to send message right now.');

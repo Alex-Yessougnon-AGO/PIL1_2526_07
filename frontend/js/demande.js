@@ -40,11 +40,12 @@ document.addEventListener('DOMContentLoaded', () => {
 		}
 
 		const formData = new FormData(form);
+		const format = String(formData.get('format') || 'ONLINE').trim().toUpperCase();
 		const data = {
 			type: 'REQUEST',
 			subject: formData.get('subject'),
 			description: formData.get('description'),
-			format: String(formData.get('format') || 'En ligne').toUpperCase(),
+			format: format === 'PHYSICAL' || format === 'ONLINE' || format === 'BOTH' ? format : 'ONLINE',
 			level: String(formData.get('level') || 'Débutant'),
 			domain: formData.get('domain'),
 			availability: formData.get('availability'),
