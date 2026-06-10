@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Connexion | MentorLink IFRI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    
+    body {
+      background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%);
+      position: relative;
+    }
+    
+    /* Animation de fond */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); opacity: 0.4; }
+      50% { transform: translateY(-20px) translateX(10px); opacity: 0.6; }
+    }
+    .bg-shape-1 { animation: float 12s ease-in-out infinite; }
+    .bg-shape-2 { animation: float 15s ease-in-out infinite reverse; }
+    .bg-shape-3 { animation: float 18s ease-in-out infinite; }
+    
+    /* Carte de connexion */
+    .login-card {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(203, 213, 225, 0.5);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      transition: all 0.3s ease;
+    }
+    .login-card:hover {
+      box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Input styling */
+    .input-group {
+      transition: all 0.2s ease;
+    }
+    .input-group:focus-within {
+      transform: translateY(-1px);
+    }
+    .input-field {
+      transition: all 0.2s ease;
+      background: #ffffff;
+      border: 1.5px solid #e2e8f0;
+    }
+    .input-field:focus {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      outline: none;
+    }
+    
+    /* Bouton */
+    .btn-primary {
+      background: linear-gradient(135deg, #2563EB 0%, #1e40af 100%);
+      transition: all 0.3s ease;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.4);
+    }
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    /* Binary decoration animation */
+    @keyframes blink {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.8; }
+    }
+    .binary-text span {
+      animation: blink 3s infinite;
+    }
+    .binary-text span:nth-child(2n) { animation-delay: 1s; }
+    .binary-text span:nth-child(3n) { animation-delay: 2s; }
+    
+    /* Checkbox styling */
+    .checkbox-custom {
+      accent-color: #2563EB;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-center items-center p-4 relative overflow-hidden">
+
+  <!-- Éléments décoratifs de fond -->
+  <div class="fixed top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+    <div class="absolute top-[10%] left-[5%] w-72 h-72 bg-blue-400/15 rounded-full blur-3xl bg-shape-1"></div>
+    <div class="absolute bottom-[15%] right-[5%] w-96 h-96 bg-indigo-400/15 rounded-full blur-3xl bg-shape-2"></div>
+    <div class="absolute top-[40%] right-[20%] w-64 h-64 bg-emerald-400/10 rounded-full blur-3xl bg-shape-3"></div>
+    <div class="absolute bottom-[30%] left-[10%] w-80 h-80 bg-purple-400/10 rounded-full blur-3xl bg-shape-1"></div>
+  </div>
+
+  <!-- Code binaire décoratif en bas -->
+  <div class="fixed bottom-0 left-0 w-full pointer-events-none z-0 opacity-20">
+    <div class="flex justify-center gap-4 px-8 pb-4 overflow-hidden">
+      <div class="binary-text font-mono text-[10px] text-slate-500 whitespace-nowrap">
+        <span>01010101</span> <span>11001100</span> <span>00110011</span> <span>10101010</span> <span>01010101</span>
+        <span>11100011</span> <span>00011100</span> <span>10101010</span> <span>01010101</span> <span>11100011</span>
+        <span>01100110</span> <span>10011001</span> <span>11110000</span> <span>00001111</span> <span>01100110</span>
+        <span>10101010</span> <span>01010101</span> <span>11001100</span> <span>00110011</span> <span>10101010</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenu principal -->
+  <main class="relative z-10 w-full max-w-md mx-auto">
+    
+    <!-- Logo et en-tête -->
+    <div class="text-center mb-8">
+      <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl shadow-lg mb-4">
+        <span class="material-symbols-outlined text-white text-3xl">school</span>
+      </div>
+      <h1 class="text-3xl font-extrabold bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">MentorLink</h1>
+      <p class="text-sm text-slate-500 mt-1">Institut de Formation et de Recherche en Informatique</p>
+    </div>
+
+    <!-- Carte de connexion -->
+    <div class="login-card rounded-2xl p-6 md:p-8">
+      
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-slate-800 mb-1">Bienvenue</h2>
+        <p class="text-sm text-slate-500">Connectez-vous pour accéder à votre espace mentorat</p>
+      </div>
+
+      <form id="login-form" class="space-y-5">
+        <!-- Champ Email -->
+        <div class="space-y-1.5">
+          <label class="text-sm font-semibold text-slate-700 block">Email ou matricule</label>
+          <div class="input-group relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">person</span>
+            <input id="identifier" name="identifier" type="text" placeholder="exemple@ifri-uac.bj" class="input-field w-full pl-10 pr-4 py-3 rounded-xl text-slate-700 placeholder:text-slate-400">
+          </div>
+        </div>
+
+        <!-- Champ Mot de passe -->
+        <div class="space-y-1.5">
+          <div class="flex justify-between items-center">
+            <label class="text-sm font-semibold text-slate-700 block">Mot de passe</label>
+            <a href="password-reset.html" class="text-xs text-blue-600 hover:text-blue-700 hover:underline transition-all">Mot de passe oublié ?</a>
+          </div>
+          <div class="input-group relative">
+            <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">lock</span>
+            <input id="password" name="password" type="password" placeholder="••••••••" class="input-field w-full pl-10 pr-4 py-3 rounded-xl text-slate-700">
+          </div>
+        </div>
+
+        <!-- Se souvenir de moi -->
+        <div class="flex items-center gap-2">
+          <input type="checkbox" id="remember" class="checkbox-custom rounded border-slate-300">
+          <label for="remember" class="text-sm text-slate-600 cursor-pointer">Rester connecté sur cet appareil</label>
+        </div>
+
+        <!-- Bouton de connexion -->
+        <button type="submit" class="btn-primary w-full text-white font-semibold py-3 rounded-xl shadow-md flex items-center justify-center gap-2 transition-all">
+          Se connecter
+          <span class="material-symbols-outlined text-base">arrow_forward</span>
+        </button>
+      </form>
+
+      <!-- Séparateur -->
+      <div class="relative my-6">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-slate-200"></div>
+        </div>
+        <div class="relative flex justify-center text-xs">
+          <span class="px-3 bg-white text-slate-400">ou</span>
+        </div>
+      </div>
+
+      <!-- Connexion avec SSO -->
+      <div class="space-y-3">
+        <button class="w-full flex items-center justify-center gap-3 border border-slate-200 rounded-xl py-2.5 hover:bg-slate-50 transition-all">
+          <img src="https://www.google.com/favicon.ico" alt="Google" class="w-5 h-5">
+          <span class="text-sm font-medium text-slate-700">Connexion avec Google</span>
+        </button>
+        <button class="w-full flex items-center justify-center gap-3 border border-slate-200 rounded-xl py-2.5 hover:bg-slate-50 transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-lg">badge</span>
+          <span class="text-sm font-medium text-slate-700">Connexion IFRI (CAS)</span>
+        </button>
+      </div>
+
+      <!-- Lien création compte -->
+      <div class="mt-6 pt-5 border-t border-slate-100 text-center">
+        <p class="text-sm text-slate-600">
+          Nouveau sur la plateforme ?
+          <a href="sign-up.html" class="text-blue-600 font-semibold hover:text-blue-700 hover:underline transition-all">Créer un compte</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Liens footer -->
+<div class="flex justify-center gap-6 mt-6">
+<a href="dashboard.html" class="text-xs text-slate-400 hover:text-slate-600 transition-all">Support</a>
+<a href="settings.html" class="text-xs text-slate-400 hover:text-slate-600 transition-all">Confidentialité</a>
+<a href="settings.html" class="text-xs text-slate-400 hover:text-slate-600 transition-all">Conditions</a>
+<a href="mon-profile.html" class="text-xs text-slate-400 hover:text-slate-600 transition-all">À propos</a>
+</div>
+
+    <!-- Version -->
+    <p class="text-center text-xs text-slate-400 mt-6">© 2024 MentorLink - Version 2.0</p>
+  </main>
+
+  <script type="module" src="../js/login.js"></script>
+  <script>
+    // Animation subtile au focus sur les champs
+    const inputs = document.querySelectorAll('.input-field');
+    inputs.forEach(input => {
+      input.addEventListener('focus', () => {
+        input.parentElement.classList.add('ring-2', 'ring-blue-500/20');
+      });
+      input.addEventListener('blur', () => {
+        input.parentElement.classList.remove('ring-2', 'ring-blue-500/20');
+      });
+    });
+    
+    // Message de bienvenue simulé (effet de notification)
+    console.log('Page de connexion MentorLink - Interface moderne');
+  </script>
+</body>
+</html>

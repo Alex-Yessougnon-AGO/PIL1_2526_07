@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>MentorLink IFRI | La plateforme de mentorat d'excellence</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    
+    /* Animation smooth scroll */
+    html { scroll-behavior: smooth; }
+    
+    /* Binary pattern background */
+    .binary-pattern {
+      background-image: radial-gradient(circle at 1px 1px, rgba(100, 116, 139, 0.15) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+    
+    /* Glass morphism */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    /* Animation flottante */
+    @keyframes float {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(-15px) translateX(5px); }
+    }
+    .float-animation {
+      animation: float 6s ease-in-out infinite;
+    }
+    
+    @keyframes float-delayed {
+      0%, 100% { transform: translateY(0) translateX(0); }
+      50% { transform: translateY(15px) translateX(-5px); }
+    }
+    .float-animation-delayed {
+      animation: float-delayed 7s ease-in-out infinite;
+    }
+    
+    /* Pulse sur les boutons */
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.4); }
+      50% { box-shadow: 0 0 0 20px rgba(37, 99, 235, 0); }
+    }
+    .pulse-glow {
+      animation: pulse-glow 2s infinite;
+    }
+    
+    /* Carte mentor hover */
+    .mentor-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .mentor-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.25);
+    }
+    
+    /* Barre de progression étape */
+    .step-progress {
+      transition: width 0.5s ease;
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar-track { background: #1e293b; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb:hover { background: #60a5fa; }
+  </style>
+</head>
+<body class="bg-slate-950 text-white overflow-x-hidden">
+
+  <!-- NAVIGATION -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800/50">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div class="flex items-center gap-2">
+        <div class="w-9 h-9 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-xl flex items-center justify-center">
+          <span class="material-symbols-outlined text-white text-xl">school</span>
+        </div>
+        <span class="text-2xl font-extrabold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">MentorLink</span>
+      </div>
+      
+      <div class="hidden md:flex items-center gap-8">
+        <a href="#accueil" class="text-slate-300 hover:text-white transition-colors">Accueil</a>
+        <a href="#mentors" class="text-slate-300 hover:text-white transition-colors">Mentors</a>
+        <a href="#fonctionnement" class="text-slate-300 hover:text-white transition-colors">Fonctionnement</a>
+        <a href="#temoignages" class="text-slate-300 hover:text-white transition-colors">Témoignages</a>
+      </div>
+      
+      <div class="flex items-center gap-3">
+        <a href="html/login.html" class="hidden md:block px-5 py-2 text-slate-300 hover:text-white transition-colors">Se connecter</a>
+        <a href="html/sign-up.html" class="px-5 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl font-semibold hover:shadow-lg hover:scale-105 transition-all">S'inscrire</a>
+        <button class="md:hidden text-white">
+          <span class="material-symbols-outlined">menu</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section id="accueil" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+    <!-- Background décoratif -->
+    <div class="absolute inset-0 binary-pattern opacity-30"></div>
+    <div class="absolute top-20 left-10 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl float-animation"></div>
+    <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl float-animation-delayed"></div>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-radial from-transparent via-blue-500/5 to-transparent"></div>
+    
+    <div class="relative z-10 text-center px-6 max-w-5xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-500/10 border border-blue-500/20 mb-6">
+        <span class="material-symbols-outlined text-blue-400 text-sm">bolt</span>
+        <span class="text-sm text-blue-400 font-medium">Innovation & Excellence</span>
+      </div>
+      
+      <h1 class="text-5xl md:text-7xl font-extrabold mb-6 bg-gradient-to-r from-white via-blue-200 to-indigo-300 bg-clip-text text-transparent">
+        Connecter. Apprendre.<br>
+        <span class="bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text">Grandir ensemble.</span>
+      </h1>
+      
+      <p class="text-lg md:text-xl text-slate-300 max-w-2xl mx-auto mb-10">
+        La première plateforme de mentorat entre pairs de l'IFRI. Accélérez votre carrière tech avec l'accompagnement des meilleurs étudiants et alumni.
+      </p>
+      
+      <div class="flex flex-col md:flex-row gap-4 justify-center">
+        <a href="html/sign-up.html" class="px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl font-bold text-lg hover:shadow-xl hover:scale-105 transition-all pulse-glow inline-block">
+          Commencer maintenant
+        </a>
+        <a href="html/feed-ifri.html" class="px-8 py-4 border border-slate-600 rounded-xl font-bold text-lg hover:bg-white/5 transition-all inline-block">
+          Découvrir la plateforme
+        </a>
+      </div>
+      
+      <!-- Stats rapides -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 pt-8">
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-blue-400">500+</div>
+          <div class="text-sm text-slate-400 mt-1">Mentors certifiés</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-blue-400">2.5k</div>
+          <div class="text-sm text-slate-400 mt-1">Sessions réalisées</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-blue-400">1.2k</div>
+          <div class="text-sm text-slate-400 mt-1">Étudiants actifs</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl md:text-4xl font-bold text-blue-400">98%</div>
+          <div class="text-sm text-slate-400 mt-1">Taux de satisfaction</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Scroll indicator -->
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <span class="material-symbols-outlined text-slate-400">keyboard_arrow_down</span>
+    </div>
+  </section>
+
+  <!-- SECTION FONCTIONNEMENT -->
+  <section id="fonctionnement" class="py-24 px-6 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="text-blue-400 text-sm font-semibold uppercase tracking-wider">Processus simple</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2">Comment ça marche ?</h2>
+        <p class="text-slate-400 mt-4 max-w-2xl mx-auto">Trois étapes simples pour transformer votre parcours académique</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Étape 1 -->
+        <div class="glass-card rounded-2xl p-8 text-center group hover:border-blue-500/50 transition-all">
+          <div class="w-16 h-16 mx-auto bg-blue-500/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-blue-400 text-3xl">person_add</span>
+          </div>
+          <div class="text-4xl font-bold text-blue-400/30 mb-2">01</div>
+          <h3 class="text-xl font-bold mb-3">Créez votre profil</h3>
+          <p class="text-slate-400">Renseignez vos compétences, votre filière et vos objectifs académiques</p>
+        </div>
+        
+        <!-- Étape 2 -->
+        <div class="glass-card rounded-2xl p-8 text-center group hover:border-blue-500/50 transition-all">
+          <div class="w-16 h-16 mx-auto bg-blue-500/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-blue-400 text-3xl">hub</span>
+          </div>
+          <div class="text-4xl font-bold text-blue-400/30 mb-2">02</div>
+          <h3 class="text-xl font-bold mb-3">Match intelligent</h3>
+          <p class="text-slate-400">Notre algorithme vous connecte aux mentors les plus pertinents</p>
+        </div>
+        
+        <!-- Étape 3 -->
+        <div class="glass-card rounded-2xl p-8 text-center group hover:border-blue-500/50 transition-all">
+          <div class="w-16 h-16 mx-auto bg-blue-500/10 rounded-2xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+            <span class="material-symbols-outlined text-blue-400 text-3xl">school</span>
+          </div>
+          <div class="text-4xl font-bold text-blue-400/30 mb-2">03</div>
+          <h3 class="text-xl font-bold mb-3">Sessions de mentorat</h3>
+          <p class="text-slate-400">Échangez, apprenez et progressez lors de sessions personnalisées</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION MENTORS EN VEDETTE -->
+  <section id="mentors" class="py-24 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row justify-between items-end mb-12">
+        <div>
+          <span class="text-blue-400 text-sm font-semibold uppercase tracking-wider">Experts à votre service</span>
+          <h2 class="text-3xl md:text-4xl font-bold mt-2">Rencontrez nos mentors</h2>
+          <p class="text-slate-400 mt-4 max-w-2xl">Des étudiants d'excellence et alumni des plus grandes entreprises tech</p>
+        </div>
+        <button class="mt-4 md:mt-0 text-blue-400 font-semibold flex items-center gap-2 hover:gap-3 transition-all">
+          Voir tous les mentors
+          <span class="material-symbols-outlined text-sm">arrow_forward</span>
+        </button>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Mentor 1 -->
+        <div class="mentor-card bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+          <div class="h-56 overflow-hidden">
+            <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXaJjyLL69OGhV-G-mB2v-oZjhkDN0JzGwMuakfRW9YUjYnGJaeVQSIkCeSbhxNlpHPgLapVVaH0tphxB6AmsPQkI1vAYSLnFmk-nRvQEBXwX4T0LuuQ9yMeWohplxOfADFMiVe2JBFJx_JFEOqV41l379VsRi_dgotBCcqnqajsd0fOA2rjTuKT9CNztU20dTTVYRWU3w4fcVYALjCr-wgSX6hayHzILWvARCPQVyfA5O7oqDIz-SRllTVbCDLqHTkX3XoEXSF3M6" alt="Mentor">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="text-xl font-bold">Dr. Koffi Mensah</h3>
+                <p class="text-blue-400 text-sm">Senior Architect @ Azure</p>
+              </div>
+              <span class="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-semibold">Expert Cloud</span>
+            </div>
+            <div class="flex flex-wrap gap-2 my-4">
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">Kubernetes</span>
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">Go</span>
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">DevOps</span>
+            </div>
+            <button class="w-full py-3 bg-slate-800 rounded-xl font-semibold hover:bg-blue-600 transition-all">Consulter le profil</button>
+          </div>
+        </div>
+        
+        <!-- Mentor 2 -->
+        <div class="mentor-card bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+          <div class="h-56 overflow-hidden">
+            <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlO0wpgQjbMnrhXyjdq6pk37XM-M1JH6gf49g3pnFEMnO7WmRm04qa_HsOtueUT2D82H6Mum2cPaQQLL3GYhnJSXbPF4_W3QcCsMY2jG749QYMNaHzyCpma2KWb55EVyBwcNh4CaozpuplFzzs0rAX8bkHrazcEwJ3Nnmsnx28DINU-TcQkrRfbkeA6oXAKxcZgsU3gHTcsPPrPrQg1ETrtcVKYzpVgTaWM8f8qRsCn7q39eMwohCtkBSNtRYSWE6tziYUB9nzd4KH" alt="Mentor">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="text-xl font-bold">Chargement...</h3>
+                <p class="text-blue-400 text-sm">Data Scientist @ NVIDIA</p>
+              </div>
+              <span class="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-semibold">Lead Data</span>
+            </div>
+            <div class="flex flex-wrap gap-2 my-4">
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">Python</span>
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">PyTorch</span>
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">Big Data</span>
+            </div>
+            <button class="w-full py-3 bg-slate-800 rounded-xl font-semibold hover:bg-blue-600 transition-all">Consulter le profil</button>
+          </div>
+        </div>
+        
+        <!-- Mentor 3 -->
+        <div class="mentor-card bg-slate-900 rounded-2xl overflow-hidden border border-slate-800">
+          <div class="h-56 overflow-hidden">
+            <img class="w-full h-full object-cover hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEgfTd3m-z7QR8k0Q39ctdffSQZLYvKFs1lwZo-Tu2zsy10EMIA2YP7dPyzKqB7FO0NHi4JoZh8VDuqU4xOb_10SOodQlf8FwrGV87dsCt3EPaKrx62N6x9Gpi5Qmo-UDPIXd-1wVxJ8DRo0-DVEOZKZDzkh7IhNCUvXGf0_nMrXEZ3RfFxyckIR0UeiPGYoVX00f2F_PUdSnEklU-jnx1bP-EdthPZGiD4EiHIlN43Fgy4l8mBEC6g5q-SXu_zzyVQ3_SFDNKehGy" alt="Mentor">
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h3 class="text-xl font-bold">Marc Kouassi</h3>
+                <p class="text-blue-400 text-sm">CTO @ Innovate Africa</p>
+              </div>
+              <span class="px-2 py-1 bg-emerald-500/20 text-emerald-400 rounded-lg text-xs font-semibold">Fullstack</span>
+            </div>
+            <div class="flex flex-wrap gap-2 my-4">
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">Next.js</span>
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">Rust</span>
+              <span class="px-2 py-1 bg-slate-800 rounded-lg text-xs">GraphQL</span>
+            </div>
+            <button class="w-full py-3 bg-slate-800 rounded-xl font-semibold hover:bg-blue-600 transition-all">Consulter le profil</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION TÉMOIGNAGES -->
+  <section id="temoignages" class="py-24 px-6 bg-slate-900/50">
+    <div class="max-w-7xl mx-auto">
+      <div class="text-center mb-16">
+        <span class="text-blue-400 text-sm font-semibold uppercase tracking-wider">Ils nous font confiance</span>
+        <h2 class="text-3xl md:text-4xl font-bold mt-2">Ce que disent nos étudiants</h2>
+        <p class="text-slate-400 mt-4 max-w-2xl mx-auto">Des parcours transformés grâce au mentorat entre pairs</p>
+      </div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="glass-card rounded-2xl p-6">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+          </div>
+          <p class="text-slate-300 italic">"Grâce à MentorLink, j'ai trouvé un mentor qui m'a aidé à décrocher mon premier stage chez Microsoft. Une expérience incroyable !"</p>
+          <div class="flex items-center gap-3 mt-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-indigo-500 flex items-center justify-center text-white font-bold">JD</div>
+            <div>
+              <p class="font-semibold">Jean Dupont</p>
+              <p class="text-xs text-slate-400">Master 2 - Génie Logiciel</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-6">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+          </div>
+          <p class="text-slate-300 italic">"Les sessions de mentorat m'ont permis de maîtriser React en seulement 2 mois. Je recommande vivement à tous les étudiants !"</p>
+          <div class="flex items-center gap-3 mt-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white font-bold">AK</div>
+            <div>
+              <p class="font-semibold">Amara Koné</p>
+              <p class="text-xs text-slate-400">Licence 3 - Développement Web</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="glass-card rounded-2xl p-6">
+          <div class="flex items-center gap-1 mb-4">
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+            <span class="material-symbols-outlined text-amber-400 text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+          </div>
+          <p class="text-slate-300 italic">"Être mentor sur cette plateforme m'a permis de partager mes connaissances et de développer mes soft skills. Une expérience enrichissante !"</p>
+          <div class="flex items-center gap-3 mt-4 pt-4 border-t border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold">SD</div>
+            <div>
+              <p class="font-semibold">Sarah Diallo</p>
+              <p class="text-xs text-slate-400">Mentore - Data Science</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION CTA FINALE -->
+  <section class="py-24 px-6">
+    <div class="max-w-4xl mx-auto glass-card rounded-3xl p-12 text-center relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-0 left-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-3xl"></div>
+      
+      <div class="relative z-10">
+        <span class="material-symbols-outlined text-5xl text-blue-400 mb-4">rocket_launch</span>
+        <h2 class="text-3xl md:text-4xl font-bold mb-4">Prêt à transformer votre parcours ?</h2>
+        <p class="text-slate-300 mb-8 max-w-xl mx-auto">Rejoignez plus de 1000 étudiants qui progressent chaque jour grâce au mentorat entre pairs</p>
+        <a href="html/sign-up.html" class="inline-block px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl font-bold text-lg hover:shadow-xl hover:scale-105 transition-all">
+          Commencer maintenant
+        </a>
+        <p class="text-xs text-slate-500 mt-4">Gratuit pour tous les étudiants IFRI</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 py-12 px-6">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div>
+          <div class="flex items-center gap-2 mb-4">
+            <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-white text-sm">school</span>
+            </div>
+            <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-indigo-400 bg-clip-text text-transparent">MentorLink</span>
+          </div>
+          <p class="text-sm text-slate-400">La plateforme de mentorat d'excellence de l'IFRI.</p>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-3">Plateforme</h4>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li><a href="html/feed-ifri.html" class="hover:text-white transition-colors">Trouver un mentor</a></li>
+            <li><a href="html/offer.html" class="hover:text-white transition-colors">Devenir mentor</a></li>
+            <li><a href="html/matching-results.html" class="hover:text-white transition-colors">Programmes</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-3">Ressources</h4>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
+            <li><a href="html/dashboard.html" class="hover:text-white transition-colors">Aide</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-3">Légal</h4>
+          <ul class="space-y-2 text-sm text-slate-400">
+            <li><a href="html/settings.html" class="hover:text-white transition-colors">Conditions générales</a></li>
+            <li><a href="html/settings.html" class="hover:text-white transition-colors">Confidentialité</a></li>
+            <li><a href="html/settings.html" class="hover:text-white transition-colors">Mentions légales</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="pt-8 border-t border-slate-800 text-center text-sm text-slate-500">
+        <p>© 2024 MentorLink IFRI - Institut de Formation et de Recherche en Informatique. Tous droits réservés.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-slate-950/90 backdrop-blur-xl border-t border-slate-800 md:hidden flex justify-around items-center py-3 z-50">
+    <a href="/" class="flex flex-col items-center text-blue-400">
+      <span class="material-symbols-outlined">home</span>
+      <span class="text-xs">Accueil</span>
+    </a>
+    <a href="html/feed-ifri.html" class="flex flex-col items-center text-slate-400">
+      <span class="material-symbols-outlined">search</span>
+      <span class="text-xs">Recherche</span>
+    </a>
+    <a href="html/login.html" class="flex flex-col items-center text-slate-400">
+      <span class="material-symbols-outlined">forum</span>
+      <span class="text-xs">Messages</span>
+    </a>
+    <a href="html/login.html" class="flex flex-col items-center text-slate-400">
+      <span class="material-symbols-outlined">person</span>
+      <span class="text-xs">Profil</span>
+    </a>
+  </nav>
+
+  <script>
+    // Navbar scroll effect
+    window.addEventListener('scroll', () => {
+      const nav = document.querySelector('nav');
+      if (window.scrollY > 50) {
+        nav.classList.add('shadow-lg', 'bg-slate-950/95');
+      } else {
+        nav.classList.remove('shadow-lg', 'bg-slate-950/95');
+      }
+    });
+  </script>
+</body>
+</html>

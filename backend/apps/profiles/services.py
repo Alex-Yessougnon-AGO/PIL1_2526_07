@@ -29,6 +29,13 @@ class ProfileService:
         UserSkillRepository.remove_skill(skill_id)
 
     @staticmethod
+    def clear_skills(user):
+        profile = ProfileRepository.get_by_user(user)
+        if not profile:
+            return
+        UserSkillRepository.delete_all_profile_skills(profile)
+
+    @staticmethod
     def add_availability(user, day_of_week, start_time, end_time):
         profile = ProfileRepository.get_or_create(user)
         return AvailabilityRepository.add_slot(profile, day_of_week, start_time, end_time)

@@ -45,6 +45,10 @@ class UserSkillRepository:
     def get_profile_skills(profile):
         return UserSkill.objects.filter(profile=profile, deleted_at__isnull=True).select_related("skill")
 
+    @staticmethod
+    def delete_all_profile_skills(profile):
+        UserSkill.objects.filter(profile=profile).delete()
+
 
 class AvailabilityRepository:
     @staticmethod

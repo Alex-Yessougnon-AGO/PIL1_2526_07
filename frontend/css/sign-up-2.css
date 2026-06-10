@@ -1,0 +1,22 @@
+.binary-strip {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 95, 172, 0.05) 0%,
+    rgba(0, 95, 172, 0) 100%
+  );
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  user-select: none;
+  opacity: 0.3;
+}
+
+.skill-badge {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.skill-badge:active {
+  transform: scale(0.95);
+}

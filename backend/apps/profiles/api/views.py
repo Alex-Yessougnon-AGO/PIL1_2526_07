@@ -1,13 +1,20 @@
+from django.db.models import Count
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 
 from apps.common.responses import error_response, success_response
-from apps.profiles.repositories import AvailabilityRepository, UserSkillRepository
+from apps.accounts.repositories import UserRepository
+from apps.mentoring.repositories import MatchRepository, MentorshipPostRepository, ReviewRepository
+from apps.mentoring.serializers import MentorshipPostSerializer
+from apps.profiles.repositories import AvailabilityRepository, ProfileRepository, UserSkillRepository
 from apps.profiles.serializers import (
     AvailabilitySlotSerializer,
     ProfilePhotoSerializer,
     ProfileSerializer,
+    ProfileStatsSerializer,
+    PublicProfileStatsSerializer,
+    ReviewSerializer,
     UserSkillSerializer,
 )
 from apps.profiles.services import ProfileService
@@ -25,8 +32,39 @@ class ProfileDetailView(APIView):
         allowed = {"bio", "department", "academic_level"}
         data = {k: v for k, v in request.data.items() if k in allowed}
         profile = ProfileService.update_profile(request.user, data)
+
+        # Handle skills if provided
+        mentor_skills = request.data.get("mentor_skills")
+        learner_skills = request.data.get("learner_skills")
+        if mentor_skills is not None or learner_skills is not None:
+            ProfileService.clear_skills(request.user)
+            for skill_name in (mentor_skills or []):
+                if skill_name.strip():
+                    ProfileService.add_skill(request.user, skill_name.strip(), "STRENGTH")
+            for skill_name in (learner_skills or []):
+                if skill_name.strip():
+                    ProfileService.add_skill(request.user, skill_name.strip(), "WEAKNESS")
+            # Refresh profile with new skills
+            profile = ProfileService.get_or_create(request.user)
+
         serializer = ProfileSerializer(profile)
         return success_response(serializer.data, "Profile updated")
+
+
+class PublicProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        user = UserRepository.get_by_id(pk)
+        if not user:
+            return error_response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        profile = ProfileRepository.get_by_user(user)
+        if not profile:
+            profile = ProfileService.get_or_create(user)
+
+        serializer = ProfileSerializer(profile)
+        return success_response(serializer.data)
 
 
 class ProfilePhotoView(APIView):
@@ -86,3 +124,57 @@ class RemoveAvailabilityView(APIView):
     def delete(self, request, pk):
         ProfileService.remove_availability(request.user, pk)
         return success_response(None, "Availability removed")
+
+
+class ProfileStatsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        stats = MatchRepository.get_profile_stats(request.user)
+        serializer = ProfileStatsSerializer(stats)
+        return success_response(serializer.data)
+
+
+class MyProposalsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        posts = MentorshipPostRepository.get_by_creator(request.user)
+        serializer = MentorshipPostSerializer(posts, many=True)
+        return success_response(serializer.data)
+
+
+class PublicProfileStatsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        user = UserRepository.get_by_id(pk)
+        if not user:
+            return error_response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        stats = MatchRepository.get_profile_stats(user)
+        avg_rating = ReviewRepository.get_average_rating(user)
+        review_count = len(ReviewRepository.get_for_user(user))
+        ranking = "Top 5%" if stats["completion_rate"] >= 90 else "Top 10%" if stats["completion_rate"] >= 75 else "Top 25%" if stats["completion_rate"] >= 50 else "En progression"
+
+        data = {
+            "sessions_completed": stats["sessions_completed"],
+            "average_rating": avg_rating,
+            "total_reviews": review_count,
+            "ranking": ranking,
+        }
+        serializer = PublicProfileStatsSerializer(data)
+        return success_response(serializer.data)
+
+
+class PublicReviewsView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        user = UserRepository.get_by_id(pk)
+        if not user:
+            return error_response("User not found", status=status.HTTP_404_NOT_FOUND)
+
+        reviews = ReviewRepository.get_for_user(user)
+        serializer = ReviewSerializer(reviews, many=True)
+        return success_response(serializer.data)

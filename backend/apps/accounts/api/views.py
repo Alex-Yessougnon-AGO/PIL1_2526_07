@@ -122,6 +122,26 @@ class AuthViewSet(ViewSet):
 
         return success_response(None, "If email exists, reset link sent")
 
+    @action(detail=False, methods=["post"], permission_classes=[IsAuthenticated])
+    def change_password(self, request):
+        """Change password while authenticated (requires current password)."""
+        from django.contrib.auth.hashers import check_password
+
+        current_password = request.data.get("current_password")
+        new_password = request.data.get("new_password")
+
+        if not current_password:
+            return error_response("Current password required", status=status.HTTP_400_BAD_REQUEST)
+        if not new_password or len(new_password) < 8:
+            return error_response("New password must be at least 8 characters", status=status.HTTP_400_BAD_REQUEST)
+
+        if not check_password(current_password, request.user.password):
+            return error_response("Current password is incorrect", status=status.HTTP_400_BAD_REQUEST)
+
+        request.user.password = make_password(new_password)
+        request.user.save(update_fields=["password"])
+        return success_response(None, "Password changed successfully")
+
     @action(detail=False, methods=["post"])
     def reset_password(self, request):
         serializer = ResetPasswordSerializer(data=request.data)

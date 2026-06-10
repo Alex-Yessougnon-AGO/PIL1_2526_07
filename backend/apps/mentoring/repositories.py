@@ -1,6 +1,6 @@
-from django.db.models import Q
+from django.db.models import Avg, Count, Q
 
-from apps.mentoring.models import Match, MentorshipPost
+from apps.mentoring.models import Match, MentorshipPost, Review
 
 
 class MentorshipPostRepository:
@@ -39,6 +39,12 @@ class MentorshipPostRepository:
     def delete(post: MentorshipPost):
         post.soft_delete()
 
+    @staticmethod
+    def get_by_creator(user):
+        return MentorshipPost.objects.filter(
+            creator=user, deleted_at__isnull=True, status__in=["OPEN", "MATCHED"]
+        ).order_by("-created_at")
+
 
 class MatchRepository:
     @staticmethod
@@ -70,3 +76,52 @@ class MatchRepository:
         match.status = status
         match.save(update_fields=["status"])
         return match
+
+    @staticmethod
+    def get_profile_stats(user):
+        """Return stats for a user's profile."""
+        sessions_as_mentor = Match.objects.filter(
+            mentor=user, deleted_at__isnull=True, status__in=["ACCEPTED", "FINISHED"]
+        ).count()
+        sessions_as_mentee = Match.objects.filter(
+            mentee=user, deleted_at__isnull=True, status__in=["ACCEPTED", "FINISHED"]
+        ).count()
+        finished_as_mentor = Match.objects.filter(
+            mentor=user, deleted_at__isnull=True, status="FINISHED"
+        ).count()
+        finished_as_mentee = Match.objects.filter(
+            mentee=user, deleted_at__isnull=True, status="FINISHED"
+        ).count()
+        total_accepted = sessions_as_mentor + sessions_as_mentee
+        total_finished = finished_as_mentor + finished_as_mentee
+        completion_rate = round((total_finished / total_accepted * 100)) if total_accepted > 0 else 0
+
+        return {
+            "sessions_given": sessions_as_mentor,
+            "sessions_received": sessions_as_mentee,
+            "sessions_total": total_accepted,
+            "sessions_completed": total_finished,
+            "completion_rate": completion_rate,
+        }
+
+
+class ReviewRepository:
+    @staticmethod
+    def create(reviewer, reviewed, rating, content=None, match=None, session_type=None):
+        return Review.objects.create(
+            reviewer=reviewer,
+            reviewed=reviewed,
+            rating=rating,
+            content=content,
+            match=match,
+            session_type=session_type,
+        )
+
+    @staticmethod
+    def get_for_user(user):
+        return Review.objects.filter(reviewed=user, deleted_at__isnull=True).select_related("reviewer")
+
+    @staticmethod
+    def get_average_rating(user):
+        result = Review.objects.filter(reviewed=user, deleted_at__isnull=True).aggregate(avg=Avg("rating"))
+        return round(result["avg"], 1) if result["avg"] else 0.0

@@ -1,0 +1,35 @@
+body {
+  background-color: #f8f9fa;
+  font-family: "DM Sans", sans-serif;
+  color: #121e1f;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  vertical-align: middle;
+}
+
+.binary-texture {
+  background-image: linear-gradient(rgba(0, 95, 172, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 95, 172, 0.03) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.card-shadow {
+  border: 1px solid #e0e0e0;
+  transition: all 0.2s ease-in-out;
+}
+
+.card-shadow:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

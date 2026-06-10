@@ -53,3 +53,26 @@ class Match(BaseModel):
 
     def __str__(self):
         return f"Match: {self.mentor.email} - {self.mentee.email} ({self.compatibility_score})"
+
+
+class Review(BaseModel):
+    RATING_CHOICES = [(i, str(i)) for i in range(1, 6)]
+
+    reviewer = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="reviews_given")
+    reviewed = models.ForeignKey("accounts.User", on_delete=models.CASCADE, related_name="reviews_received")
+    match = models.ForeignKey(Match, on_delete=models.CASCADE, related_name="reviews", null=True, blank=True)
+    rating = models.IntegerField(choices=RATING_CHOICES)
+    content = models.TextField(null=True, blank=True)
+    session_type = models.CharField(max_length=50, null=True, blank=True, help_text="e.g. Session mentorat, Session technique")
+
+    class Meta:
+        db_table = "reviews"
+        indexes = [
+            models.Index(fields=["reviewed"]),
+            models.Index(fields=["reviewer"]),
+            models.Index(fields=["rating"]),
+        ]
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"Review by {self.reviewer.email} for {self.reviewed.email}: {self.rating}/5"

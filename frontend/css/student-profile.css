@@ -1,0 +1,26 @@
+body {
+  background-color: #f8f9fa;
+  font-family: "DM Sans", sans-serif;
+}
+.binary-pattern {
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 100% 24px;
+}
+.node-line {
+  background-image: radial-gradient(circle, #e0e0e0 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d8e5e6;
+  border-radius: 10px;
+}

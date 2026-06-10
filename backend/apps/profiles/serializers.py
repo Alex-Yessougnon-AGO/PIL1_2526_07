@@ -60,3 +60,45 @@ class ProfilePhotoSerializer(serializers.Serializer):
         if value.size > 5 * 1024 * 1024:
             raise serializers.ValidationError("File too large (max 5MB)")
         return value
+
+
+class ProfileStatsSerializer(serializers.Serializer):
+    sessions_given = serializers.IntegerField()
+    sessions_received = serializers.IntegerField()
+    sessions_total = serializers.IntegerField()
+    sessions_completed = serializers.IntegerField()
+    completion_rate = serializers.IntegerField()
+
+
+class ReviewSerializer(serializers.Serializer):
+    id = serializers.UUIDField()
+    reviewer_name = serializers.SerializerMethodField()
+    reviewer_avatar = serializers.SerializerMethodField()
+    reviewer_level = serializers.SerializerMethodField()
+    rating = serializers.IntegerField()
+    content = serializers.CharField()
+    session_type = serializers.CharField()
+    created_at = serializers.DateTimeField()
+
+    def get_reviewer_name(self, obj):
+        user = obj.reviewer
+        return f"{user.first_name} {user.last_name}"
+
+    def get_reviewer_avatar(self, obj):
+        profile = getattr(obj.reviewer, "profile", None)
+        if profile and profile.profile_photo:
+            return profile.profile_photo.url
+        return None
+
+    def get_reviewer_level(self, obj):
+        profile = getattr(obj.reviewer, "profile", None)
+        if profile and profile.academic_level:
+            return profile.academic_level
+        return ""
+
+
+class PublicProfileStatsSerializer(serializers.Serializer):
+    sessions_completed = serializers.IntegerField()
+    average_rating = serializers.FloatField()
+    total_reviews = serializers.IntegerField()
+    ranking = serializers.CharField()

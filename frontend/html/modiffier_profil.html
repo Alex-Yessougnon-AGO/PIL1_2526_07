@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Modifier mon profil | MentorLink IFRI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    body { background: linear-gradient(135deg, #f8fafc 0%, #f0f4f9 100%); }
+    
+    /* Sidebar styling */
+    .sidebar-item {
+      transition: all 0.2s ease;
+      border-radius: 12px;
+      margin: 0 12px;
+    }
+    .sidebar-item:hover {
+      background: linear-gradient(95deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0.02) 100%);
+      transform: translateX(4px);
+    }
+    .sidebar-item.active {
+      background: linear-gradient(95deg, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.04) 100%);
+      border-right: 3px solid #2563EB;
+      color: #1e40af;
+    }
+    
+    /* Form elements */
+    .form-input {
+      transition: all 0.2s ease;
+      background: white;
+      border: 1.5px solid #e2e8f0;
+    }
+    .form-input:focus {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      outline: none;
+    }
+    
+    /* Edit card */
+    .edit-card {
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(203, 213, 225, 0.6);
+      transition: all 0.3s ease;
+    }
+    
+    /* Tag input styling */
+    .skill-tag {
+      background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+      color: #1e40af;
+      transition: all 0.2s;
+    }
+    .skill-tag:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #c7d2fe 0%, #a5b4fc 100%);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+    
+    /* Animation */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-section {
+      animation: fadeSlideUp 0.4s ease-out forwards;
+    }
+    
+    /* Image upload overlay */
+    .avatar-overlay {
+      transition: all 0.3s ease;
+    }
+    .avatar-container:hover .avatar-overlay {
+      opacity: 1;
+    }
+    
+    /* Switch toggle */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 24px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: 0.3s;
+      border-radius: 34px;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    input:checked + .toggle-slider {
+      background-color: #2563EB;
+    }
+    input:checked + .toggle-slider:before {
+      transform: translateX(22px);
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- SIDEBAR -->
+  <aside class="fixed left-0 top-0 h-full w-72 bg-white/95 backdrop-blur-md border-r border-slate-200/70 flex flex-col z-50 shadow-xl shadow-slate-200/20">
+    <div class="px-6 pt-8 pb-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg">
+          <span class="material-symbols-outlined text-white text-2xl">school</span>
+        </div>
+        <div>
+          <h1 class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">MentorLink</h1>
+          <p class="text-xs text-slate-500 font-medium">IFRI Mentorship Hub</p>
+        </div>
+      </div>
+      <nav class="space-y-1">
+        <a href="dashboard.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">dashboard</span>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="feed-ifri.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">dynamic_feed</span>
+          <span>Fil d'actualité</span>
+        </a>
+        <a href="message.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">forum</span>
+          <span>Messages</span>
+          <span class="ml-auto bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-semibold">3</span>
+        </a>
+        <a href="matching-results.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">groups</span>
+          <span>Matching</span>
+        </a>
+        <a href="mon-profile.html" class="sidebar-item active flex items-center gap-3 px-4 py-2.5 text-blue-700 font-semibold transition-all">
+          <span class="material-symbols-outlined text-blue-600 text-xl">person</span>
+          <span>Mon profil</span>
+        </a>
+        <a href="notifs.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">notifications</span>
+          <span>Notifications</span>
+        </a>
+        <a href="settings.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">settings</span>
+          <span>Paramètres</span>
+        </a>
+      </nav>
+    </div>
+    <div class="px-6 pb-8 mt-auto space-y-2">
+      <a href="feed-ifri.html" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-white text-lg">search</span>
+        Trouver un mentor
+      </a>
+      <a href="login.html" onclick="localStorage.clear();window.location.href='login.html'" class="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-red-500 hover:bg-red-50 rounded-xl transition-all"><span class="material-symbols-outlined text-lg">logout</span>Déconnexion</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="lg:ml-72 min-h-screen">
+    
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/70 shadow-sm">
+      <div class="flex justify-between items-center w-full px-6 md:px-8 py-3">
+        <div class="flex items-center gap-4">
+          <div class="lg:hidden">
+            <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-white text-sm">school</span>
+            </div>
+          </div>
+          <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Modifier mon profil</h2>
+          <div class="hidden md:flex items-center gap-2 ml-4">
+            <a href="#" class="text-slate-500 hover:text-blue-600 text-sm font-medium transition-colors">Dashboard</a>
+            <span class="text-slate-300">/</span>
+            <a href="#" class="text-slate-500 hover:text-blue-600 text-sm font-medium transition-colors">Mon profil</a>
+            <span class="text-slate-300">/</span>
+            <span class="text-blue-600 font-semibold text-sm">Modification</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="p-2 rounded-full text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all relative">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-emerald-500 rounded-full ring-2 ring-white"></span>
+          </button>
+          <div class="flex items-center gap-3 cursor-pointer group">
+            <div class="relative">
+              <img class="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-md group-hover:ring-blue-500/30 transition-all" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=100" alt="avatar">
+              <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-white"></span>
+            </div>
+            <div class="hidden md:block">
+              <p class="text-sm font-semibold text-slate-800">Chargement...</p>
+              <p class="text-xs text-slate-500">Étudiant Master 1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="max-w-5xl mx-auto px-6 md:px-8 py-6">
+      
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- COLONNE DE GAUCHE - PHOTO & STATUT -->
+        <div class="space-y-6">
+          <!-- Carte avatar -->
+          <div class="edit-card rounded-2xl p-6 text-center animate-section">
+            <div class="avatar-container relative inline-block mb-4">
+              <img class="w-32 h-32 rounded-full object-cover ring-4 ring-white shadow-lg" src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=200" alt="Avatar">
+              <div class="avatar-overlay absolute inset-0 bg-black/50 rounded-full flex items-center justify-center opacity-0 transition-all cursor-pointer">
+                <span class="material-symbols-outlined text-white text-3xl">camera_alt</span>
+              </div>
+            </div>
+            <button class="text-sm text-blue-600 font-medium hover:underline">Changer la photo</button>
+            <p class="text-xs text-slate-400 mt-2">Format recommandé : JPG, PNG. Max 2MB</p>
+            
+            <div class="mt-6 pt-5 border-t border-slate-100">
+              <div class="flex items-center justify-between">
+                <div class="text-left">
+                  <p class="text-sm font-semibold text-slate-700">Profil public</p>
+                  <p class="text-xs text-slate-500">Visible par tous les utilisateurs</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Carte statut mentor -->
+          <div class="edit-card rounded-2xl p-6 animate-section" style="animation-delay: 0.05s">
+            <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-emerald-600">stars</span>
+              Statut mentor
+            </h3>
+            <div class="space-y-3">
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="mentorStatus" class="w-4 h-4 text-blue-600" checked>
+                <span class="text-sm text-slate-700">Actif - Disponible pour mentorat</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="mentorStatus" class="w-4 h-4 text-blue-600">
+                <span class="text-sm text-slate-700">Indisponible temporairement</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer">
+                <input type="radio" name="mentorStatus" class="w-4 h-4 text-blue-600">
+                <span class="text-sm text-slate-700">Uniquement comme mentoré</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Carte réseaux sociaux -->
+          <div class="edit-card rounded-2xl p-6 animate-section" style="animation-delay: 0.1s">
+            <h3 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <span class="material-symbols-outlined text-blue-600">link</span>
+              Liens professionnels
+            </h3>
+            <div class="space-y-3">
+              <div>
+                <label class="text-xs font-medium text-slate-500 block mb-1">LinkedIn</label>
+                <input type="url" placeholder="https://linkedin.com/in/..." class="form-input w-full px-3 py-2 rounded-lg text-sm">
+              </div>
+              <div>
+                <label class="text-xs font-medium text-slate-500 block mb-1">GitHub</label>
+                <input type="url" placeholder="https://github.com/..." class="form-input w-full px-3 py-2 rounded-lg text-sm">
+              </div>
+              <div>
+                <label class="text-xs font-medium text-slate-500 block mb-1">Portfolio / Site web</label>
+                <input type="url" placeholder="https://..." class="form-input w-full px-3 py-2 rounded-lg text-sm">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLONNE DE DROITE - FORMULAIRES -->
+        <div class="lg:col-span-2 space-y-6">
+          <form id="profile-form">
+          
+          <!-- Informations personnelles -->
+          <div class="edit-card rounded-2xl p-6 animate-section" style="animation-delay: 0.15s">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-blue-600">person_outline</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Informations personnelles</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Nom complet</label>
+                <input type="text" value="Chargement..." class="form-input w-full px-4 py-3 rounded-xl">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Email</label>
+                <input type="email" value="email@example.com" class="form-input w-full px-4 py-3 rounded-xl">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Téléphone</label>
+                <input type="tel" placeholder="+225 XX XX XX XX" class="form-input w-full px-4 py-3 rounded-xl">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Localisation</label>
+                <input type="text" placeholder="Abidjan, Côte d'Ivoire" class="form-input w-full px-4 py-3 rounded-xl">
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Bio</label>
+                <textarea rows="3" placeholder="Décrivez-vous, vos intérêts académiques et professionnels..." class="form-input w-full px-4 py-3 rounded-xl resize-none">Passionné par le développement Backend et les architectures distribuées. Enthousiaste à l'idée d'aider les étudiants à naviguer dans le cursus informatique.</textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Parcours académique -->
+          <div class="edit-card rounded-2xl p-6 animate-section" style="animation-delay: 0.2s">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-emerald-600">school</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Parcours académique</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Filière</label>
+                <select class="form-input w-full px-4 py-3 rounded-xl appearance-none cursor-pointer bg-white">
+                  <option selected>Génie Logiciel</option>
+                  <option>Cybersécurité</option>
+                  <option>Data Science</option>
+                  <option>Intelligence Artificielle</option>
+                  <option>Réseaux & Télécoms</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Niveau d'étude</label>
+                <select class="form-input w-full px-4 py-3 rounded-xl appearance-none cursor-pointer bg-white">
+                  <option>Licence 1</option>
+                  <option>Licence 2</option>
+                  <option>Licence 3</option>
+                  <option selected>Master 1</option>
+                  <option>Master 2</option>
+                  <option>Doctorat</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Année académique</label>
+                <select class="form-input w-full px-4 py-3 rounded-xl appearance-none cursor-pointer bg-white">
+                  <option>2023-2024</option>
+                  <option selected>2024-2025</option>
+                  <option>2025-2026</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Moyenne générale</label>
+                <input type="text" placeholder="15.5/20" class="form-input w-full px-4 py-3 rounded-xl">
+              </div>
+            </div>
+          </div>
+
+          <!-- Compétences -->
+          <div class="edit-card rounded-2xl p-6 animate-section" style="animation-delay: 0.25s">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-purple-600">code</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Compétences</h2>
+            </div>
+            
+            <!-- Compétences à enseigner -->
+            <div class="mb-6">
+              <label class="block text-sm font-semibold text-slate-700 mb-2">🎓 Je peux aider en</label>
+              <div class="flex flex-wrap gap-2 mb-3" id="mentorTagsContainer">
+                <span class="skill-tag inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium">
+                  Python
+                  <button type="button" class="text-blue-800 hover:text-red-500 transition-colors remove-tag-btn">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                  </button>
+                </span>
+                <span class="skill-tag inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium">
+                  Algorithmique
+                  <button type="button" class="text-blue-800 hover:text-red-500 transition-colors remove-tag-btn">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                  </button>
+                </span>
+                <span class="skill-tag inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium">
+                  Structures de données
+                  <button type="button" class="text-blue-800 hover:text-red-500 transition-colors remove-tag-btn">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                  </button>
+                </span>
+              </div>
+              <div class="relative">
+                <input type="text" id="mentorSkillInput" placeholder="Ajouter une compétence... (appuyez sur Entrée)" class="form-input w-full px-4 py-3 rounded-xl text-sm">
+              </div>
+            </div>
+
+            <div class="border-t border-slate-100 my-4"></div>
+
+            <!-- Compétences à apprendre -->
+            <div>
+              <label class="block text-sm font-semibold text-slate-700 mb-2">📚 Je souhaite apprendre</label>
+              <div class="flex flex-wrap gap-2 mb-3" id="learnerTagsContainer">
+                <span class="skill-tag inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium" style="background:#fef3c7; color:#92400e;">
+                  DevOps
+                  <button type="button" class="text-amber-800 hover:text-red-500 transition-colors remove-tag-btn">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                  </button>
+                </span>
+                <span class="skill-tag inline-flex items-center gap-1 px-3 py-1.5 rounded-full text-sm font-medium" style="background:#fef3c7; color:#92400e;">
+                  Kubernetes
+                  <button type="button" class="text-amber-800 hover:text-red-500 transition-colors remove-tag-btn">
+                    <span class="material-symbols-outlined text-sm">close</span>
+                  </button>
+                </span>
+              </div>
+              <div class="relative">
+                <input type="text" id="learnerSkillInput" placeholder="Ajouter une compétence... (appuyez sur Entrée)" class="form-input w-full px-4 py-3 rounded-xl text-sm">
+              </div>
+            </div>
+          </div>
+
+          <!-- Disponibilités -->
+          <div class="edit-card rounded-2xl p-6 animate-section" style="animation-delay: 0.3s">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-8 h-8 rounded-lg bg-amber-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-amber-600">calendar_month</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Disponibilités</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Jours préférés</label>
+                <div class="flex flex-wrap gap-2">
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Lun</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Mar</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Mer</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Jeu</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Ven</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Sam</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Dim</span></label>
+                </div>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Créneaux horaires</label>
+                <div class="space-y-1">
+                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Matin (8h-12h)</span></label>
+                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Après-midi (14h-18h)</span></label>
+                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Soirée (19h-22h)</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Boutons action -->
+          <div class="flex gap-4 pt-4 pb-8">
+            <button type="submit" class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-lg hover:scale-[1.02] transition-all">
+              Enregistrer les modifications
+            </button>
+            <a href="mon-profile.html" class="flex-1 border border-slate-300 text-slate-700 font-semibold py-3 rounded-xl hover:bg-slate-50 transition-all inline-block text-center">
+              Annuler
+            </a>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-slate-200 bg-white/50 py-6 mt-4">
+      <div class="max-w-7xl mx-auto px-6 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+        <div>© 2024 MentorLink - IFRI Academic Hub</div>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-blue-600 transition-colors">Confidentialité</a>
+          <a href="#" class="hover:text-blue-600 transition-colors">Conditions</a>
+          <a href="#" class="hover:text-blue-600 transition-colors">Aide</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-200 flex justify-around items-center h-16 lg:hidden z-50 shadow-[0_-4px_10px_-2px_rgba(0,0,0,0.05)]">
+    <a class="flex flex-col items-center text-slate-500" href="dashboard.html"><span class="material-symbols-outlined">dashboard</span><span class="text-[11px] mt-0.5">Accueil</span></a>
+    <a class="flex flex-col items-center text-slate-500" href="feed-ifri.html"><span class="material-symbols-outlined">dynamic_feed</span><span class="text-[11px]">Fil</span></a>
+    <a class="flex flex-col items-center text-blue-600 font-bold" href="mon-profile.html"><span class="material-symbols-outlined">person</span><span class="text-[11px]">Profil</span></a>
+    <a class="flex flex-col items-center text-slate-500" href="settings.html"><span class="material-symbols-outlined">settings</span><span class="text-[11px]">Paramètres</span></a>
+  </nav>
+
+  <script type="module" src="../js/modiffier_profil.js"></script>
+</body>
+</html>

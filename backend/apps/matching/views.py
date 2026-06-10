@@ -6,6 +6,7 @@ from apps.common.responses import error_response, success_response
 from apps.matching.services.matcher import MatcherService
 from apps.mentoring.models import Match
 from apps.mentoring.repositories import MatchRepository
+from apps.accounts.serializers import UserSerializer
 from apps.mentoring.serializers import MatchSerializer
 
 
@@ -41,8 +42,8 @@ class MatchingRecommendationsView(APIView):
             data.append(
                 {
                     "id": str(m.id),
-                    "mentor": MatchSerializer(m.mentor).data,
-                    "mentee": MatchSerializer(m.mentee).data,
+                    "mentor": UserSerializer(m.mentor).data,
+                    "mentee": UserSerializer(m.mentee).data,
                     "score": m.compatibility_score,
                     "common_skills": result["common_skills"],
                     "common_slots": result["common_slots"],

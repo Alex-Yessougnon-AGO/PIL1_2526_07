@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #f6f9fc 0%, #edf2f8 100%);
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      border: 1px solid rgba(203, 213, 225, 0.5);
+      box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+    }
+    .glass-card:hover {
+      box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.08);
+      border-color: rgba(37, 99, 235, 0.2);
+      transform: translateY(-2px);
+    }
+    .nav-item-active {
+      background: linear-gradient(95deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0.02) 100%);
+      border-right: 3px solid #2563EB;
+      color: #1e40af;
+    }
+    .stat-card {
+      transition: all 0.25s ease;
+    }
+    .stat-card:hover {
+      transform: translateY(-4px);
+    }
+    .skill-badge-strength {
+      background: linear-gradient(135deg, #e6f7ec 0%, #d1fae5 100%);
+      color: #0b5e2e;
+      border: none;
+      font-weight: 600;
+    }
+    .skill-badge-need {
+      background: linear-gradient(135deg, #fff1e6 0%, #ffe4cc 100%);
+      color: #c2410c;
+      border: none;
+      font-weight: 600;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 5px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #eef2f6;
+      border-radius: 10px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #94a3b8;
+      border-radius: 10px;
+    }
+    .gradient-border {
+      background: linear-gradient(135deg, #2563EB, #7c3aed, #10b981);
+      padding: 1px;
+      border-radius: 1.5rem;
+    }
+    .inner-card {
+      background: white;
+      border-radius: 1.5rem;
+    }
+    .avatar-ring {
+      box-shadow: 0 0 0 3px white, 0 0 0 6px rgba(37, 99, 235, 0.2);
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+    .float-animation {
+      animation: float 4s ease-in-out infinite;
+    }
+    .glow-on-hover:hover {
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1), 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+    }
+  </style>
+</head>
+<body class="overflow-x-hidden antialiased">
+
+  <!-- SIDEBAR - version élégante -->
+  <aside class="fixed left-0 top-0 h-full w-72 bg-white/95 backdrop-blur-md border-r border-slate-200/70 hidden lg:flex flex-col justify-between z-50 shadow-xl shadow-slate-200/20">
+    <div class="px-6 pt-8">
+      <div class="mb-10 flex items-center gap-3">
+        <div class="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-md">
+          <span class="material-symbols-outlined text-white text-2xl">psychology</span>
+        </div>
+        <div>
+          <h1 class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">MentorLink</h1>
+          <p class="text-xs text-slate-500 font-medium">IFRI Mentorship Hub</p>
+        </div>
+      </div>
+      <nav class="space-y-1.5">
+        <a href="dashboard.html" class="nav-item-active flex items-center gap-3 px-4 py-3 rounded-xl font-semibold text-slate-700 transition-all duration-200">
+          <span class="material-symbols-outlined text-blue-600">dashboard</span>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="feed-ifri.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-all duration-200">
+          <span class="material-symbols-outlined">groups</span>
+          <span>Explorer</span>
+        </a>
+        <a href="matching-results.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-all duration-200">
+          <span class="material-symbols-outlined">handshake</span>
+          <span>Matching</span>
+        </a>
+        <a href="message.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-all duration-200">
+          <span class="material-symbols-outlined">chat</span>
+          <span>Messages</span>
+          <span class="ml-auto bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-semibold">3</span>
+        </a>
+        <a href="notifs.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-all duration-200">
+          <span class="material-symbols-outlined">notifications</span>
+          <span>Notifications</span>
+        </a>
+        <a href="mon-profile.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-500 hover:bg-slate-50 hover:text-slate-700 transition-all duration-200">
+          <span class="material-symbols-outlined">person</span>
+          <span>Mon Profil</span>
+        </a>
+      </nav>
+    </div>
+    <div class="px-6 pb-8 space-y-2 border-t border-slate-100 pt-6 mt-6">
+      <a href="settings.html" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-slate-500 hover:bg-slate-50 transition-all">
+        <span class="material-symbols-outlined">settings</span>
+        <span>Paramètres</span>
+      </a>
+      <a href="login.html" onclick="localStorage.clear();window.location.href='login.html'" class="flex items-center gap-3 px-4 py-3 rounded-xl font-medium text-red-500 hover:bg-red-50 transition-all">
+        <span class="material-symbols-outlined">logout</span>
+        <span>Déconnexion</span>
+      </a>
+    </div>
+  </aside>
+
+  <!-- HEADER -->
+  <header class="fixed top-0 right-0 left-0 lg:left-72 h-18 bg-white/80 backdrop-blur-xl border-b border-slate-200/70 flex justify-between items-center px-6 md:px-8 z-40 shadow-sm">
+    <div class="lg:hidden">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+          <span class="material-symbols-outlined text-white text-sm">psychology</span>
+        </div>
+        <span class="font-extrabold text-xl bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">MentorLink</span>
+      </div>
+    </div>
+    <div class="hidden lg:flex items-center flex-1 max-w-md">
+      <div class="relative w-full">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-xl">search</span>
+        <input class="w-full bg-slate-50 border border-slate-200 rounded-2xl pl-12 pr-5 py-2.5 text-sm font-medium text-slate-700 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500 transition-all" placeholder="Rechercher un mentor, compétence..." type="text">
+      </div>
+    </div>
+    <div class="flex items-center gap-5">
+      <a href="notifs.html" class="relative p-2 text-slate-500 hover:text-blue-600 transition-colors rounded-full hover:bg-slate-100 inline-block">
+        <span class="material-symbols-outlined">notifications</span>
+        <span class="absolute top-1.5 right-1.5 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-white"></span>
+      </a>
+      <a href="mon-profile.html" class="flex items-center gap-3 cursor-pointer group">
+        <div class="relative">
+          <img class="w-10 h-10 rounded-full object-cover ring-2 ring-white shadow-md group-hover:ring-blue-500/30 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxGYzkfys04EyRyyFBtxlRkU9PD1TOVKopRk2jd8d1P4Ch_P2qeHG90ETGgquOYcfDw9kh4Dof_5H_yaWwuwcFaZiz--df6LFUMYXfW__bVoGTLszrYXK5QjZo8h9TIlcxwxud-ccYTKfzKJO-VkdOntcAlRrqMNt8565ump8wQ08ky3XT2xXhPts7xEtHCb3i1qn64h1jEn17zmKz6Ku-dQnR4ogKImjAHCy4QGu3CHxsksOQT8BLUmAVqDQLRGOGfBsnBXo_8hDA" alt="avatar">
+          <span class="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 rounded-full ring-2 ring-white"></span>
+        </div>
+        <div class="hidden md:block text-right">
+          <p class="text-sm font-semibold text-slate-800">Chargement...</p>
+          <p class="text-xs text-slate-500">Étudiante Master 1</p>
+        </div>
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="pt-24 pb-20 px-5 md:px-8 lg:ml-72 min-h-screen">
+    
+    <!-- Bannière d'accueil personnalisée -->
+    <div class="relative overflow-hidden rounded-3xl bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 p-8 mb-10 shadow-2xl">
+      <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+      <div class="absolute bottom-0 left-0 w-48 h-48 bg-emerald-500/20 rounded-full blur-2xl -ml-20 -mb-20"></div>
+      <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-5">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-bold text-white tracking-tight">Bonjour, Utilisateur 👋</h2>
+          <p class="text-blue-100 mt-2 max-w-xl">Votre réseau de mentorat vous attend. Découvrez les opportunités qui vont booster votre carrière tech.</p>
+        </div>
+        <div class="flex gap-3">
+          <div class="bg-white/20 backdrop-blur-sm rounded-2xl px-5 py-2.5 border border-white/30">
+            <p class="text-xs text-blue-100 font-medium">Sessions ce mois</p>
+            <p class="text-2xl font-bold text-white">4</p>
+          </div>
+          <div class="bg-white/20 backdrop-blur-sm rounded-2xl px-5 py-2.5 border border-white/30">
+            <p class="text-xs text-blue-100 font-medium">Progression</p>
+            <p class="text-2xl font-bold text-white">67%</p>
+          </div>
+        </div>
+      </div>
+      <!-- Quick actions chips -->
+      <div class="flex flex-wrap gap-3 mt-7 relative z-10">
+        <a href="offer.html" class="bg-white/95 text-slate-800 px-5 py-2 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-transform flex items-center gap-2">
+          <span class="material-symbols-outlined text-blue-600 text-base">post_add</span>
+          Publier une offre
+        </a>
+        <a href="demande.html" class="bg-white/95 text-slate-800 px-5 py-2 rounded-full text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-transform flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-600 text-base">help</span>
+          Demander un mentor
+        </a>
+        <a href="feed-ifri.html" class="bg-blue-600 text-white px-5 py-2 rounded-full text-sm font-semibold shadow-lg hover:bg-blue-700 hover:scale-105 transition-transform flex items-center gap-2">
+          <span class="material-symbols-outlined text-white text-base">person_search</span>
+          Trouver un mentor
+        </a>
+      </div>
+    </div>
+
+    <!-- Grille statistiques & activité -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-7 mb-10">
+      <!-- Stats cards -->
+      <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-3 gap-5">
+        <div class="glass-card rounded-2xl p-6 stat-card cursor-default">
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-md flex items-center justify-center">
+              <span class="material-symbols-outlined text-white">handshake</span>
+            </div>
+            <span class="text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full text-xs font-bold">+12%</span>
+          </div>
+          <p class="text-slate-500 text-sm font-medium mt-5">Mentorat actif</p>
+          <h3 class="text-4xl font-extrabold text-slate-800 mt-1">04</h3>
+        </div>
+        <div class="glass-card rounded-2xl p-6 stat-card cursor-default">
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-md flex items-center justify-center">
+              <span class="material-symbols-outlined text-white">chat</span>
+            </div>
+            <span class="text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full text-xs font-bold">Nouveau</span>
+          </div>
+          <p class="text-slate-500 text-sm font-medium mt-5">Messages non lus</p>
+          <h3 class="text-4xl font-extrabold text-slate-800 mt-1">12</h3>
+        </div>
+        <div class="glass-card rounded-2xl p-6 stat-card cursor-default">
+          <div class="flex items-center justify-between">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-indigo-500 shadow-md flex items-center justify-center">
+              <span class="material-symbols-outlined text-white">pending_actions</span>
+            </div>
+            <span class="text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full text-xs font-bold">3 en attente</span>
+          </div>
+          <p class="text-slate-500 text-sm font-medium mt-5">Demandes pendantes</p>
+          <h3 class="text-4xl font-extrabold text-slate-800 mt-1">07</h3>
+        </div>
+      </div>
+
+      <!-- Recent Activity Card stylisé -->
+      <div class="glass-card rounded-2xl p-6 lg:row-span-2 flex flex-col h-full">
+        <div class="flex justify-between items-center mb-5">
+          <h3 class="text-base font-bold text-slate-800 flex items-center gap-2">
+            <span class="material-symbols-outlined text-blue-600 text-xl">activity</span>
+            Activité récente
+          </h3>
+          <span class="material-symbols-outlined text-slate-400 hover:text-slate-600 cursor-pointer">more_horiz</span>
+        </div>
+        <div class="space-y-5 flex-1" id="activity-feed-container">
+          <div class="flex gap-4 items-start">
+            <div class="relative flex-shrink-0">
+              <div class="w-9 h-9 rounded-full bg-slate-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-slate-400 text-base">schedule</span>
+              </div>
+            </div>
+            <div>
+              <p class="font-semibold text-slate-400">Chargement des activités...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Profils Recommandés - Design amélioré -->
+    <div class="mt-4">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <h3 class="text-2xl font-bold text-slate-800 flex items-center gap-2">
+            <span class="material-symbols-outlined text-blue-600 text-3xl">recommend</span>
+            Profils recommandés pour vous
+          </h3>
+          <p class="text-slate-500 text-sm mt-1">Basé sur vos compétences et objectifs</p>
+        </div>
+        <div class="flex gap-2">
+          <button id="scroll-left" class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center hover:bg-slate-50 hover:border-blue-300 transition-all">
+            <span class="material-symbols-outlined text-slate-600">chevron_left</span>
+          </button>
+          <button id="scroll-right" class="w-10 h-10 rounded-full bg-white border border-slate-200 shadow-sm flex items-center justify-center hover:bg-slate-50 hover:border-blue-300 transition-all">
+            <span class="material-symbols-outlined text-slate-600">chevron_right</span>
+          </button>
+        </div>
+      </div>
+      <div id="carousel-container" class="flex gap-6 overflow-x-auto custom-scrollbar pb-6 snap-x scroll-smooth">
+        <!-- Loading state (remplace automatiquement par dashboard.js) -->
+        <div class="min-w-[340px] bg-white rounded-2xl border border-slate-200/80 p-6 snap-start shadow-lg flex items-center justify-center">
+          <div class="text-center">
+            <span class="material-symbols-outlined text-4xl text-slate-300 mb-3">recommend</span>
+            <p class="text-sm text-slate-400">Chargement des recommandations...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Mobile bottom bar -->
+  <nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-200 flex justify-around items-center h-16 lg:hidden z-50 shadow-[0_-4px_10px_-2px_rgba(0,0,0,0.05)]">
+    <a class="flex flex-col items-center text-blue-600 font-bold" href="dashboard.html"><span class="material-symbols-outlined">home</span><span class="text-[11px] mt-0.5">Accueil</span></a>
+    <a class="flex flex-col items-center text-slate-500" href="feed-ifri.html"><span class="material-symbols-outlined">search</span><span class="text-[11px]">Explorer</span></a>
+    <a class="flex flex-col items-center text-slate-500" href="message.html"><span class="material-symbols-outlined">forum</span><span class="text-[11px]">Chat</span></a>
+    <a class="flex flex-col items-center text-slate-500" href="mon-profile.html"><span class="material-symbols-outlined">person</span><span class="text-[11px]">Profil</span></a>
+  </nav>
+  <button class="lg:hidden fixed bottom-20 right-5 w-14 h-14 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full shadow-xl flex items-center justify-center active:scale-90 transition-all z-40 hover:shadow-2xl"><span class="material-symbols-outlined text-white text-2xl">add</span></button>
+
+
+  <script type="module" src="../js/dashboard.js"></script>
+</body>
+</html>

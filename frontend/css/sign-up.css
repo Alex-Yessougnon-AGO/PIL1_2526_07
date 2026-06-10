@@ -1,0 +1,36 @@
+body {
+  background-color: #f8f9fa;
+  color: #121e1f;
+}
+
+.binary-strip {
+  background-image: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 95, 172, 0.05) 50%,
+    transparent
+  );
+  font-family: monospace;
+  font-size: 10px;
+  letter-spacing: 2px;
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  user-select: none;
+  pointer-events: none;
+}
+
+.step-transition {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+}
+
+.tag-active-primary {
+  background-color: #85f96f;
+  color: #002200;
+  border-color: #006e00;
+}
+
+.tag-active-tertiary {
+  background-color: #ffdcc7;
+  color: #311300;
+  border-color: #954800;
+}

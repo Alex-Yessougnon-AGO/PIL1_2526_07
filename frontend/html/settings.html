@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Paramètres | MentorLink IFRI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+  <style>
+    * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+    body { background: linear-gradient(135deg, #f8fafc 0%, #f0f4f9 100%); }
+    
+    /* Sidebar styling */
+    .sidebar-item {
+      transition: all 0.2s ease;
+      border-radius: 12px;
+      margin: 0 12px;
+    }
+    .sidebar-item:hover {
+      background: linear-gradient(95deg, rgba(37, 99, 235, 0.08) 0%, rgba(37, 99, 235, 0.02) 100%);
+      transform: translateX(4px);
+    }
+    .sidebar-item.active {
+      background: linear-gradient(95deg, rgba(37, 99, 235, 0.12) 0%, rgba(37, 99, 235, 0.04) 100%);
+      border-right: 3px solid #2563EB;
+      color: #1e40af;
+    }
+    
+    /* Form elements styling */
+    .form-input {
+      transition: all 0.2s ease;
+      background: white;
+      border: 1.5px solid #e2e8f0;
+    }
+    .form-input:focus {
+      border-color: #2563EB;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+      outline: none;
+    }
+    
+    /* Settings card */
+    .settings-card {
+      background: rgba(255, 255, 255, 0.97);
+      border: 1px solid rgba(203, 213, 225, 0.6);
+      transition: all 0.3s ease;
+    }
+    .settings-card:hover {
+      box-shadow: 0 8px 25px -12px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Toggle switch */
+    .toggle-switch {
+      position: relative;
+      display: inline-block;
+      width: 46px;
+      height: 24px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #cbd5e1;
+      transition: 0.3s;
+      border-radius: 34px;
+    }
+    .toggle-slider:before {
+      position: absolute;
+      content: "";
+      height: 18px;
+      width: 18px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    input:checked + .toggle-slider {
+      background-color: #2563EB;
+    }
+    input:checked + .toggle-slider:before {
+      transform: translateX(22px);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; }
+    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 10px; }
+    
+    /* Animation */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-section {
+      animation: fadeSlideUp 0.4s ease-out forwards;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- SIDEBAR -->
+  <aside class="fixed left-0 top-0 h-full w-72 bg-white/95 backdrop-blur-md border-r border-slate-200/70 flex flex-col z-50 shadow-xl shadow-slate-200/20">
+    <div class="px-6 pt-8 pb-6">
+      <div class="flex items-center gap-3 mb-8">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg">
+          <span class="material-symbols-outlined text-white text-2xl">school</span>
+        </div>
+        <div>
+          <h1 class="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent">MentorLink</h1>
+          <p class="text-xs text-slate-500 font-medium">IFRI Mentorship Hub</p>
+        </div>
+      </div>
+      <nav class="space-y-1">
+        <a href="dashboard.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">dashboard</span>
+          <span>Tableau de bord</span>
+        </a>
+        <a href="feed-ifri.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">dynamic_feed</span>
+          <span>Fil d'actualité</span>
+        </a>
+        <a href="message.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">forum</span>
+          <span>Messages</span>
+          <span class="ml-auto bg-blue-100 text-blue-700 text-xs px-2 py-0.5 rounded-full font-semibold">3</span>
+        </a>
+        <a href="matching-results.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">groups</span>
+          <span>Matching</span>
+        </a>
+        <a href="mon-profile.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">person</span>
+          <span>Mon profil</span>
+        </a>
+        <a href="notifs.html" class="sidebar-item flex items-center gap-3 px-4 py-2.5 text-slate-600 font-medium transition-all">
+          <span class="material-symbols-outlined text-slate-500 text-xl">notifications</span>
+          <span>Notifications</span>
+        </a>
+        <a href="settings.html" class="sidebar-item active flex items-center gap-3 px-4 py-2.5 text-blue-700 font-semibold transition-all">
+          <span class="material-symbols-outlined text-blue-600 text-xl" style="font-variation-settings: 'FILL' 1;">settings</span>
+          <span>Paramètres</span>
+        </a>
+      </nav>
+    </div>
+    <div class="px-6 pb-8 mt-auto space-y-2">
+      <a href="feed-ifri.html" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-3 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.02] transition-all flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined text-white text-lg">search</span>
+        Trouver un mentor
+      </a>
+      <a href="login.html" onclick="localStorage.clear();window.location.href='login.html'" class="w-full flex items-center justify-center gap-2 py-2 text-sm font-medium text-red-500 hover:bg-red-50 rounded-xl transition-all"><span class="material-symbols-outlined text-lg">logout</span>Déconnexion</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="lg:ml-72 min-h-screen">
+    
+    <!-- HEADER -->
+    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-xl border-b border-slate-200/70 shadow-sm">
+      <div class="flex justify-between items-center w-full px-6 md:px-8 py-3">
+        <div class="flex items-center gap-4">
+          <div class="lg:hidden">
+            <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+              <span class="material-symbols-outlined text-white text-sm">school</span>
+            </div>
+          </div>
+          <h2 class="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">Paramètres</h2>
+          <div class="hidden md:flex items-center gap-2 ml-4">
+            <a href="#" class="text-slate-500 hover:text-blue-600 text-sm font-medium transition-colors">Dashboard</a>
+            <span class="text-slate-300">/</span>
+            <span class="text-blue-600 font-semibold text-sm">Paramètres</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-4">
+          <button class="p-2 rounded-full text-slate-500 hover:text-blue-600 hover:bg-slate-100 transition-all relative">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-emerald-500 rounded-full ring-2 ring-white"></span>
+          </button>
+          <div class="flex items-center gap-3 cursor-pointer group">
+            <div class="relative">
+              <img class="w-9 h-9 rounded-full object-cover ring-2 ring-white shadow-md group-hover:ring-blue-500/30 transition-all" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZgyLpILxbhoq0rWvF-NGSqYeogCwksereg6LH76qfAwY7HC_4Tlw8_2g_iQjD_amzfXozIh7ufmYk4Tqiaqr-RYZka2h6W__Mn3tpWp_-t30VXND_x44SN5LwfMVzCdgDqDkT67Klz_uLxgloKnrBQel48h1B7omCsPAKOWdDOR0v4QsMjC7NCLqxwT62BL-bMCykpclw7-EX2tA5_XHguqB0uKZ3_9w-gG6t58rCU1tgEaYpQDlHQl9aaWLvvhOKdjckvwHQiO80" alt="avatar">
+              <span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full ring-2 ring-white"></span>
+            </div>
+            <div class="hidden md:block">
+              <p class="text-sm font-semibold text-slate-800">Chargement...</p>
+              <p class="text-xs text-slate-500">Étudiant Master 1</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENU PRINCIPAL -->
+    <div class="max-w-7xl mx-auto px-6 md:px-8 py-6">
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        
+        <!-- COLONNE DE GAUCHE (2/3) -->
+        <div class="lg:col-span-2 space-y-6">
+          
+          <!-- Section Profil -->
+          <div class="settings-card rounded-2xl p-6 animate-section">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-9 h-9 rounded-xl bg-blue-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-blue-600">person_outline</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Informations du profil</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Nom complet</label>
+                <input type="text" value="Chargement..." class="form-input w-full px-4 py-3 rounded-xl text-slate-700">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Adresse email</label>
+                <input type="email" value="email@example.com" class="form-input w-full px-4 py-3 rounded-xl text-slate-700">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Filière</label>
+                <select class="form-input w-full px-4 py-3 rounded-xl text-slate-700 appearance-none cursor-pointer bg-white">
+                  <option>Informatique & IA</option>
+                  <option>Cybersécurité</option>
+                  <option selected>Génie Logiciel</option>
+                  <option>Data Science</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Niveau d'étude</label>
+                <select class="form-input w-full px-4 py-3 rounded-xl text-slate-700 appearance-none cursor-pointer bg-white">
+                  <option>Licence 1</option>
+                  <option>Licence 2</option>
+                  <option>Licence 3</option>
+                  <option selected>Master 1</option>
+                  <option>Master 2</option>
+                  <option>Doctorat</option>
+                </select>
+              </div>
+              <div class="md:col-span-2">
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Bio</label>
+                <textarea rows="3" placeholder="Partagez vos intérêts académiques..." class="form-input w-full px-4 py-3 rounded-xl resize-none text-slate-700 placeholder:text-slate-400">Passionné par les grands modèles de langage et les systèmes distribués. Enthousiaste à l'idée d'aider les étudiants à naviguer dans le cursus informatique.</textarea>
+              </div>
+            </div>
+            <div class="mt-5 flex justify-end">
+              <button class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold px-6 py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all">Enregistrer les modifications</button>
+            </div>
+          </div>
+
+          <!-- Section Sécurité -->
+          <div class="settings-card rounded-2xl p-6 animate-section" style="animation-delay: 0.05s">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-9 h-9 rounded-xl bg-emerald-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-emerald-600">lock_reset</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Sécurité & mot de passe</h2>
+            </div>
+            <div class="space-y-4 max-w-md">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Mot de passe actuel</label>
+                <input type="password" placeholder="••••••••" class="form-input w-full px-4 py-3 rounded-xl text-slate-700">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Nouveau mot de passe</label>
+                <input type="password" placeholder="••••••••" class="form-input w-full px-4 py-3 rounded-xl text-slate-700">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Confirmer le mot de passe</label>
+                <input type="password" placeholder="••••••••" class="form-input w-full px-4 py-3 rounded-xl text-slate-700">
+              </div>
+            </div>
+            <div class="mt-5 flex justify-end">
+              <button class="border border-slate-300 text-slate-700 font-semibold px-6 py-2.5 rounded-xl hover:bg-slate-50 transition-all">Changer le mot de passe</button>
+            </div>
+          </div>
+
+          <!-- Section Préférences -->
+          <div class="settings-card rounded-2xl p-6 animate-section" style="animation-delay: 0.1s">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-9 h-9 rounded-xl bg-purple-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-purple-600">translate</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Préférences</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Langue</label>
+                <select class="form-input w-full px-4 py-3 rounded-xl text-slate-700 appearance-none cursor-pointer bg-white">
+                  <option selected>Français</option>
+                  <option>English</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-700 mb-2">Fuseau horaire</label>
+                <select class="form-input w-full px-4 py-3 rounded-xl text-slate-700 appearance-none cursor-pointer bg-white">
+                  <option selected>UTC+1 (Afrique de l'Ouest)</option>
+                  <option>UTC+0 (GMT)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLONNE DE DROITE (1/3) -->
+        <div class="space-y-6">
+          
+          <!-- Notifications -->
+          <div class="settings-card rounded-2xl p-6 animate-section" style="animation-delay: 0.15s">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-amber-600">notifications_active</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Notifications</h2>
+            </div>
+            <div class="space-y-4">
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-semibold text-slate-700">Demandes de mentorat</p>
+                  <p class="text-xs text-slate-500">Nouveaux étudiants souhaitant vous rejoindre</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-semibold text-slate-700">Messages directs</p>
+                  <p class="text-xs text-slate-500">Alertes instantanées pour nouveaux messages</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-semibold text-slate-700">Rappels de sessions</p>
+                  <p class="text-xs text-slate-500">Notifications 30 min avant une session</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox" checked>
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="font-semibold text-slate-700">Résumé hebdomadaire</p>
+                  <p class="text-xs text-slate-500">Synthèse de votre activité</p>
+                </div>
+                <label class="toggle-switch">
+                  <input type="checkbox">
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Progression badge -->
+          <div class="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-2xl p-6 text-white relative overflow-hidden">
+            <div class="absolute -right-6 -bottom-6 opacity-10">
+              <span class="material-symbols-outlined text-8xl">military_tech</span>
+            </div>
+            <div class="relative z-10">
+              <div class="flex items-center gap-2 mb-3">
+                <span class="material-symbols-outlined">stars</span>
+                <span class="text-sm font-semibold uppercase tracking-wide">Niveau 4 - Mentor confirmé</span>
+              </div>
+              <p class="text-sm text-white/80 mb-4">Vous avez aidé 12 étudiants ce semestre. Continuez pour atteindre le niveau Expert !</p>
+              <div class="w-full bg-white/20 rounded-full h-2 overflow-hidden">
+                <div class="bg-white h-full rounded-full" style="width: 80%"></div>
+              </div>
+              <p class="text-xs text-white/70 mt-2">80% vers le niveau supérieur</p>
+            </div>
+          </div>
+
+          <!-- Actions compte -->
+          <div class="bg-white border border-red-200 rounded-2xl p-6">
+            <div class="flex items-center gap-2 mb-5">
+              <div class="w-9 h-9 rounded-xl bg-red-100 flex items-center justify-center">
+                <span class="material-symbols-outlined text-red-600">warning</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-800">Actions du compte</h2>
+            </div>
+            <div class="space-y-3">
+              <button class="w-full flex items-center justify-between p-3 rounded-xl border border-slate-200 hover:bg-slate-50 transition-all group">
+                <div class="text-left">
+                  <p class="font-semibold text-slate-700">Désactiver le compte</p>
+                  <p class="text-xs text-slate-500">Masquer temporairement votre profil</p>
+                </div>
+                <span class="material-symbols-outlined text-slate-400 group-hover:translate-x-1 transition-transform">chevron_right</span>
+              </button>
+              <button class="w-full flex items-center justify-between p-3 rounded-xl border border-red-200 hover:bg-red-50 transition-all group">
+                <div class="text-left">
+                  <p class="font-semibold text-red-600">Supprimer le compte</p>
+                  <p class="text-xs text-slate-500">Action irréversible - suppression des données</p>
+                </div>
+                <span class="material-symbols-outlined text-red-500 group-hover:translate-x-1 transition-transform">delete</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer class="mt-10 pt-6 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
+        <div>© 2024 MentorLink - IFRI Academic Hub</div>
+        <div class="flex gap-6">
+          <a href="#" class="hover:text-blue-600 transition-colors">Confidentialité</a>
+          <a href="#" class="hover:text-blue-600 transition-colors">Conditions</a>
+          <a href="#" class="hover:text-blue-600 transition-colors">Aide</a>
+          <a href="#" class="hover:text-blue-600 transition-colors">Contact</a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <!-- MOBILE BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-slate-200 flex justify-around items-center h-16 lg:hidden z-50 shadow-[0_-4px_10px_-2px_rgba(0,0,0,0.05)]">
+    <a class="flex flex-col items-center text-slate-500" href="dashboard.html"><span class="material-symbols-outlined">dashboard</span><span class="text-[11px] mt-0.5">Accueil</span></a>
+    <a class="flex flex-col items-center text-slate-500" href="feed-ifri.html"><span class="material-symbols-outlined">dynamic_feed</span><span class="text-[11px]">Fil</span></a>
+    <a class="flex flex-col items-center text-slate-500" href="feed-ifri.html"><span class="material-symbols-outlined">search</span><span class="text-[11px]">Explorer</span></a>
+    <a class="flex flex-col items-center text-blue-600 font-bold" href="settings.html"><span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">settings</span><span class="text-[11px]">Paramètres</span></a>
+  </nav>
+
+  <script>
+    // Animation au scroll
+    const sections = document.querySelectorAll('.animate-section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.05 });
+    sections.forEach(section => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(20px)';
+      section.style.transition = 'all 0.4s ease-out';
+      observer.observe(section);
+    });
+    
+    // Gestion des toggles
+    const toggles = document.querySelectorAll('.toggle-switch input');
+    toggles.forEach(toggle => {
+      toggle.addEventListener('change', function() {
+        const text = this.closest('.flex.items-center.justify-between')?.querySelector('p.font-semibold')?.innerText;
+        console.log(`Notification ${text} : ${this.checked ? 'activée' : 'désactivée'}`);
+      });
+    });
+  </script>
+  <script type="module" src="../js/settings.js"></script>
+</body>
+</html>

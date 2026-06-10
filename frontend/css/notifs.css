@@ -1,0 +1,29 @@
+body {
+  background-color: #f8f9fa;
+}
+.binary-pattern {
+  background-image: radial-gradient(circle, #005fac 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.05;
+}
+.node-link {
+  stroke: #e0e0e0;
+  stroke-width: 1;
+}
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #d4e3ff;
+  border-radius: 10px;
+}
+.notification-card {
+  transition: transform 0.1s ease, background-color 0.2s ease,
+    border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.notification-card:hover {
+  transform: scale(1.01);
+}

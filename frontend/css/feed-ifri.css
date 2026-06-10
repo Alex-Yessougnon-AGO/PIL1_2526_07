@@ -1,0 +1,48 @@
+body {
+  background-color: #f8f9fa;
+  color: #121e1f;
+  font-family: "DM Sans", sans-serif;
+  overflow-x: hidden;
+}
+
+/* Décoration en arrière-plan (Grille binaire) */
+.binary-decor {
+  background: linear-gradient(
+    90deg,
+    rgba(0, 95, 172, 0.03) 1px,
+    transparent 1px
+  );
+  background-size: 20px 100%;
+}
+
+/* Transition fluide au survol des cartes */
+.academic-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid #e0e0e0;
+}
+
+.academic-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transform: translateY(-2px);
+  border-color: #005fac;
+}
+
+/* Customisation de la barre de défilement */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #c0c7d4;
+  border-radius: 10px;
+}
+
+/* Alignement vertical des icônes Google Material */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  vertical-align: middle;
+}

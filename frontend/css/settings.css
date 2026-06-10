@@ -1,0 +1,25 @@
+.binary-pattern {
+  background-image: linear-gradient(
+      rgba(224, 224, 224, 0.1) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(224, 224, 224, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.node-line {
+  position: absolute;
+  height: 1px;
+  background: #e0e0e0;
+  z-index: 0;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
