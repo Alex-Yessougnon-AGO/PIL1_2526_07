@@ -101,6 +101,29 @@ document.addEventListener('DOMContentLoaded', async () => {
         button.addEventListener('mouseup', () => button.classList.remove('scale-95'));
         button.addEventListener('mouseleave', () => button.classList.remove('scale-95'));
     });
+
+    // Wire "Envoyer un message" button
+    document.querySelectorAll('button').forEach(btn => {
+        if (btn.textContent.includes('Envoyer un message') || btn.innerHTML.includes('send')) {
+            btn.addEventListener('click', async () => {
+                try {
+                    const conv = await apiRequest('/conversations', {
+                        method: 'POST',
+                        body: JSON.stringify({ user_id: userId }),
+                    });
+                    if (conv.success && (conv.data?.conversation_id || conv.data?.data?.id || conv.data?.id)) {
+                        const convId = conv.data.conversation_id || conv.data.data?.id || conv.data.id;
+                        window.location.href = `message.html?conversationId=${convId}`;
+                    } else {
+                        window.location.href = `message.html?userId=${userId}`;
+                    }
+                } catch (e) {
+                    console.error('Error creating conversation', e);
+                    window.location.href = `message.html?userId=${userId}`;
+                }
+            });
+        }
+    });
 });
 
 async function loadPublicStats(userId) {

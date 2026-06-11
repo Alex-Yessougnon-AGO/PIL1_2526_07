@@ -93,5 +93,19 @@ class MessageListView(APIView, StandardPagination):
             return error_response("Forbidden", status=status.HTTP_403_FORBIDDEN)
 
         msg = MessageRepository.create(conv, request.user, serializer.validated_data["content"])
+
+        # Create notification for other members
+        from apps.chat.models import ConversationMember
+        from apps.notifications.models import Notification
+        other_members = ConversationMember.objects.filter(conversation=conv).exclude(user=request.user)
+        for member in other_members:
+            Notification.objects.create(
+                user=member.user,
+                type="NEW_MESSAGE",
+                title=f"Nouveau message de {request.user.first_name} {request.user.last_name}",
+                content=serializer.validated_data["content"][:200],
+                metadata={"conversation_id": str(conv.id), "sender_id": str(request.user.id)},
+            )
+
         from apps.chat.serializers import MessageSerializer as MS
         return success_response(MS(msg).data, "Message sent", status.HTTP_201_CREATED)

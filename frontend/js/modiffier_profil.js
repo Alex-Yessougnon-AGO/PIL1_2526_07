@@ -199,7 +199,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 				})
 				.filter(Boolean);
 
+				const formInputs = profileForm.querySelectorAll('input, select, textarea');
+			const nameValue = (formInputs[0]?.value || '').trim();
+			const nameParts = nameValue.split(' ');
 			const updateData = {
+				first_name: nameParts[0] || '',
+				last_name: nameParts.slice(1).join(' ') || '',
+				phone: formInputs[2]?.value || '',
 				bio: profileForm.querySelector('textarea')?.value || '',
 				department: profileForm.querySelectorAll('select')[0]?.value || '',
 				academic_level: profileForm.querySelectorAll('select')[1]?.value || '',
@@ -215,6 +221,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 				if (result.success) {
 					alert('✅ Profil mis à jour avec succès !');
+					window.location.href = 'mon-profile.html';
 				} else {
 					alert(`❌ ${result.message || 'Erreur lors de la mise à jour'}`);
 				}

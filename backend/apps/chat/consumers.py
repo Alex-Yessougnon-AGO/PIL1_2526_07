@@ -95,8 +95,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def _save_message(self, content):
+        from django.utils import timezone
+        from apps.chat.models import Conversation, ConversationMember
+        from apps.notifications.models import Notification
+
         conv = Conversation.objects.get(id=self.conversation_id)
-        return MessageRepository.create(conv, self.user, content)
+        msg = MessageRepository.create(conv, self.user, content)
+
+        # Create notification for other conversation members
+        other_members = ConversationMember.objects.filter(conversation=conv).exclude(user=self.user)
+        for member in other_members:
+            Notification.objects.create(
+                user=member.user,
+                type="NEW_MESSAGE",
+                title=f"Nouveau message de {self.user.first_name} {self.user.last_name}",
+                content=content[:200],
+                metadata={"conversation_id": str(conv.id), "sender_id": str(self.user.id)},
+            )
+
+        return msg
 
     @database_sync_to_async
     def _mark_read(self):

@@ -29,6 +29,15 @@ class ProfileDetailView(APIView):
         return success_response(serializer.data)
 
     def patch(self, request):
+        # Update user fields on the User model
+        user_allowed = {"first_name", "last_name", "phone"}
+        user_data = {k: v for k, v in request.data.items() if k in user_allowed and v is not None}
+        for key, value in user_data.items():
+            setattr(request.user, key, value)
+        if user_data:
+            request.user.save(update_fields=user_data.keys())
+
+        # Update profile fields on the Profile model
         allowed = {"bio", "department", "academic_level"}
         data = {k: v for k, v in request.data.items() if k in allowed}
         profile = ProfileService.update_profile(request.user, data)
@@ -44,7 +53,6 @@ class ProfileDetailView(APIView):
             for skill_name in (learner_skills or []):
                 if skill_name.strip():
                     ProfileService.add_skill(request.user, skill_name.strip(), "WEAKNESS")
-            # Refresh profile with new skills
             profile = ProfileService.get_or_create(request.user)
 
         serializer = ProfileSerializer(profile)

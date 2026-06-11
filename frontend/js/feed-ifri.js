@@ -78,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                         </div>
                     </div>
                     ${isOffer 
-                        ? '<a href="message.html" class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2.5 rounded-xl text-sm hover:shadow-lg hover:scale-[1.02] transition-all inline-block text-center">Contacter →</a>'
+                        ? '<button class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2.5 rounded-xl text-sm hover:shadow-lg hover:scale-[1.02] transition-all btn-contact-offer" data-creator-id="' + (creator.id || '') + '" data-creator="' + (creator.first_name || '') + ' ' + (creator.last_name || '') + '" data-subject="' + post.subject + '">Contacter →</button>'
                         : '<button class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold py-2.5 rounded-xl text-sm hover:shadow-lg hover:scale-[1.02] transition-all btn-respond" data-creator="' + (creator.first_name || '') + ' ' + (creator.last_name || '') + '" data-creator-id="' + (creator.id || '') + '" data-subject="' + post.subject + '">Repondre →</button>'
                     }
                 </div>
@@ -143,65 +143,94 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function initReplyModal() {
-        document.querySelectorAll('.btn-respond').forEach(button => {
-            button.addEventListener('click', () => {
-                const studentName = button.dataset.creator || 'cet etudiant';
-                const subject = button.dataset.subject || 'ce sujet';
-                const overlay = document.createElement('div');
-                overlay.className = 'fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50';
-                overlay.innerHTML = `
-                    <div class="bg-white rounded-xl max-w-md w-full p-4 border border-slate-200 shadow-lg">
-                        <div class="flex justify-between items-center mb-4">
-                            <h3 class="text-lg font-bold text-slate-800">Contacter ${studentName}</h3>
-                            <button class="close-modal text-slate-400 hover:text-red-500"><span class="material-symbols-outlined">close</span></button>
-                        </div>
-                        <p class="text-sm text-slate-600 mb-4">Vous vous appretes a repondre a l'annonce : <strong>${subject}</strong>.</p>
-                        <div class="mb-4">
-                            <label class="block text-sm font-semibold mb-1 text-slate-700">Votre message</label>
-                            <textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="4" placeholder="Salut ! Je suis disponible..."></textarea>
-                        </div>
-                        <div class="flex justify-end gap-2">
-                            <button class="close-modal px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50">Annuler</button>
-                            <button class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg text-sm hover:opacity-90">Envoyer</button>
-                        </div>
-                    </div>
-                `;
-                document.body.appendChild(overlay);
-                const close = () => overlay.remove();
-                overlay.querySelectorAll('.close-modal').forEach(el => el.addEventListener('click', close));
-                overlay.querySelector('button:last-child')?.addEventListener('click', async () => {
-                    const textarea = overlay.querySelector('textarea');
-                    const message = textarea?.value?.trim() || '';
-                    try {
-                        // D'abord creer la conversation
-                        const conv = await apiRequest('/conversations', {
-                            method: 'POST',
-                            body: JSON.stringify({ user_id: button.dataset.creatorId || '' }),
-                        });
-                        if (conv.success && conv.data) {
-                            const convId = conv.data.conversation_id || conv.data.id;
-                            if (convId && message) {
-                                // Envoyer le message
-                                await apiRequest('/messages', {
-                                    method: 'POST',
-                                    body: JSON.stringify({ conversation_id: convId, content: message }),
-                                });
-                            }
-                            close();
-                            window.location.href = 'message.html';
-                        } else {
-                            // Fallback: rediriger vers la page message
-                            close();
-                            window.location.href = 'message.html';
-                        }
-                    } catch (e) {
-                        console.error('Error sending message', e);
-                        close();
-                        window.location.href = 'message.html';
-                    }
+        // Event delegation for OFFER "Contacter" buttons (handles dynamically added buttons)
+        document.addEventListener('click', async (e) => {
+            const btn = e.target.closest('.btn-contact-offer');
+            if (!btn) return;
+            const creatorId = btn.dataset.creatorId;
+            if (!creatorId) {
+                alert('Impossible de contacter cet utilisateur.');
+                return;
+            }
+            btn.disabled = true;
+            btn.textContent = 'Chargement...';
+            try {
+                const conv = await apiRequest('/conversations', {
+                    method: 'POST',
+                    body: JSON.stringify({ user_id: creatorId }),
                 });
-                overlay.addEventListener('click', (ev) => { if (ev.target === overlay) close(); });
+                if (conv.success && (conv.data?.conversation_id || conv.data?.data?.id || conv.data?.id)) {
+                    const convId = conv.data.conversation_id || conv.data.data?.id || conv.data.id;
+                    window.location.href = `message.html?conversationId=${convId}`;
+                } else {
+                    window.location.href = `message.html?userId=${creatorId}`;
+                }
+            } catch (e) {
+                console.error('Error creating conversation', e);
+                window.location.href = `message.html?userId=${creatorId}`;
+            }
+        });
+
+        // Event delegation for NEED "Repondre" buttons
+        document.addEventListener('click', (e) => {
+            const btn = e.target.closest('.btn-respond');
+            if (!btn) return;
+            const studentName = btn.dataset.creator || 'cet etudiant';
+            const subject = btn.dataset.subject || 'ce sujet';
+            const creatorId = btn.dataset.creatorId;
+            if (!creatorId) return;
+
+            const overlay = document.createElement('div');
+            overlay.className = 'fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50';
+            overlay.innerHTML = `
+                <div class="bg-white rounded-xl max-w-md w-full p-4 border border-slate-200 shadow-lg">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-bold text-slate-800">Contacter ${studentName}</h3>
+                        <button class="close-modal text-slate-400 hover:text-red-500"><span class="material-symbols-outlined">close</span></button>
+                    </div>
+                    <p class="text-sm text-slate-600 mb-4">Vous vous appretes a repondre a l'annonce : <strong>${subject}</strong>.</p>
+                    <div class="mb-4">
+                        <label class="block text-sm font-semibold mb-1 text-slate-700">Votre message</label>
+                        <textarea class="w-full bg-slate-50 border border-slate-200 rounded-lg p-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" rows="4" placeholder="Salut ! Je suis disponible..."></textarea>
+                    </div>
+                    <div class="flex justify-end gap-2">
+                        <button class="close-modal px-4 py-2 border border-slate-200 rounded-lg text-sm text-slate-600 hover:bg-slate-50">Annuler</button>
+                        <button class="px-4 py-2 bg-blue-600 text-white font-bold rounded-lg text-sm hover:opacity-90">Envoyer</button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            const close = () => overlay.remove();
+            overlay.querySelectorAll('.close-modal').forEach(el => el.addEventListener('click', close));
+            overlay.querySelector('button:last-child')?.addEventListener('click', async () => {
+                const textarea = overlay.querySelector('textarea');
+                const message = textarea?.value?.trim() || '';
+                try {
+                    const conv = await apiRequest('/conversations', {
+                        method: 'POST',
+                        body: JSON.stringify({ user_id: creatorId }),
+                    });
+                    if (conv.success && conv.data) {
+                        const convId = conv.data.conversation_id || conv.data.data?.id || conv.data.id;
+                        if (convId && message) {
+                            await apiRequest('/messages', {
+                                method: 'POST',
+                                body: JSON.stringify({ conversation_id: convId, content: message }),
+                            });
+                        }
+                        close();
+                        window.location.href = `message.html?conversationId=${convId}`;
+                    } else {
+                        close();
+                        window.location.href = `message.html?userId=${creatorId}`;
+                    }
+                } catch (e) {
+                    console.error('Error sending message', e);
+                    close();
+                    window.location.href = `message.html?userId=${creatorId}`;
+                }
             });
+            overlay.addEventListener('click', (ev) => { if (ev.target === overlay) close(); });
         });
     }
 });

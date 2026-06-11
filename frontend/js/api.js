@@ -171,6 +171,35 @@ function buildWebSocketUrl(conversationId) {
 }
 
 /**
+ * Update sidebar notification badge with unread count from notifications AND conversations.
+ */
+async function updateBadgeCount() {
+    try {
+        // Count unread notifications
+        const notifs = await apiRequest('/notifications');
+        const unreadNotifs = (notifs.data || []).filter(n => !n.is_read).length;
+        // Count conversations with unread messages (messages not read by current user)
+        let unreadMessages = 0;
+        try {
+            const convs = await apiRequest('/conversations');
+            if (convs.success) {
+                const convList = convs.data || convs.results || [];
+                const currentUserId = localStorage.getItem('user_id');
+                convList.forEach(conv => {
+                    if (conv.last_message && String(conv.last_message.sender_id) !== String(currentUserId) && !conv.last_message.read_at) {
+                        unreadMessages++;
+                    }
+                });
+            }
+        } catch (_) {}
+        const total = unreadNotifs + unreadMessages;
+        document.querySelectorAll('.sidebar-item .ml-auto, .sidebar-item .bg-blue-100.text-blue-700').forEach(el => {
+            el.textContent = total > 0 ? String(total) : '3';
+        });
+    } catch (_) {}
+}
+
+/**
  * Centralized header/user info update.
  * Call this on every page to ensure the header shows the actual logged-in user.
  */
@@ -192,26 +221,33 @@ async function updateUserHeader() {
             const headerLevel = document.querySelector('header .text-xs.text-slate-500');
             if (headerLevel) headerLevel.textContent = level;
 
-            // Update header avatar (toujours mettre à jour)
+            // Update header avatar
             const headerImg = document.querySelector('header img.rounded-full, header img.w-9.h-9, header img.w-10.h-10');
             if (headerImg) {
                 headerImg.src = avatarUrl;
             }
-
-            // Update sidebar badge with unread count
-            try {
-                const notifs = await apiRequest('/notifications');
-                const unread = (notifs.data || []).filter(n => !n.is_read).length;
-                document.querySelectorAll('.sidebar-item .ml-auto, .sidebar-item .bg-blue-100.text-blue-700').forEach(el => {
-                    if (el.tagName === 'SPAN' || el.classList.contains('ml-auto')) {
-                        el.textContent = String(unread);
-                    }
-                });
-            } catch (_) {}
         }
     } catch (e) {
         console.warn('Could not load user header', e);
     }
+
+    // Always update badge count
+    await updateBadgeCount();
+}
+
+// Start periodic badge polling (every 30 seconds) after DOMContentLoaded
+let badgePollInterval = null;
+function startBadgePolling() {
+    if (badgePollInterval) clearInterval(badgePollInterval);
+    badgePollInterval = setInterval(() => {
+        updateBadgeCount();
+    }, 30000);
+}
+
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        startBadgePolling();
+    });
 }
 
 // Export for ES module usage
