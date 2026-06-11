@@ -52,11 +52,36 @@ document.addEventListener('DOMContentLoaded', async () => {
 		}
 	});
 
-	function removeLoadingState() {
+    // Run matching functionality
+    window.runMatching = async function () {
+      try {
+        const res = await apiRequest('/matching/run', { method: 'POST' });
+        if (res.success) {
+          alert('✅ Matching relancé ! Les recommendations sont en train de se mettre à jour.');
+          location.reload();
+        } else {
+          alert(`❌ ${res.message || 'Erreur lors du lancement du matching'}`);
+        }
+      } catch (err) {
+        console.error(err);
+        alert('❌ Erreur de connexion au serveur');
+      }
+    };
+
+    function removeLoadingState() {
 		const container = document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3');
 		if (!container) return;
 		const loadingCards = container.querySelectorAll('.mentor-card');
 		loadingCards.forEach(card => card.remove());
+	}
+
+	function formatCommonSlots(slots) {
+		if (!slots || slots.length === 0) return 'Voir les créneaux';
+		const dayLabels = {
+			MONDAY: 'Lun', TUESDAY: 'Mar', WEDNESDAY: 'Mer',
+			THURSDAY: 'Jeu', FRIDAY: 'Ven', SATURDAY: 'Sam', SUNDAY: 'Dim'
+		};
+		return slots.map(s => `${dayLabels[s.day] || s.day} ${s.mentor_start || s.start_time || ''}-${s.mentor_end || s.end_time || ''}`).join(', ');
 	}
 
 	function renderRecommendations(matches) {
@@ -79,8 +104,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 		const currentUserId = localStorage.getItem('user_id');
 
 		matches.forEach((match, index) => {
-			// API returns UserSerializer objects directly (not nested .user)
-			const person = match.mentor || {};
+			// Determine the "other person" — if current user is the mentor, show the mentee, and vice versa
+			const isCurrentUserMentor = match.mentor && String(match.mentor.id) === String(currentUserId);
+			const person = isCurrentUserMentor ? (match.mentee || {}) : (match.mentor || {});
 			const score = match.score || 0;
 			const offset = 282.7 - (282.7 * score / 100);
 			const avatarUrl = `https://ui-avatars.com/api/?name=${encodeURIComponent((person.first_name||'') + '+' + (person.last_name||''))}&background=2563EB&color=fff&size=56`;
@@ -126,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 					<p class="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Créneaux communs</p>
 					<div class="flex items-center gap-2 text-slate-600 text-sm">
 						<span class="material-symbols-outlined text-base">calendar_today</span>
-						<span>${(match.common_slots || []).length > 0 ? match.common_slots.join(', ') : 'Voir les créneaux'}</span>
+						<span>${formatCommonSlots(match.common_slots)}</span>
 					</div>
 				</div>
 				<div class="grid grid-cols-2 gap-3 mt-auto pt-4 border-t border-slate-100">

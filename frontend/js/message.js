@@ -161,8 +161,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 		await loadMessages(conv.id);
 		chatSocket = connectToConversation(conv.id, {
-			onMessage: handleSocketMessage,
-			onOpen: () => console.log('Chat socket connected'),
+			onMessage: handleSocketMessage,				onOpen: () => {
+				console.log('Chat socket connected');
+				// Send READ signal to mark all messages from other users as read
+				if (chatSocket && chatSocket.readyState === WebSocket.OPEN) {
+					chatSocket.send(JSON.stringify({ type: 'READ' }));
+				}
+				// Recharger les messages pour voir read_at mis à jour
+				setTimeout(() => loadMessages(conv.id), 300);
+			},
 			onClose: () => console.log('Chat socket disconnected'),
 			onError: (error) => console.error('Chat socket error', error),
 		});

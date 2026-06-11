@@ -48,9 +48,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 		const notifs = await apiRequest('/notifications');
 		if (notifs.success) {
 			const data = notifs.data || [];
-			const count = data.length;
+			const unreadCount = data.filter(n => !n.is_read).length;
 			const badges = document.querySelectorAll('.bg-blue-100.text-blue-700, .sidebar-item .ml-auto');
-			badges.forEach(badge => { badge.textContent = count; });
+			badges.forEach(badge => { badge.textContent = String(unreadCount); });
 		}
 	} catch (e) {
 		console.error("Error loading notifications", e);

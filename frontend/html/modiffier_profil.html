@@ -450,22 +450,22 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
               <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Jours préférés</label>
-                <div class="flex flex-wrap gap-2">
-                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Lun</span></label>
-                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Mar</span></label>
-                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Mer</span></label>
-                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Jeu</span></label>
-                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Ven</span></label>
-                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Sam</span></label>
-                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Dim</span></label>
+                <div class="flex flex-wrap gap-2 availability-days">
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300 day-checkbox" data-day="MONDAY" checked> <span class="text-sm">Lun</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300 day-checkbox" data-day="TUESDAY" checked> <span class="text-sm">Mar</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300 day-checkbox" data-day="WEDNESDAY" checked> <span class="text-sm">Mer</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300 day-checkbox" data-day="THURSDAY"> <span class="text-sm">Jeu</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300 day-checkbox" data-day="FRIDAY"> <span class="text-sm">Ven</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300 day-checkbox" data-day="SATURDAY" checked> <span class="text-sm">Sam</span></label>
+                  <label class="flex items-center gap-1"><input type="checkbox" class="rounded border-slate-300 day-checkbox" data-day="SUNDAY"> <span class="text-sm">Dim</span></label>
                 </div>
               </div>
               <div>
                 <label class="block text-sm font-semibold text-slate-700 mb-2">Créneaux horaires</label>
-                <div class="space-y-1">
-                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Matin (8h-12h)</span></label>
-                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300" checked> <span class="text-sm">Après-midi (14h-18h)</span></label>
-                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300"> <span class="text-sm">Soirée (19h-22h)</span></label>
+                <div class="space-y-1 availability-times">
+                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300 time-checkbox" data-time-start="08:00" data-time-end="12:00" checked> <span class="text-sm">Matin (8h-12h)</span></label>
+                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300 time-checkbox" data-time-start="14:00" data-time-end="18:00" checked> <span class="text-sm">Après-midi (14h-18h)</span></label>
+                  <label class="flex items-center gap-2"><input type="checkbox" class="rounded border-slate-300 time-checkbox" data-time-start="19:00" data-time-end="22:00"> <span class="text-sm">Soirée (19h-22h)</span></label>
                 </div>
               </div>
             </div>

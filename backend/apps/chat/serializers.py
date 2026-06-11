@@ -16,7 +16,12 @@ class ConversationSerializer(serializers.ModelSerializer):
     def get_last_message(self, obj):
         msg = obj.messages.order_by("-created_at").first()
         if msg:
-            return {"content": msg.content, "sender_id": str(msg.sender_id), "created_at": msg.created_at}
+            return {
+                "content": msg.content,
+                "sender_id": str(msg.sender_id),
+                "created_at": msg.created_at,
+                "read_at": msg.read_at.isoformat() if msg.read_at else None,
+            }
         return None
 
 

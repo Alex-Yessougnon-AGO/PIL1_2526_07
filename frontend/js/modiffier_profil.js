@@ -199,6 +199,31 @@ document.addEventListener('DOMContentLoaded', async () => {
 				})
 				.filter(Boolean);
 
+			// Get checked days and time slots using data attributes
+
+			// Get checked days (using data attributes from checkboxes)
+			const dayInputs = Array.from(document.querySelectorAll('.availability-days .day-checkbox'));
+			const checkedDays = dayInputs.filter(cb => cb.checked).map(cb => cb.dataset.day);
+
+			// Get checked time slots (using data attributes from checkboxes)
+			const timeInputs = Array.from(document.querySelectorAll('.availability-times .time-checkbox'));
+			const checkedTimes = timeInputs.filter(cb => cb.checked).map(cb => ({
+				start: cb.dataset.timeStart,
+				end: cb.dataset.timeEnd
+			}));
+
+			// Create availability combinations (each day + each time slot)
+			const availabilitySlots = [];
+			checkedDays.forEach(day => {
+				checkedTimes.forEach(t => {
+					availabilitySlots.push({
+						day: day,
+						start: t.start,
+						end: t.end
+					});
+				});
+			});
+
 				const formInputs = profileForm.querySelectorAll('input, select, textarea');
 			const nameValue = (formInputs[0]?.value || '').trim();
 			const nameParts = nameValue.split(' ');
@@ -214,17 +239,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 			};
 
 			try {
+				// Step 1: Update basic profile data (without availability in PATCH)
 				const result = await apiRequest('/me', {
 					method: 'PATCH',
-					body: JSON.stringify(updateData),
+					body: JSON.stringify({
+						first_name: updateData.first_name,
+						last_name: updateData.last_name,
+						phone: updateData.phone,
+						bio: updateData.bio,
+						department: updateData.department,
+						academic_level: updateData.academic_level,
+						mentor_skills: mentorSkills,
+						learner_skills: learnerSkills,
+					}),
 				});
 
-				if (result.success) {
-					alert('✅ Profil mis à jour avec succès !');
-					window.location.href = 'mon-profile.html';
-				} else {
-					alert(`❌ ${result.message || 'Erreur lors de la mise à jour'}`);
+				if (!result.success) {
+					throw new Error(result.message || 'Erreur lors de la mise à jour');
 				}
+
+				// Step 2: Clear and re-add availability slots
+				const myProfile = await apiRequest('/me');
+				if (myProfile.success && myProfile.data.availability) {
+					for (const slot of myProfile.data.availability) {
+						if (slot.id) {
+							await apiRequest(`/me/availability/${slot.id}`, { method: 'DELETE' });
+						}
+					}
+				}
+
+				// Add new availability slots
+				for (const slot of availabilitySlots) {
+					if (slot.day && slot.start && slot.end) {
+						await apiRequest('/me/availability', {
+							method: 'POST',
+							body: JSON.stringify(slot),
+						});
+					}
+				}
+
+				alert('✅ Profil mis à jour avec succès !');
+				window.location.href = 'mon-profile.html';
 			} catch (error) {
 				console.error(error);
 				alert('❌ Erreur de connexion au serveur');
