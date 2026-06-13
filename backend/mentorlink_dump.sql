@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict jmYGcuvb2ZEs9xzmlLOFHKXJXJMJ3f2lgkxth3wURhcjAXToqOgYp5ngNigSZiq
+\restrict CIQ0ONqjVIJlaL4jWi38p6QAYGmBbotTOuztqilmrSeSO0nY2uFZRhQcIteMqal
 
 -- Dumped from database version 16.13
 -- Dumped by pg_dump version 16.13
@@ -18,12 +18,162 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+ALTER TABLE IF EXISTS ONLY public.verification_documents DROP CONSTRAINT IF EXISTS verification_documents_user_id_adcd77e6_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.verification_documents DROP CONSTRAINT IF EXISTS verification_documents_reviewed_by_id_67481493_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.users_user_permissions DROP CONSTRAINT IF EXISTS users_user_permissions_user_id_92473840_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.users_user_permissions DROP CONSTRAINT IF EXISTS users_user_permissio_permission_id_6d08dcd2_fk_auth_perm;
+ALTER TABLE IF EXISTS ONLY public.users_groups DROP CONSTRAINT IF EXISTS users_groups_user_id_f500bee5_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.users_groups DROP CONSTRAINT IF EXISTS users_groups_group_id_2f3517aa_fk_auth_group_id;
+ALTER TABLE IF EXISTS ONLY public.user_skills DROP CONSTRAINT IF EXISTS user_skills_skill_id_1a55c9b3_fk_skills_id;
+ALTER TABLE IF EXISTS ONLY public.user_skills DROP CONSTRAINT IF EXISTS user_skills_profile_id_4ff2a56e_fk_profiles_id;
+ALTER TABLE IF EXISTS ONLY public.token_blacklist_outstandingtoken DROP CONSTRAINT IF EXISTS token_blacklist_outstandingtoken_user_id_83bc629a_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.token_blacklist_blacklistedtoken DROP CONSTRAINT IF EXISTS token_blacklist_blacklistedtoken_token_id_3cc7fe56_fk;
+ALTER TABLE IF EXISTS ONLY public.reviews DROP CONSTRAINT IF EXISTS reviews_reviewer_id_dbb954a8_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.reviews DROP CONSTRAINT IF EXISTS reviews_reviewed_id_26ab5b38_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.reviews DROP CONSTRAINT IF EXISTS reviews_match_id_df422061_fk_matches_id;
+ALTER TABLE IF EXISTS ONLY public.profiles DROP CONSTRAINT IF EXISTS profiles_user_id_36580373_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.notifications DROP CONSTRAINT IF EXISTS notifications_user_id_468e288d_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.messages DROP CONSTRAINT IF EXISTS messages_sender_id_dc5a0bbd_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.messages DROP CONSTRAINT IF EXISTS messages_conversation_id_5ef638db_fk_conversations_id;
+ALTER TABLE IF EXISTS ONLY public.mentorship_posts DROP CONSTRAINT IF EXISTS mentorship_posts_creator_id_6ae72afe_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.matches DROP CONSTRAINT IF EXISTS matches_request_id_b2653ba8_fk_mentorship_posts_id;
+ALTER TABLE IF EXISTS ONLY public.matches DROP CONSTRAINT IF EXISTS matches_offer_id_91e0d674_fk_mentorship_posts_id;
+ALTER TABLE IF EXISTS ONLY public.matches DROP CONSTRAINT IF EXISTS matches_mentor_id_59b76bab_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.matches DROP CONSTRAINT IF EXISTS matches_mentee_id_d1f950e2_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_user_id_c564eba6_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_content_type_id_c4bce8eb_fk_django_co;
+ALTER TABLE IF EXISTS ONLY public.conversation_members DROP CONSTRAINT IF EXISTS conversation_members_user_id_3bfe90c8_fk_users_id;
+ALTER TABLE IF EXISTS ONLY public.conversation_members DROP CONSTRAINT IF EXISTS conversation_members_conversation_id_570068ad_fk_conversat;
+ALTER TABLE IF EXISTS ONLY public.availability_slots DROP CONSTRAINT IF EXISTS availability_slots_profile_id_0c5edf97_fk_profiles_id;
+ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_content_type_id_2f476e4b_fk_django_co;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_group_id_b120cbf9_fk_auth_group_id;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissio_permission_id_84c5c92e_fk_auth_perm;
+DROP INDEX IF EXISTS public.verification_documents_reviewed_by_id_67481493;
+DROP INDEX IF EXISTS public.verificatio_user_id_d15fbf_idx;
+DROP INDEX IF EXISTS public.verificatio_status_a43286_idx;
+DROP INDEX IF EXISTS public.users_user_permissions_user_id_92473840;
+DROP INDEX IF EXISTS public.users_user_permissions_permission_id_6d08dcd2;
+DROP INDEX IF EXISTS public.users_phone_af6883_idx;
+DROP INDEX IF EXISTS public.users_phone_2b77170a_like;
+DROP INDEX IF EXISTS public.users_is_acti_847b48_idx;
+DROP INDEX IF EXISTS public.users_groups_user_id_f500bee5;
+DROP INDEX IF EXISTS public.users_groups_group_id_2f3517aa;
+DROP INDEX IF EXISTS public.users_email_4b85f2_idx;
+DROP INDEX IF EXISTS public.users_email_0ea73cca_like;
+DROP INDEX IF EXISTS public.users_created_6541e9_idx;
+DROP INDEX IF EXISTS public.user_skills_skill_id_1a55c9b3;
+DROP INDEX IF EXISTS public.user_skills_profile_id_4ff2a56e;
+DROP INDEX IF EXISTS public.token_blacklist_outstandingtoken_user_id_83bc629a;
+DROP INDEX IF EXISTS public.token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_like;
+DROP INDEX IF EXISTS public.skills_name_3120df3a_like;
+DROP INDEX IF EXISTS public.reviews_reviewer_id_dbb954a8;
+DROP INDEX IF EXISTS public.reviews_reviewed_id_26ab5b38;
+DROP INDEX IF EXISTS public.reviews_reviewe_fe0fd6_idx;
+DROP INDEX IF EXISTS public.reviews_reviewe_965d53_idx;
+DROP INDEX IF EXISTS public.reviews_rating_17e8a4_idx;
+DROP INDEX IF EXISTS public.reviews_match_id_df422061;
+DROP INDEX IF EXISTS public.profiles_departm_ffdbbc_idx;
+DROP INDEX IF EXISTS public.profiles_academi_e4a1e1_idx;
+DROP INDEX IF EXISTS public.notifications_user_id_468e288d;
+DROP INDEX IF EXISTS public.notificatio_user_id_a4dd5c_idx;
+DROP INDEX IF EXISTS public.notificatio_created_e4c995_idx;
+DROP INDEX IF EXISTS public.messages_sender_id_dc5a0bbd;
+DROP INDEX IF EXISTS public.messages_sender__6ae55a_idx;
+DROP INDEX IF EXISTS public.messages_conversation_id_5ef638db;
+DROP INDEX IF EXISTS public.messages_convers_3ebb41_idx;
+DROP INDEX IF EXISTS public.mentorship_posts_creator_id_6ae72afe;
+DROP INDEX IF EXISTS public.mentorship__type_2b976d_idx;
+DROP INDEX IF EXISTS public.mentorship__subject_4b0ea6_idx;
+DROP INDEX IF EXISTS public.mentorship__creator_6feaca_idx;
+DROP INDEX IF EXISTS public.mentorship__created_280abb_idx;
+DROP INDEX IF EXISTS public.matches_status_639056_idx;
+DROP INDEX IF EXISTS public.matches_request_id_b2653ba8;
+DROP INDEX IF EXISTS public.matches_offer_id_91e0d674;
+DROP INDEX IF EXISTS public.matches_mentor_id_59b76bab;
+DROP INDEX IF EXISTS public.matches_mentor__fb198d_idx;
+DROP INDEX IF EXISTS public.matches_mentee_id_d1f950e2;
+DROP INDEX IF EXISTS public.matches_mentee__3d25ef_idx;
+DROP INDEX IF EXISTS public.matches_compati_0bce3a_idx;
+DROP INDEX IF EXISTS public.django_session_session_key_c0390e0f_like;
+DROP INDEX IF EXISTS public.django_session_expire_date_a5c62663;
+DROP INDEX IF EXISTS public.django_admin_log_user_id_c564eba6;
+DROP INDEX IF EXISTS public.django_admin_log_content_type_id_c4bce8eb;
+DROP INDEX IF EXISTS public.conversation_members_user_id_3bfe90c8;
+DROP INDEX IF EXISTS public.conversation_members_conversation_id_570068ad;
+DROP INDEX IF EXISTS public.availability_slots_profile_id_0c5edf97;
+DROP INDEX IF EXISTS public.auth_permission_content_type_id_2f476e4b;
+DROP INDEX IF EXISTS public.auth_group_permissions_permission_id_84c5c92e;
+DROP INDEX IF EXISTS public.auth_group_permissions_group_id_b120cbf9;
+DROP INDEX IF EXISTS public.auth_group_name_a6ea08ec_like;
+ALTER TABLE IF EXISTS ONLY public.verification_documents DROP CONSTRAINT IF EXISTS verification_documents_user_id_key;
+ALTER TABLE IF EXISTS ONLY public.verification_documents DROP CONSTRAINT IF EXISTS verification_documents_pkey;
+ALTER TABLE IF EXISTS ONLY public.users_user_permissions DROP CONSTRAINT IF EXISTS users_user_permissions_user_id_permission_id_3b86cbdf_uniq;
+ALTER TABLE IF EXISTS ONLY public.users_user_permissions DROP CONSTRAINT IF EXISTS users_user_permissions_pkey;
+ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS users_pkey;
+ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS users_phone_key;
+ALTER TABLE IF EXISTS ONLY public.users_groups DROP CONSTRAINT IF EXISTS users_groups_user_id_group_id_fc7788e8_uniq;
+ALTER TABLE IF EXISTS ONLY public.users_groups DROP CONSTRAINT IF EXISTS users_groups_pkey;
+ALTER TABLE IF EXISTS ONLY public.users DROP CONSTRAINT IF EXISTS users_email_key;
+ALTER TABLE IF EXISTS ONLY public.user_skills DROP CONSTRAINT IF EXISTS user_skills_profile_id_skill_id_632d0408_uniq;
+ALTER TABLE IF EXISTS ONLY public.user_skills DROP CONSTRAINT IF EXISTS user_skills_pkey;
+ALTER TABLE IF EXISTS ONLY public.token_blacklist_outstandingtoken DROP CONSTRAINT IF EXISTS token_blacklist_outstandingtoken_pkey;
+ALTER TABLE IF EXISTS ONLY public.token_blacklist_outstandingtoken DROP CONSTRAINT IF EXISTS token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_uniq;
+ALTER TABLE IF EXISTS ONLY public.token_blacklist_blacklistedtoken DROP CONSTRAINT IF EXISTS token_blacklist_blacklistedtoken_token_id_key;
+ALTER TABLE IF EXISTS ONLY public.token_blacklist_blacklistedtoken DROP CONSTRAINT IF EXISTS token_blacklist_blacklistedtoken_pkey;
+ALTER TABLE IF EXISTS ONLY public.skills DROP CONSTRAINT IF EXISTS skills_pkey;
+ALTER TABLE IF EXISTS ONLY public.skills DROP CONSTRAINT IF EXISTS skills_name_key;
+ALTER TABLE IF EXISTS ONLY public.reviews DROP CONSTRAINT IF EXISTS reviews_pkey;
+ALTER TABLE IF EXISTS ONLY public.profiles DROP CONSTRAINT IF EXISTS profiles_user_id_key;
+ALTER TABLE IF EXISTS ONLY public.profiles DROP CONSTRAINT IF EXISTS profiles_pkey;
+ALTER TABLE IF EXISTS ONLY public.notifications DROP CONSTRAINT IF EXISTS notifications_pkey;
+ALTER TABLE IF EXISTS ONLY public.messages DROP CONSTRAINT IF EXISTS messages_pkey;
+ALTER TABLE IF EXISTS ONLY public.mentorship_posts DROP CONSTRAINT IF EXISTS mentorship_posts_pkey;
+ALTER TABLE IF EXISTS ONLY public.matches DROP CONSTRAINT IF EXISTS matches_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_session DROP CONSTRAINT IF EXISTS django_session_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_migrations DROP CONSTRAINT IF EXISTS django_migrations_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_content_type DROP CONSTRAINT IF EXISTS django_content_type_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_content_type DROP CONSTRAINT IF EXISTS django_content_type_app_label_model_76bd3d3b_uniq;
+ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_pkey;
+ALTER TABLE IF EXISTS ONLY public.conversations DROP CONSTRAINT IF EXISTS conversations_pkey;
+ALTER TABLE IF EXISTS ONLY public.conversation_members DROP CONSTRAINT IF EXISTS conversation_members_pkey;
+ALTER TABLE IF EXISTS ONLY public.conversation_members DROP CONSTRAINT IF EXISTS conversation_members_conversation_id_user_id_f14fcbc6_uniq;
+ALTER TABLE IF EXISTS ONLY public.availability_slots DROP CONSTRAINT IF EXISTS availability_slots_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_content_type_id_codename_01ab375a_uniq;
+ALTER TABLE IF EXISTS ONLY public.auth_group DROP CONSTRAINT IF EXISTS auth_group_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_group_id_permission_id_0cd325b0_uniq;
+ALTER TABLE IF EXISTS ONLY public.auth_group DROP CONSTRAINT IF EXISTS auth_group_name_key;
+DROP TABLE IF EXISTS public.verification_documents;
+DROP TABLE IF EXISTS public.users_user_permissions;
+DROP TABLE IF EXISTS public.users_groups;
+DROP TABLE IF EXISTS public.users;
+DROP TABLE IF EXISTS public.user_skills;
+DROP TABLE IF EXISTS public.token_blacklist_outstandingtoken;
+DROP TABLE IF EXISTS public.token_blacklist_blacklistedtoken;
+DROP TABLE IF EXISTS public.skills;
+DROP TABLE IF EXISTS public.reviews;
+DROP TABLE IF EXISTS public.profiles;
+DROP TABLE IF EXISTS public.notifications;
+DROP TABLE IF EXISTS public.messages;
+DROP TABLE IF EXISTS public.mentorship_posts;
+DROP TABLE IF EXISTS public.matches;
+DROP TABLE IF EXISTS public.django_session;
+DROP TABLE IF EXISTS public.django_migrations;
+DROP TABLE IF EXISTS public.django_content_type;
+DROP TABLE IF EXISTS public.django_admin_log;
+DROP TABLE IF EXISTS public.conversations;
+DROP TABLE IF EXISTS public.conversation_members;
+DROP TABLE IF EXISTS public.availability_slots;
+DROP TABLE IF EXISTS public.auth_permission;
+DROP TABLE IF EXISTS public.auth_group_permissions;
+DROP TABLE IF EXISTS public.auth_group;
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
 
 --
--- Name: auth_group; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.auth_group (
@@ -32,8 +182,10 @@ CREATE TABLE public.auth_group (
 );
 
 
+ALTER TABLE public.auth_group OWNER TO mentorlink;
+
 --
--- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.auth_group ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -47,7 +199,7 @@ ALTER TABLE public.auth_group ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTI
 
 
 --
--- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.auth_group_permissions (
@@ -57,8 +209,10 @@ CREATE TABLE public.auth_group_permissions (
 );
 
 
+ALTER TABLE public.auth_group_permissions OWNER TO mentorlink;
+
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.auth_group_permissions ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -72,7 +226,7 @@ ALTER TABLE public.auth_group_permissions ALTER COLUMN id ADD GENERATED BY DEFAU
 
 
 --
--- Name: auth_permission; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.auth_permission (
@@ -83,8 +237,10 @@ CREATE TABLE public.auth_permission (
 );
 
 
+ALTER TABLE public.auth_permission OWNER TO mentorlink;
+
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.auth_permission ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -98,7 +254,7 @@ ALTER TABLE public.auth_permission ALTER COLUMN id ADD GENERATED BY DEFAULT AS I
 
 
 --
--- Name: availability_slots; Type: TABLE; Schema: public; Owner: -
+-- Name: availability_slots; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.availability_slots (
@@ -113,8 +269,10 @@ CREATE TABLE public.availability_slots (
 );
 
 
+ALTER TABLE public.availability_slots OWNER TO mentorlink;
+
 --
--- Name: conversation_members; Type: TABLE; Schema: public; Owner: -
+-- Name: conversation_members; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.conversation_members (
@@ -125,8 +283,10 @@ CREATE TABLE public.conversation_members (
 );
 
 
+ALTER TABLE public.conversation_members OWNER TO mentorlink;
+
 --
--- Name: conversations; Type: TABLE; Schema: public; Owner: -
+-- Name: conversations; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.conversations (
@@ -137,8 +297,10 @@ CREATE TABLE public.conversations (
 );
 
 
+ALTER TABLE public.conversations OWNER TO mentorlink;
+
 --
--- Name: django_admin_log; Type: TABLE; Schema: public; Owner: -
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.django_admin_log (
@@ -154,8 +316,10 @@ CREATE TABLE public.django_admin_log (
 );
 
 
+ALTER TABLE public.django_admin_log OWNER TO mentorlink;
+
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.django_admin_log ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -169,7 +333,7 @@ ALTER TABLE public.django_admin_log ALTER COLUMN id ADD GENERATED BY DEFAULT AS 
 
 
 --
--- Name: django_content_type; Type: TABLE; Schema: public; Owner: -
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.django_content_type (
@@ -179,8 +343,10 @@ CREATE TABLE public.django_content_type (
 );
 
 
+ALTER TABLE public.django_content_type OWNER TO mentorlink;
+
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.django_content_type ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -194,7 +360,7 @@ ALTER TABLE public.django_content_type ALTER COLUMN id ADD GENERATED BY DEFAULT 
 
 
 --
--- Name: django_migrations; Type: TABLE; Schema: public; Owner: -
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.django_migrations (
@@ -205,8 +371,10 @@ CREATE TABLE public.django_migrations (
 );
 
 
+ALTER TABLE public.django_migrations OWNER TO mentorlink;
+
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.django_migrations ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -220,7 +388,7 @@ ALTER TABLE public.django_migrations ALTER COLUMN id ADD GENERATED BY DEFAULT AS
 
 
 --
--- Name: django_session; Type: TABLE; Schema: public; Owner: -
+-- Name: django_session; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.django_session (
@@ -230,8 +398,10 @@ CREATE TABLE public.django_session (
 );
 
 
+ALTER TABLE public.django_session OWNER TO mentorlink;
+
 --
--- Name: matches; Type: TABLE; Schema: public; Owner: -
+-- Name: matches; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.matches (
@@ -249,8 +419,10 @@ CREATE TABLE public.matches (
 );
 
 
+ALTER TABLE public.matches OWNER TO mentorlink;
+
 --
--- Name: mentorship_posts; Type: TABLE; Schema: public; Owner: -
+-- Name: mentorship_posts; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.mentorship_posts (
@@ -267,8 +439,10 @@ CREATE TABLE public.mentorship_posts (
 );
 
 
+ALTER TABLE public.mentorship_posts OWNER TO mentorlink;
+
 --
--- Name: messages; Type: TABLE; Schema: public; Owner: -
+-- Name: messages; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.messages (
@@ -283,8 +457,10 @@ CREATE TABLE public.messages (
 );
 
 
+ALTER TABLE public.messages OWNER TO mentorlink;
+
 --
--- Name: notifications; Type: TABLE; Schema: public; Owner: -
+-- Name: notifications; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.notifications (
@@ -301,8 +477,10 @@ CREATE TABLE public.notifications (
 );
 
 
+ALTER TABLE public.notifications OWNER TO mentorlink;
+
 --
--- Name: profiles; Type: TABLE; Schema: public; Owner: -
+-- Name: profiles; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.profiles (
@@ -318,8 +496,10 @@ CREATE TABLE public.profiles (
 );
 
 
+ALTER TABLE public.profiles OWNER TO mentorlink;
+
 --
--- Name: reviews; Type: TABLE; Schema: public; Owner: -
+-- Name: reviews; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.reviews (
@@ -336,8 +516,10 @@ CREATE TABLE public.reviews (
 );
 
 
+ALTER TABLE public.reviews OWNER TO mentorlink;
+
 --
--- Name: skills; Type: TABLE; Schema: public; Owner: -
+-- Name: skills; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.skills (
@@ -346,8 +528,10 @@ CREATE TABLE public.skills (
 );
 
 
+ALTER TABLE public.skills OWNER TO mentorlink;
+
 --
--- Name: token_blacklist_blacklistedtoken; Type: TABLE; Schema: public; Owner: -
+-- Name: token_blacklist_blacklistedtoken; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.token_blacklist_blacklistedtoken (
@@ -357,8 +541,10 @@ CREATE TABLE public.token_blacklist_blacklistedtoken (
 );
 
 
+ALTER TABLE public.token_blacklist_blacklistedtoken OWNER TO mentorlink;
+
 --
--- Name: token_blacklist_blacklistedtoken_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: token_blacklist_blacklistedtoken_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.token_blacklist_blacklistedtoken ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -372,7 +558,7 @@ ALTER TABLE public.token_blacklist_blacklistedtoken ALTER COLUMN id ADD GENERATE
 
 
 --
--- Name: token_blacklist_outstandingtoken; Type: TABLE; Schema: public; Owner: -
+-- Name: token_blacklist_outstandingtoken; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.token_blacklist_outstandingtoken (
@@ -385,8 +571,10 @@ CREATE TABLE public.token_blacklist_outstandingtoken (
 );
 
 
+ALTER TABLE public.token_blacklist_outstandingtoken OWNER TO mentorlink;
+
 --
--- Name: token_blacklist_outstandingtoken_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: token_blacklist_outstandingtoken_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.token_blacklist_outstandingtoken ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -400,7 +588,7 @@ ALTER TABLE public.token_blacklist_outstandingtoken ALTER COLUMN id ADD GENERATE
 
 
 --
--- Name: user_skills; Type: TABLE; Schema: public; Owner: -
+-- Name: user_skills; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.user_skills (
@@ -414,8 +602,10 @@ CREATE TABLE public.user_skills (
 );
 
 
+ALTER TABLE public.user_skills OWNER TO mentorlink;
+
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -
+-- Name: users; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.users (
@@ -436,8 +626,10 @@ CREATE TABLE public.users (
 );
 
 
+ALTER TABLE public.users OWNER TO mentorlink;
+
 --
--- Name: users_groups; Type: TABLE; Schema: public; Owner: -
+-- Name: users_groups; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.users_groups (
@@ -447,8 +639,10 @@ CREATE TABLE public.users_groups (
 );
 
 
+ALTER TABLE public.users_groups OWNER TO mentorlink;
+
 --
--- Name: users_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: users_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.users_groups ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -462,7 +656,7 @@ ALTER TABLE public.users_groups ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDEN
 
 
 --
--- Name: users_user_permissions; Type: TABLE; Schema: public; Owner: -
+-- Name: users_user_permissions; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.users_user_permissions (
@@ -472,8 +666,10 @@ CREATE TABLE public.users_user_permissions (
 );
 
 
+ALTER TABLE public.users_user_permissions OWNER TO mentorlink;
+
 --
--- Name: users_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: users_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: mentorlink
 --
 
 ALTER TABLE public.users_user_permissions ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -487,7 +683,7 @@ ALTER TABLE public.users_user_permissions ALTER COLUMN id ADD GENERATED BY DEFAU
 
 
 --
--- Name: verification_documents; Type: TABLE; Schema: public; Owner: -
+-- Name: verification_documents; Type: TABLE; Schema: public; Owner: mentorlink
 --
 
 CREATE TABLE public.verification_documents (
@@ -502,986 +698,10 @@ CREATE TABLE public.verification_documents (
 );
 
 
---
--- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_group
-    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
-
-
---
--- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_group_permissions
-    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
-
-
---
--- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_group_permissions
-    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
-
-
---
--- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_group
-    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
-
-
---
--- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_permission
-    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
-
-
---
--- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_permission
-    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
-
-
---
--- Name: availability_slots availability_slots_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.availability_slots
-    ADD CONSTRAINT availability_slots_pkey PRIMARY KEY (id);
-
-
---
--- Name: conversation_members conversation_members_conversation_id_user_id_f14fcbc6_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.conversation_members
-    ADD CONSTRAINT conversation_members_conversation_id_user_id_f14fcbc6_uniq UNIQUE (conversation_id, user_id);
-
-
---
--- Name: conversation_members conversation_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.conversation_members
-    ADD CONSTRAINT conversation_members_pkey PRIMARY KEY (id);
-
-
---
--- Name: conversations conversations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.conversations
-    ADD CONSTRAINT conversations_pkey PRIMARY KEY (id);
-
-
---
--- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.django_admin_log
-    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
-
-
---
--- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.django_content_type
-    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
-
-
---
--- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.django_content_type
-    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
-
-
---
--- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.django_migrations
-    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
-
-
---
--- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.django_session
-    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
-
-
---
--- Name: matches matches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.matches
-    ADD CONSTRAINT matches_pkey PRIMARY KEY (id);
-
-
---
--- Name: mentorship_posts mentorship_posts_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.mentorship_posts
-    ADD CONSTRAINT mentorship_posts_pkey PRIMARY KEY (id);
-
-
---
--- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.messages
-    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
-
-
---
--- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.notifications
-    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
-
-
---
--- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.profiles
-    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
-
-
---
--- Name: profiles profiles_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.profiles
-    ADD CONSTRAINT profiles_user_id_key UNIQUE (user_id);
-
-
---
--- Name: reviews reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.reviews
-    ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
-
-
---
--- Name: skills skills_name_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.skills
-    ADD CONSTRAINT skills_name_key UNIQUE (name);
-
-
---
--- Name: skills skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.skills
-    ADD CONSTRAINT skills_pkey PRIMARY KEY (id);
-
-
---
--- Name: token_blacklist_blacklistedtoken token_blacklist_blacklistedtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.token_blacklist_blacklistedtoken
-    ADD CONSTRAINT token_blacklist_blacklistedtoken_pkey PRIMARY KEY (id);
-
-
---
--- Name: token_blacklist_blacklistedtoken token_blacklist_blacklistedtoken_token_id_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.token_blacklist_blacklistedtoken
-    ADD CONSTRAINT token_blacklist_blacklistedtoken_token_id_key UNIQUE (token_id);
-
-
---
--- Name: token_blacklist_outstandingtoken token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.token_blacklist_outstandingtoken
-    ADD CONSTRAINT token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_uniq UNIQUE (jti);
-
-
---
--- Name: token_blacklist_outstandingtoken token_blacklist_outstandingtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.token_blacklist_outstandingtoken
-    ADD CONSTRAINT token_blacklist_outstandingtoken_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_skills user_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_skills
-    ADD CONSTRAINT user_skills_pkey PRIMARY KEY (id);
-
-
---
--- Name: user_skills user_skills_profile_id_skill_id_632d0408_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_skills
-    ADD CONSTRAINT user_skills_profile_id_skill_id_632d0408_uniq UNIQUE (profile_id, skill_id);
-
-
---
--- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_email_key UNIQUE (email);
-
-
---
--- Name: users_groups users_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_groups
-    ADD CONSTRAINT users_groups_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_groups users_groups_user_id_group_id_fc7788e8_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_groups
-    ADD CONSTRAINT users_groups_user_id_group_id_fc7788e8_uniq UNIQUE (user_id, group_id);
-
-
---
--- Name: users users_phone_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_phone_key UNIQUE (phone);
-
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_user_permissions users_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_user_permissions
-    ADD CONSTRAINT users_user_permissions_pkey PRIMARY KEY (id);
-
-
---
--- Name: users_user_permissions users_user_permissions_user_id_permission_id_3b86cbdf_uniq; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_user_permissions
-    ADD CONSTRAINT users_user_permissions_user_id_permission_id_3b86cbdf_uniq UNIQUE (user_id, permission_id);
-
-
---
--- Name: verification_documents verification_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.verification_documents
-    ADD CONSTRAINT verification_documents_pkey PRIMARY KEY (id);
-
-
---
--- Name: verification_documents verification_documents_user_id_key; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.verification_documents
-    ADD CONSTRAINT verification_documents_user_id_key UNIQUE (user_id);
-
-
---
--- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
-
-
---
--- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
-
-
---
--- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
-
-
---
--- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
-
-
---
--- Name: availability_slots_profile_id_0c5edf97; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX availability_slots_profile_id_0c5edf97 ON public.availability_slots USING btree (profile_id);
-
-
---
--- Name: conversation_members_conversation_id_570068ad; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX conversation_members_conversation_id_570068ad ON public.conversation_members USING btree (conversation_id);
-
-
---
--- Name: conversation_members_user_id_3bfe90c8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX conversation_members_user_id_3bfe90c8 ON public.conversation_members USING btree (user_id);
-
-
---
--- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
-
-
---
--- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
-
-
---
--- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
-
-
---
--- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
-
-
---
--- Name: matches_compati_0bce3a_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_compati_0bce3a_idx ON public.matches USING btree (compatibility_score);
-
-
---
--- Name: matches_mentee__3d25ef_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_mentee__3d25ef_idx ON public.matches USING btree (mentee_id, status);
-
-
---
--- Name: matches_mentee_id_d1f950e2; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_mentee_id_d1f950e2 ON public.matches USING btree (mentee_id);
-
-
---
--- Name: matches_mentor__fb198d_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_mentor__fb198d_idx ON public.matches USING btree (mentor_id, status);
-
-
---
--- Name: matches_mentor_id_59b76bab; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_mentor_id_59b76bab ON public.matches USING btree (mentor_id);
-
-
---
--- Name: matches_offer_id_91e0d674; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_offer_id_91e0d674 ON public.matches USING btree (offer_id);
-
-
---
--- Name: matches_request_id_b2653ba8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_request_id_b2653ba8 ON public.matches USING btree (request_id);
-
-
---
--- Name: matches_status_639056_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX matches_status_639056_idx ON public.matches USING btree (status);
-
-
---
--- Name: mentorship__created_280abb_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX mentorship__created_280abb_idx ON public.mentorship_posts USING btree (created_at);
-
-
---
--- Name: mentorship__creator_6feaca_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX mentorship__creator_6feaca_idx ON public.mentorship_posts USING btree (creator_id, status);
-
-
---
--- Name: mentorship__subject_4b0ea6_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX mentorship__subject_4b0ea6_idx ON public.mentorship_posts USING btree (subject);
-
-
---
--- Name: mentorship__type_2b976d_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX mentorship__type_2b976d_idx ON public.mentorship_posts USING btree (type, status);
-
-
---
--- Name: mentorship_posts_creator_id_6ae72afe; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX mentorship_posts_creator_id_6ae72afe ON public.mentorship_posts USING btree (creator_id);
-
-
---
--- Name: messages_convers_3ebb41_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX messages_convers_3ebb41_idx ON public.messages USING btree (conversation_id, created_at);
-
-
---
--- Name: messages_conversation_id_5ef638db; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX messages_conversation_id_5ef638db ON public.messages USING btree (conversation_id);
-
-
---
--- Name: messages_sender__6ae55a_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX messages_sender__6ae55a_idx ON public.messages USING btree (sender_id);
-
-
---
--- Name: messages_sender_id_dc5a0bbd; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX messages_sender_id_dc5a0bbd ON public.messages USING btree (sender_id);
-
-
---
--- Name: notificatio_created_e4c995_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX notificatio_created_e4c995_idx ON public.notifications USING btree (created_at);
-
-
---
--- Name: notificatio_user_id_a4dd5c_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX notificatio_user_id_a4dd5c_idx ON public.notifications USING btree (user_id, is_read);
-
-
---
--- Name: notifications_user_id_468e288d; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX notifications_user_id_468e288d ON public.notifications USING btree (user_id);
-
-
---
--- Name: profiles_academi_e4a1e1_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX profiles_academi_e4a1e1_idx ON public.profiles USING btree (academic_level);
-
-
---
--- Name: profiles_departm_ffdbbc_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX profiles_departm_ffdbbc_idx ON public.profiles USING btree (department);
-
-
---
--- Name: reviews_match_id_df422061; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX reviews_match_id_df422061 ON public.reviews USING btree (match_id);
-
-
---
--- Name: reviews_rating_17e8a4_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX reviews_rating_17e8a4_idx ON public.reviews USING btree (rating);
-
-
---
--- Name: reviews_reviewe_965d53_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX reviews_reviewe_965d53_idx ON public.reviews USING btree (reviewer_id);
-
-
---
--- Name: reviews_reviewe_fe0fd6_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX reviews_reviewe_fe0fd6_idx ON public.reviews USING btree (reviewed_id);
-
-
---
--- Name: reviews_reviewed_id_26ab5b38; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX reviews_reviewed_id_26ab5b38 ON public.reviews USING btree (reviewed_id);
-
-
---
--- Name: reviews_reviewer_id_dbb954a8; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX reviews_reviewer_id_dbb954a8 ON public.reviews USING btree (reviewer_id);
-
-
---
--- Name: skills_name_3120df3a_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX skills_name_3120df3a_like ON public.skills USING btree (name varchar_pattern_ops);
-
-
---
--- Name: token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_like ON public.token_blacklist_outstandingtoken USING btree (jti varchar_pattern_ops);
-
-
---
--- Name: token_blacklist_outstandingtoken_user_id_83bc629a; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX token_blacklist_outstandingtoken_user_id_83bc629a ON public.token_blacklist_outstandingtoken USING btree (user_id);
-
-
---
--- Name: user_skills_profile_id_4ff2a56e; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX user_skills_profile_id_4ff2a56e ON public.user_skills USING btree (profile_id);
-
-
---
--- Name: user_skills_skill_id_1a55c9b3; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX user_skills_skill_id_1a55c9b3 ON public.user_skills USING btree (skill_id);
-
-
---
--- Name: users_created_6541e9_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_created_6541e9_idx ON public.users USING btree (created_at);
-
-
---
--- Name: users_email_0ea73cca_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_email_0ea73cca_like ON public.users USING btree (email varchar_pattern_ops);
-
-
---
--- Name: users_email_4b85f2_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_email_4b85f2_idx ON public.users USING btree (email);
-
-
---
--- Name: users_groups_group_id_2f3517aa; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_groups_group_id_2f3517aa ON public.users_groups USING btree (group_id);
-
-
---
--- Name: users_groups_user_id_f500bee5; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_groups_user_id_f500bee5 ON public.users_groups USING btree (user_id);
-
-
---
--- Name: users_is_acti_847b48_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_is_acti_847b48_idx ON public.users USING btree (is_active);
-
-
---
--- Name: users_phone_2b77170a_like; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_phone_2b77170a_like ON public.users USING btree (phone varchar_pattern_ops);
-
-
---
--- Name: users_phone_af6883_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_phone_af6883_idx ON public.users USING btree (phone);
-
-
---
--- Name: users_user_permissions_permission_id_6d08dcd2; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_user_permissions_permission_id_6d08dcd2 ON public.users_user_permissions USING btree (permission_id);
-
-
---
--- Name: users_user_permissions_user_id_92473840; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX users_user_permissions_user_id_92473840 ON public.users_user_permissions USING btree (user_id);
-
-
---
--- Name: verificatio_status_a43286_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX verificatio_status_a43286_idx ON public.verification_documents USING btree (status);
-
-
---
--- Name: verificatio_user_id_d15fbf_idx; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX verificatio_user_id_d15fbf_idx ON public.verification_documents USING btree (user_id, status);
-
-
---
--- Name: verification_documents_reviewed_by_id_67481493; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX verification_documents_reviewed_by_id_67481493 ON public.verification_documents USING btree (reviewed_by_id);
-
-
---
--- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_group_permissions
-    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_group_permissions
-    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.auth_permission
-    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: availability_slots availability_slots_profile_id_0c5edf97_fk_profiles_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.availability_slots
-    ADD CONSTRAINT availability_slots_profile_id_0c5edf97_fk_profiles_id FOREIGN KEY (profile_id) REFERENCES public.profiles(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: conversation_members conversation_members_conversation_id_570068ad_fk_conversat; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.conversation_members
-    ADD CONSTRAINT conversation_members_conversation_id_570068ad_fk_conversat FOREIGN KEY (conversation_id) REFERENCES public.conversations(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: conversation_members conversation_members_user_id_3bfe90c8_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.conversation_members
-    ADD CONSTRAINT conversation_members_user_id_3bfe90c8_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.django_admin_log
-    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.django_admin_log
-    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: matches matches_mentee_id_d1f950e2_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.matches
-    ADD CONSTRAINT matches_mentee_id_d1f950e2_fk_users_id FOREIGN KEY (mentee_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: matches matches_mentor_id_59b76bab_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.matches
-    ADD CONSTRAINT matches_mentor_id_59b76bab_fk_users_id FOREIGN KEY (mentor_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: matches matches_offer_id_91e0d674_fk_mentorship_posts_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.matches
-    ADD CONSTRAINT matches_offer_id_91e0d674_fk_mentorship_posts_id FOREIGN KEY (offer_id) REFERENCES public.mentorship_posts(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: matches matches_request_id_b2653ba8_fk_mentorship_posts_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.matches
-    ADD CONSTRAINT matches_request_id_b2653ba8_fk_mentorship_posts_id FOREIGN KEY (request_id) REFERENCES public.mentorship_posts(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: mentorship_posts mentorship_posts_creator_id_6ae72afe_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.mentorship_posts
-    ADD CONSTRAINT mentorship_posts_creator_id_6ae72afe_fk_users_id FOREIGN KEY (creator_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: messages messages_conversation_id_5ef638db_fk_conversations_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.messages
-    ADD CONSTRAINT messages_conversation_id_5ef638db_fk_conversations_id FOREIGN KEY (conversation_id) REFERENCES public.conversations(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: messages messages_sender_id_dc5a0bbd_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.messages
-    ADD CONSTRAINT messages_sender_id_dc5a0bbd_fk_users_id FOREIGN KEY (sender_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: notifications notifications_user_id_468e288d_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.notifications
-    ADD CONSTRAINT notifications_user_id_468e288d_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: profiles profiles_user_id_36580373_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.profiles
-    ADD CONSTRAINT profiles_user_id_36580373_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: reviews reviews_match_id_df422061_fk_matches_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.reviews
-    ADD CONSTRAINT reviews_match_id_df422061_fk_matches_id FOREIGN KEY (match_id) REFERENCES public.matches(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: reviews reviews_reviewed_id_26ab5b38_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.reviews
-    ADD CONSTRAINT reviews_reviewed_id_26ab5b38_fk_users_id FOREIGN KEY (reviewed_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: reviews reviews_reviewer_id_dbb954a8_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.reviews
-    ADD CONSTRAINT reviews_reviewer_id_dbb954a8_fk_users_id FOREIGN KEY (reviewer_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: token_blacklist_blacklistedtoken token_blacklist_blacklistedtoken_token_id_3cc7fe56_fk; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.token_blacklist_blacklistedtoken
-    ADD CONSTRAINT token_blacklist_blacklistedtoken_token_id_3cc7fe56_fk FOREIGN KEY (token_id) REFERENCES public.token_blacklist_outstandingtoken(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: token_blacklist_outstandingtoken token_blacklist_outstandingtoken_user_id_83bc629a_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.token_blacklist_outstandingtoken
-    ADD CONSTRAINT token_blacklist_outstandingtoken_user_id_83bc629a_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: user_skills user_skills_profile_id_4ff2a56e_fk_profiles_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_skills
-    ADD CONSTRAINT user_skills_profile_id_4ff2a56e_fk_profiles_id FOREIGN KEY (profile_id) REFERENCES public.profiles(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: user_skills user_skills_skill_id_1a55c9b3_fk_skills_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.user_skills
-    ADD CONSTRAINT user_skills_skill_id_1a55c9b3_fk_skills_id FOREIGN KEY (skill_id) REFERENCES public.skills(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: users_groups users_groups_group_id_2f3517aa_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_groups
-    ADD CONSTRAINT users_groups_group_id_2f3517aa_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: users_groups users_groups_user_id_f500bee5_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_groups
-    ADD CONSTRAINT users_groups_user_id_f500bee5_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: users_user_permissions users_user_permissio_permission_id_6d08dcd2_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_user_permissions
-    ADD CONSTRAINT users_user_permissio_permission_id_6d08dcd2_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: users_user_permissions users_user_permissions_user_id_92473840_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.users_user_permissions
-    ADD CONSTRAINT users_user_permissions_user_id_92473840_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: verification_documents verification_documents_reviewed_by_id_67481493_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.verification_documents
-    ADD CONSTRAINT verification_documents_reviewed_by_id_67481493_fk_users_id FOREIGN KEY (reviewed_by_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- Name: verification_documents verification_documents_user_id_adcd77e6_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.verification_documents
-    ADD CONSTRAINT verification_documents_user_id_adcd77e6_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
-
-
---
--- PostgreSQL database dump complete
---
-
-\unrestrict jmYGcuvb2ZEs9xzmlLOFHKXJXJMJ3f2lgkxth3wURhcjAXToqOgYp5ngNigSZiq
-
-
---
--- PostgreSQL database dump
---
-
-\restrict c3RrDI6YcuZYrus7aLebkVnUXPf8EHooyaRa5b7c86qfmxMetdGfLiMdOl4jhL7
-
--- Dumped from database version 16.13
--- Dumped by pg_dump version 16.13
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET xmloption = content;
-SET client_min_messages = warning;
-SET row_security = off;
+ALTER TABLE public.verification_documents OWNER TO mentorlink;
 
 --
--- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.auth_group (id, name) FROM stdin;
@@ -1489,35 +709,15 @@ COPY public.auth_group (id, name) FROM stdin;
 
 
 --
--- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
-COPY public.django_content_type (id, app_label, model) FROM stdin;
-1	admin	logentry
-2	auth	permission
-3	auth	group
-4	contenttypes	contenttype
-5	sessions	session
-6	token_blacklist	blacklistedtoken
-7	token_blacklist	outstandingtoken
-8	accounts	user
-9	profiles	skill
-10	profiles	profile
-11	profiles	availabilityslot
-12	profiles	userskill
-13	mentoring	mentorshippost
-14	mentoring	match
-15	chat	conversation
-16	chat	conversationmember
-17	chat	message
-18	notifications	notification
-19	onboarding	verificationdocument
-20	mentoring	review
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 \.
 
 
 --
--- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
@@ -1605,56 +805,7 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 
 
 --
--- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
-\.
-
-
---
--- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.users (password, last_login, is_superuser, first_name, last_name, is_staff, is_active, date_joined, id, email, phone, is_verified, created_at, updated_at) FROM stdin;
-pbkdf2_sha256$870000$ayroh0sFpynYbfkoydyl5C$SGfIhrG3l9H664YzNH8Axk0Co6rfBc1k6+Auhtg0OQ8=	2026-06-10 12:40:14.366078+00	t			t	t	2026-06-10 12:28:46.795582+00	cef5d0be-9064-4305-9468-bd3900d374a1	admin@mentorlink.com	\N	f	2026-06-10 12:28:47.447212+00	2026-06-10 12:28:47.447225+00
-pbkdf2_sha256$870000$NFX7vYDdKjDwOk5isrlWqG$7WmJt+AJap5O2gJNrSBt1g+q9tk1Ylhb8eJCNT/AdT8=	\N	f	Bob	Kouassi	f	t	2026-06-10 14:25:15.647349+00	3f1f157d-98f6-4907-8c7c-165e573a186a	bob@example.com	+22501010102	t	2026-06-10 14:25:15.647572+00	2026-06-10 14:25:15.64758+00
-pbkdf2_sha256$870000$L2GVEsPQqaD0vdpA81mY8v$CJTU7G2FrI4zOOTECQSF0KgffRVsDTfu3ItVzVH06bc=	\N	f	Carol	Diallo	f	t	2026-06-10 14:25:16.490665+00	7d28b09c-b8fd-45bf-806d-ad82d4884774	carol@example.com	+22501010103	t	2026-06-10 14:25:16.490915+00	2026-06-10 14:25:16.490923+00
-pbkdf2_sha256$870000$sHx5oEAohrcVMvze5TPt42$Xi1ueXoqdhYusKEun19+Vc+nvV2t4Jp77CeTYWox2Yw=	\N	f	Dave	Traore	f	t	2026-06-10 14:25:17.664043+00	a097155f-18d3-401f-b023-a0e05b8a6753	dave@example.com	+22501010104	t	2026-06-10 14:25:17.66424+00	2026-06-10 14:25:17.664247+00
-pbkdf2_sha256$870000$IeMgt0mOPpUeru8xEP3BEq$RvkS8A5fpioI8M+1eTTfTCo5+ukSypJfP9R5vQMD8gk=	\N	f	Eve	NGuessan	f	t	2026-06-10 14:25:18.462834+00	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363	eve@example.com	+22501010105	t	2026-06-10 14:25:18.463061+00	2026-06-10 14:25:18.463068+00
-pbkdf2_sha256$870000$9yaeADJ0mi0V5hD7Ho71Ex$mdYbLvg3n33JhRXYfN+PwcweNFt+qSAfwgN7XKVwVRA=	\N	f	Frank	Soro	f	t	2026-06-10 14:25:19.266886+00	e876f033-f143-4f4b-9adc-71642419144a	frank@example.com	+22501010106	t	2026-06-10 14:25:19.267116+00	2026-06-10 14:25:19.267123+00
-pbkdf2_sha256$870000$g5KSFVpVZLHfltPeAWtceM$WsVbXwqNn9+u2hmVUOUrvWc55x3NmV5xM2uAMHomzBU=	\N	f	Grace	Koffi	f	t	2026-06-10 14:25:20.238848+00	2e624d5c-4afa-475d-9083-9877614d6d06	grace@example.com	+22501010107	t	2026-06-10 14:25:20.239187+00	2026-06-10 14:25:20.239198+00
-pbkdf2_sha256$870000$RBfnT5rZ4zcsubb0NG0Qle$GBmdpkgzn506d+tJkISo8d+N5NQZUO6Q38ZJ6p3HcWU=	\N	f	Henry	Zadi	f	t	2026-06-10 14:25:21.301309+00	02d56625-7584-447e-8ad0-838c2beeaaf4	henry@example.com	+22501010108	t	2026-06-10 14:25:21.301488+00	2026-06-10 14:25:21.301495+00
-pbkdf2_sha256$870000$DlnNk9dVtdMubmT3LumHb0$9+2j7VlBEbrwtmcQuXhO0CZGyHoon7Kvce6OEjiBuO0=	\N	f	Iris	Bamba	f	t	2026-06-10 14:25:22.171193+00	717f97b9-6de0-4c33-8c5c-61c9abdebed4	iris@example.com	+22501010109	t	2026-06-10 14:25:22.171427+00	2026-06-10 14:25:22.171436+00
-pbkdf2_sha256$870000$YnLzKKArvmo2ONiPAcx5Iu$Hh4VJxGwDo0uKyhJ12ST+5ReoHJ6ei0m4JeKfsfYahI=	\N	f	James	Toure	f	t	2026-06-10 14:25:23.198815+00	d5626e1d-fd73-4d98-8086-552536eadf39	james@example.com	+22501010110	t	2026-06-10 14:25:23.199053+00	2026-06-10 14:25:23.199062+00
-pbkdf2_sha256$870000$TqWDWmszFyIIZQYaZp9BYc$dw3k5XE9p1vCg0oW21ma0DPX/xJxqyk3/L2Mxm3pQjM=	\N	f	Test	User	f	t	2026-06-10 17:08:48.802126+00	c156fde9-c5db-49d6-bd58-2844fd4ef021	browser-test@example.com	\N	f	2026-06-10 17:08:48.8073+00	2026-06-10 17:08:48.807322+00
-pbkdf2_sha256$870000$71uQZkl5WoH1pbTnVkmUqY$qQhRA9lat49L2bMen7daRyiIA5/2wlWZWpERE6hnq0g=	\N	f	Alice	Konan	f	t	2026-06-10 14:25:14.735505+00	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	alice@example.com	+22501010101	t	2026-06-10 14:25:14.736017+00	2026-06-11 15:25:45.619209+00
-pbkdf2_sha256$870000$MLPCdzRIy53CohAPAmILob$F/5DrF53++2yjr62wXs0zIyueTmXbtO27suKIxu+Wlo=	\N	f	AGO	Alex	f	t	2026-06-10 15:00:05.896682+00	cd9bd543-becf-4a12-b672-47bcd0d4c95e	alexyessougnonago@gmail.com	0153088468	f	2026-06-10 15:00:05.897568+00	2026-06-10 15:00:05.897578+00
-\.
-
-
---
--- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.profiles (id, created_at, updated_at, deleted_at, profile_photo, department, academic_level, bio, user_id) FROM stdin;
-6da8523a-b47c-4702-b967-6c64655652b8	2026-06-10 15:00:11.24873+00	2026-06-10 15:00:11.248758+00	\N		Génie Logiciel	Master 1	J'aime l'IA	cd9bd543-becf-4a12-b672-47bcd0d4c95e
-9ec37782-f01d-4322-b5a2-b00a5f83ad6e	2026-06-10 14:25:15.715541+00	2026-06-10 14:25:15.780743+00	\N		Informatique	L3	Looking to improve my programming skills. Interested in Python and web dev.	3f1f157d-98f6-4907-8c7c-165e573a186a
-aa841022-0523-4f34-bed7-b6960d284da4	2026-06-10 14:25:16.578845+00	2026-06-10 14:25:16.821267+00	\N		Mathematiques	M1	Math tutor available for mentoring. Can help with statistics and physics too.	7d28b09c-b8fd-45bf-806d-ad82d4884774
-757c574b-9719-4c7b-9e00-21a7ee1d4093	2026-06-10 14:25:17.730918+00	2026-06-10 14:25:17.795401+00	\N		Informatique	L2	Want to learn web development and Python. Motivated and curious.	a097155f-18d3-401f-b023-a0e05b8a6753
-48969b1c-1316-4814-b05a-2fcb821d31a1	2026-06-10 14:25:18.516384+00	2026-06-10 14:25:18.570479+00	\N		Physique	M2	Physics researcher offering mentorship in quantum mechanics and ML.	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363
-bf8442cd-e57f-4394-bc9f-f711703cb479	2026-06-10 14:25:19.346441+00	2026-06-10 14:25:19.412105+00	\N		Informatique	M1	Full-stack developer with 3 years experience. Love React and TypeScript.	e876f033-f143-4f4b-9adc-71642419144a
-181e73d9-825b-445a-9989-6c195b2c3054	2026-06-10 14:25:20.299028+00	2026-06-10 14:25:20.363917+00	\N		Informatique	L3	Beginner in programming. Want to learn Java and mobile development.	2e624d5c-4afa-475d-9083-9877614d6d06
-ac24a8bd-3c25-4af6-b72b-1da9e004200e	2026-06-10 14:25:21.360966+00	2026-06-10 14:25:21.415412+00	\N		Reseaux	M2	Cybersecurity expert. Can mentor in networking, security, and DevOps.	02d56625-7584-447e-8ad0-838c2beeaaf4
-c20a1276-4b3b-442c-a33f-03039f42eb8b	2026-06-10 14:25:22.292122+00	2026-06-10 14:25:22.345189+00	\N		Design	L3	UI/UX designer looking for mentorship in frontend development.	717f97b9-6de0-4c33-8c5c-61c9abdebed4
-173ed165-b675-4ef2-b46b-693495010ef5	2026-06-10 14:25:23.266641+00	2026-06-10 14:25:23.341515+00	\N		Informatique	M1	Machine learning enthusiast. Can mentor in data science and AI.	d5626e1d-fd73-4d98-8086-552536eadf39
-4e4e056e-ae17-4f9d-8869-ae8fb92a87d6	2026-06-10 17:09:13.87381+00	2026-06-10 17:09:13.873834+00	\N		Génie Logiciel	Master 1		c156fde9-c5db-49d6-bd58-2844fd4ef021
-08ac6245-6b77-45f1-9893-a3c923dc507e	2026-06-10 14:25:14.843326+00	2026-06-10 14:25:14.906289+00	\N		Génie Logiciel	Master 1	Bio test via browser	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
-\.
-
-
---
--- Data for Name: availability_slots; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: availability_slots; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.availability_slots (id, created_at, updated_at, deleted_at, day_of_week, start_time, end_time, profile_id) FROM stdin;
@@ -1686,29 +837,26 @@ e491f3cc-4761-4087-95cc-545a38ce7b47	2026-06-10 18:09:10.422468+00	2026-06-10 18
 b861bf8b-6001-4c3a-a421-e7040c2493d1	2026-06-10 18:09:10.425267+00	2026-06-10 18:09:10.425294+00	2026-06-11 16:37:29.278265+00	SUNDAY	14:00:00	16:00:00	6da8523a-b47c-4702-b967-6c64655652b8
 9a5deadd-f70c-49d4-b697-af8155ca7f97	2026-06-10 18:09:10.103055+00	2026-06-10 18:09:10.103204+00	2026-06-11 16:37:29.36386+00	WEDNESDAY	20:00:00	20:00:00	6da8523a-b47c-4702-b967-6c64655652b8
 dd43faec-644f-4d88-ac2f-43986369c9e7	2026-06-11 16:37:29.479764+00	2026-06-11 16:37:29.479794+00	2026-06-11 16:54:01.122592+00	MONDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
-8830ee5a-a221-464e-aad5-25f3cc5bda1c	2026-06-11 16:54:01.271578+00	2026-06-11 16:54:01.271602+00	\N	MONDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+3b818d3f-58e2-4548-b24a-73923d920b2b	2026-06-11 17:07:58.738658+00	2026-06-11 17:07:58.738673+00	\N	MONDAY	09:00:00	12:00:00	e6fc12d2-364c-48b3-b630-6103216ca9a2
+8830ee5a-a221-464e-aad5-25f3cc5bda1c	2026-06-11 16:54:01.271578+00	2026-06-11 16:54:01.271602+00	2026-06-11 17:18:23.510534+00	MONDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+17026d30-94cc-4d0a-a857-2300f2d53940	2026-06-11 17:18:23.689938+00	2026-06-11 17:18:23.689962+00	2026-06-11 17:19:04.181873+00	MONDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+755eaec7-d4cc-47aa-86d7-90a37d5b33fb	2026-06-11 17:19:04.559126+00	2026-06-11 17:19:04.559142+00	2026-06-11 17:22:48.290056+00	MONDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+8db11ded-0447-4dd7-9144-1262a7f59a37	2026-06-11 17:22:48.550331+00	2026-06-11 17:22:48.550373+00	2026-06-11 17:23:09.648525+00	MONDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+13d8579a-3caa-4e7f-afe1-c7b7f8ca6aec	2026-06-11 17:22:48.641042+00	2026-06-11 17:22:48.641057+00	2026-06-11 17:23:09.747863+00	MONDAY	14:00:00	18:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+f4cc0ea6-b63a-45b9-a831-66dedba41fbe	2026-06-11 17:22:48.728894+00	2026-06-11 17:22:48.728921+00	2026-06-11 17:23:09.870702+00	MONDAY	19:00:00	22:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+6802cda3-0d89-491e-9467-74f407c04032	2026-06-11 17:23:10.026352+00	2026-06-11 17:23:10.026368+00	\N	MONDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+879f26af-1c5c-4743-b868-91be016d842e	2026-06-11 17:23:10.126499+00	2026-06-11 17:23:10.126518+00	\N	MONDAY	14:00:00	18:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+1849f3e0-1a65-4af4-a6f5-aab031d10417	2026-06-11 17:23:10.21373+00	2026-06-11 17:23:10.213744+00	\N	TUESDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+ce4c194e-9a4f-4889-97b4-380ac01172c5	2026-06-11 17:23:10.297225+00	2026-06-11 17:23:10.297243+00	\N	TUESDAY	14:00:00	18:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+4dda8aaa-40a3-4bba-a4eb-a1d06ffc2619	2026-06-11 17:23:10.384918+00	2026-06-11 17:23:10.384942+00	\N	WEDNESDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+ac53a31c-90e9-4a24-ae05-7c8989ff41a8	2026-06-11 17:23:10.482182+00	2026-06-11 17:23:10.482201+00	\N	WEDNESDAY	14:00:00	18:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+f7f8574e-58f2-4307-8f94-1412b82cc849	2026-06-11 17:23:10.577942+00	2026-06-11 17:23:10.577956+00	\N	SATURDAY	08:00:00	12:00:00	6da8523a-b47c-4702-b967-6c64655652b8
+55f9b915-b2c0-4546-8f58-a655bb3b715e	2026-06-11 17:23:10.691511+00	2026-06-11 17:23:10.691525+00	\N	SATURDAY	14:00:00	18:00:00	6da8523a-b47c-4702-b967-6c64655652b8
 \.
 
 
 --
--- Data for Name: conversations; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.conversations (id, created_at, updated_at, deleted_at) FROM stdin;
-c6adebb0-838a-4574-ae2b-332258d320db	2026-06-10 14:25:31.02682+00	2026-06-10 14:25:31.026856+00	\N
-6f543bb5-f963-4abf-be67-017313aa693a	2026-06-10 14:25:32.24197+00	2026-06-10 14:25:32.242049+00	\N
-aa3c0b6d-7d42-4f34-8b81-e907c32f82a5	2026-06-10 14:25:33.669988+00	2026-06-10 14:25:33.670078+00	\N
-e2c82824-1eb6-4cc9-9e17-470cf927e6b0	2026-06-10 14:25:34.599715+00	2026-06-10 14:25:34.599748+00	\N
-f6247269-527c-4758-a721-d4f334b9d278	2026-06-10 14:25:36.14995+00	2026-06-10 14:25:36.149987+00	\N
-cec86833-fedb-4c98-8c71-70409ef56abf	2026-06-10 17:12:26.96717+00	2026-06-10 17:12:26.967187+00	\N
-d9e83586-f916-4f41-8203-7cfd7d44d018	2026-06-11 15:33:31.70353+00	2026-06-11 15:33:31.703555+00	\N
-73dec969-ad14-413e-9151-28dfdcad917c	2026-06-11 15:45:14.137976+00	2026-06-11 15:45:14.137992+00	\N
-a3bbcaeb-e60b-4fdf-b03f-d88dcf00549e	2026-06-11 16:04:55.608692+00	2026-06-11 16:04:55.608812+00	\N
-\.
-
-
---
--- Data for Name: conversation_members; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: conversation_members; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.conversation_members (id, joined_at, conversation_id, user_id) FROM stdin;
@@ -1730,11 +878,70 @@ b9f053ff-d8f7-45be-8c8f-889b618d3146	2026-06-11 15:45:14.223452+00	73dec969-ad14
 5f121033-0ff0-427f-8e31-cce7c40300a2	2026-06-11 15:45:14.290039+00	73dec969-ad14-413e-9151-28dfdcad917c	cd9bd543-becf-4a12-b672-47bcd0d4c95e
 7a2e0de2-46a3-48c9-8d8d-08b94842ba3a	2026-06-11 16:04:55.692277+00	a3bbcaeb-e60b-4fdf-b03f-d88dcf00549e	cd9bd543-becf-4a12-b672-47bcd0d4c95e
 6c591da7-007d-47b1-8198-5696943f74b0	2026-06-11 16:04:55.946187+00	a3bbcaeb-e60b-4fdf-b03f-d88dcf00549e	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+d475f502-b248-4e36-8e8a-96b51f05aba7	2026-06-11 17:04:51.879361+00	b9aa586f-25e1-442e-8966-04f97cac29e0	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+fc1bd314-0e0b-41de-a8c6-614ea9f8e10a	2026-06-11 17:04:51.945579+00	b9aa586f-25e1-442e-8966-04f97cac29e0	3f1f157d-98f6-4907-8c7c-165e573a186a
+032e2d86-6a88-4b95-9d25-74bc00fb053e	2026-06-11 17:04:53.15238+00	707c9a99-965b-457d-8795-a991136438d3	e876f033-f143-4f4b-9adc-71642419144a
+6ead86b8-ec2d-41e1-8fc6-1ec97a283f9e	2026-06-11 17:04:53.208015+00	707c9a99-965b-457d-8795-a991136438d3	a097155f-18d3-401f-b023-a0e05b8a6753
+0407ca0a-2862-44e8-ab03-c0513ad13f38	2026-06-11 17:04:54.580144+00	cad3c041-8738-4441-9dbf-9b58d15fa1ae	7d28b09c-b8fd-45bf-806d-ad82d4884774
+aaa6b093-83eb-4677-b659-fb4a0371d7bd	2026-06-11 17:04:54.646493+00	cad3c041-8738-4441-9dbf-9b58d15fa1ae	3f1f157d-98f6-4907-8c7c-165e573a186a
+919fa6cd-4c25-467a-a890-e40d2b7a6017	2026-06-11 17:04:55.787411+00	1d2d0710-2060-427d-95c3-71a04ad40cf8	d5626e1d-fd73-4d98-8086-552536eadf39
+6dedd6c1-19d7-4cab-8499-919d131bb506	2026-06-11 17:04:55.842803+00	1d2d0710-2060-427d-95c3-71a04ad40cf8	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+714d7b38-ebad-442d-85d4-ce00b301df50	2026-06-11 17:04:56.606763+00	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	02d56625-7584-447e-8ad0-838c2beeaaf4
+ad2236f0-59b9-4202-85a4-472b125d8ae6	2026-06-11 17:04:56.672516+00	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	2e624d5c-4afa-475d-9083-9877614d6d06
+4c0d2dd3-5e5e-408d-9795-36a1b8c710f8	2026-06-11 18:17:03.709516+00	8d71e52f-e705-4a32-9b38-40223ef36869	db488050-f420-4024-830b-bc6b7507ac94
+f98d6aea-1e00-4501-9fec-3bd7b8484fd3	2026-06-11 18:17:03.76446+00	8d71e52f-e705-4a32-9b38-40223ef36869	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+c0897929-03e7-4163-9717-3f2e589bf864	2026-06-11 18:17:27.180668+00	032e3493-7e12-4946-bd36-c17b728ccd66	db488050-f420-4024-830b-bc6b7507ac94
+ee6e11d1-6ff3-4dd0-8796-d17429eee21d	2026-06-11 18:17:27.234517+00	2d897011-eaba-4425-83e6-75fcc271a691	db488050-f420-4024-830b-bc6b7507ac94
+a88f99d2-d107-4969-b47a-57a866c7a49e	2026-06-11 18:17:27.287683+00	032e3493-7e12-4946-bd36-c17b728ccd66	27517d56-3f32-4ff1-a77e-ec55d96f903a
+4b12521b-05d4-49b4-ba9b-ba6b0f00632f	2026-06-11 18:17:27.345902+00	2d897011-eaba-4425-83e6-75fcc271a691	27517d56-3f32-4ff1-a77e-ec55d96f903a
+76b08692-0acd-4458-960b-d33891fda0bc	2026-06-11 18:20:16.246992+00	f0d6ecbc-5bf7-4388-a8af-f137134c374a	db488050-f420-4024-830b-bc6b7507ac94
+f2be4b88-0b04-4e8a-9e7b-538c8946f6ca	2026-06-11 18:20:16.305935+00	324e5a64-6a9c-41ad-bfe6-f59182af1ebe	db488050-f420-4024-830b-bc6b7507ac94
+4b51cfe7-4e1f-4b09-9145-524709f98df9	2026-06-11 18:20:16.372743+00	f0d6ecbc-5bf7-4388-a8af-f137134c374a	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+3c35661a-4e5c-480f-bb84-024f60a0b262	2026-06-11 18:20:16.442032+00	324e5a64-6a9c-41ad-bfe6-f59182af1ebe	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+1edc1245-0631-40a2-badb-3c89270156f6	2026-06-11 20:54:38.52593+00	f07b0be6-4071-4b37-988c-13d86bfd21cc	0289dffa-d174-4241-95e2-a6e004cfa72c
+c13bd0c2-cf66-4f29-bf95-64604c424262	2026-06-11 20:54:38.586032+00	8f45415d-edce-47ab-be91-1b325b5d763f	0289dffa-d174-4241-95e2-a6e004cfa72c
+76ebdf77-f68e-40c6-94cb-875ecaa34b1d	2026-06-11 20:54:38.752154+00	8f45415d-edce-47ab-be91-1b325b5d763f	27517d56-3f32-4ff1-a77e-ec55d96f903a
+7e3dbdfd-d7d8-4717-aed7-40e8ad8dfcfc	2026-06-11 20:54:38.829733+00	f07b0be6-4071-4b37-988c-13d86bfd21cc	27517d56-3f32-4ff1-a77e-ec55d96f903a
+a13f0a8b-9ad7-4836-a985-76bd98e63f16	2026-06-11 20:55:17.254665+00	bd8db874-bd1a-4f65-9fb1-6c8116845e16	0289dffa-d174-4241-95e2-a6e004cfa72c
+aa8efcd5-cc05-4d5d-aeab-099dbb23aa00	2026-06-11 20:55:17.365136+00	4bc171e0-37ed-45de-a893-8fbc7e23fb9f	0289dffa-d174-4241-95e2-a6e004cfa72c
+93ef2c33-ae10-451a-8996-ff7f2c362169	2026-06-11 20:55:17.486949+00	bd8db874-bd1a-4f65-9fb1-6c8116845e16	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+6a545837-4ff5-466a-8cff-c425de8cfb3c	2026-06-11 20:55:17.586711+00	4bc171e0-37ed-45de-a893-8fbc7e23fb9f	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 \.
 
 
 --
--- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: conversations; Type: TABLE DATA; Schema: public; Owner: mentorlink
+--
+
+COPY public.conversations (id, created_at, updated_at, deleted_at) FROM stdin;
+c6adebb0-838a-4574-ae2b-332258d320db	2026-06-10 14:25:31.02682+00	2026-06-10 14:25:31.026856+00	\N
+6f543bb5-f963-4abf-be67-017313aa693a	2026-06-10 14:25:32.24197+00	2026-06-10 14:25:32.242049+00	\N
+aa3c0b6d-7d42-4f34-8b81-e907c32f82a5	2026-06-10 14:25:33.669988+00	2026-06-10 14:25:33.670078+00	\N
+e2c82824-1eb6-4cc9-9e17-470cf927e6b0	2026-06-10 14:25:34.599715+00	2026-06-10 14:25:34.599748+00	\N
+f6247269-527c-4758-a721-d4f334b9d278	2026-06-10 14:25:36.14995+00	2026-06-10 14:25:36.149987+00	\N
+cec86833-fedb-4c98-8c71-70409ef56abf	2026-06-10 17:12:26.96717+00	2026-06-10 17:12:26.967187+00	\N
+d9e83586-f916-4f41-8203-7cfd7d44d018	2026-06-11 15:33:31.70353+00	2026-06-11 15:33:31.703555+00	\N
+73dec969-ad14-413e-9151-28dfdcad917c	2026-06-11 15:45:14.137976+00	2026-06-11 15:45:14.137992+00	\N
+a3bbcaeb-e60b-4fdf-b03f-d88dcf00549e	2026-06-11 16:04:55.608692+00	2026-06-11 16:04:55.608812+00	\N
+b9aa586f-25e1-442e-8966-04f97cac29e0	2026-06-11 17:04:51.815671+00	2026-06-11 17:04:51.815703+00	\N
+707c9a99-965b-457d-8795-a991136438d3	2026-06-11 17:04:53.098674+00	2026-06-11 17:04:53.098712+00	\N
+cad3c041-8738-4441-9dbf-9b58d15fa1ae	2026-06-11 17:04:54.513695+00	2026-06-11 17:04:54.513717+00	\N
+1d2d0710-2060-427d-95c3-71a04ad40cf8	2026-06-11 17:04:55.731888+00	2026-06-11 17:04:55.731939+00	\N
+3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	2026-06-11 17:04:56.551009+00	2026-06-11 17:04:56.551044+00	\N
+8d71e52f-e705-4a32-9b38-40223ef36869	2026-06-11 18:17:03.644009+00	2026-06-11 18:17:03.644048+00	\N
+032e3493-7e12-4946-bd36-c17b728ccd66	2026-06-11 18:17:27.108333+00	2026-06-11 18:17:27.108365+00	\N
+2d897011-eaba-4425-83e6-75fcc271a691	2026-06-11 18:17:27.137838+00	2026-06-11 18:17:27.137863+00	\N
+f0d6ecbc-5bf7-4388-a8af-f137134c374a	2026-06-11 18:20:16.175013+00	2026-06-11 18:20:16.17504+00	\N
+324e5a64-6a9c-41ad-bfe6-f59182af1ebe	2026-06-11 18:20:16.234534+00	2026-06-11 18:20:16.234561+00	\N
+f07b0be6-4071-4b37-988c-13d86bfd21cc	2026-06-11 20:54:38.446127+00	2026-06-11 20:54:38.446149+00	\N
+8f45415d-edce-47ab-be91-1b325b5d763f	2026-06-11 20:54:38.466586+00	2026-06-11 20:54:38.466623+00	\N
+bd8db874-bd1a-4f65-9fb1-6c8116845e16	2026-06-11 20:55:17.033287+00	2026-06-11 20:55:17.033326+00	\N
+4bc171e0-37ed-45de-a893-8fbc7e23fb9f	2026-06-11 20:55:17.083123+00	2026-06-11 20:55:17.083155+00	\N
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
@@ -1743,7 +950,35 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 
 
 --
--- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: mentorlink
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	contenttypes	contenttype
+5	sessions	session
+6	token_blacklist	blacklistedtoken
+7	token_blacklist	outstandingtoken
+8	accounts	user
+9	profiles	skill
+10	profiles	profile
+11	profiles	availabilityslot
+12	profiles	userskill
+13	mentoring	mentorshippost
+14	mentoring	match
+15	chat	conversation
+16	chat	conversationmember
+17	chat	message
+18	notifications	notification
+19	onboarding	verificationdocument
+20	mentoring	review
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
@@ -1789,7 +1024,7 @@ COPY public.django_migrations (id, app, name, applied) FROM stdin;
 
 
 --
--- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
@@ -1798,7 +1033,26 @@ sm7vnvnqqr28dgb3muqsr6kct0eboxld	.eJxVzMsOwiAQheF3YW3JwEBhXLr3GZqBAVs1bdLLyvju2q
 
 
 --
--- Data for Name: mentorship_posts; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: mentorlink
+--
+
+COPY public.matches (id, created_at, updated_at, deleted_at, compatibility_score, status, matched_at, mentee_id, mentor_id, offer_id, request_id) FROM stdin;
+d1ccb750-5cff-433e-af22-e5da0c76b1a7	2026-06-10 14:25:30.125632+00	2026-06-11 17:04:51.175848+00	\N	85.5	PENDING	2026-06-10 14:25:13.858442+00	3f1f157d-98f6-4907-8c7c-165e573a186a	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	c3fb5fb5-65e4-482d-8b02-3d43a6e07604	32933d29-3c36-4355-b3ed-7262e6dc3cb0
+729ebb4c-d6c5-4515-9d7e-ccf87cf668a0	2026-06-10 14:25:30.26604+00	2026-06-11 17:04:51.416203+00	\N	92	ACCEPTED	2026-06-07 14:25:13.858442+00	a097155f-18d3-401f-b023-a0e05b8a6753	e876f033-f143-4f4b-9adc-71642419144a	89fb4e17-f6ef-4c3a-942d-c770803925db	43e607af-f3d7-4668-b8ed-4450c4ec8501
+3147eb6e-86a9-4dea-9a48-bd75a4bbfac8	2026-06-10 14:25:30.421272+00	2026-06-11 17:04:51.472563+00	\N	78	ACCEPTED	2026-06-04 14:25:13.858442+00	3f1f157d-98f6-4907-8c7c-165e573a186a	7d28b09c-b8fd-45bf-806d-ad82d4884774	9f2c7ea6-484e-4b8b-81e0-d75ef4ee241e	\N
+4d1a5c0a-b84b-403b-b6d9-8dd412065a3f	2026-06-10 14:25:30.552605+00	2026-06-11 17:04:51.539456+00	\N	65	PENDING	2026-06-01 14:25:13.858442+00	2e624d5c-4afa-475d-9083-9877614d6d06	02d56625-7584-447e-8ad0-838c2beeaaf4	0bc73ee9-88d4-47ce-a072-cd77aab3c0bd	a59b5500-b50a-492a-8601-e7ab2f88b540
+08242230-05c5-4f04-b41a-18e6ea54559b	2026-06-10 14:25:30.663322+00	2026-06-11 17:04:51.604753+00	\N	71	ACCEPTED	2026-05-29 14:25:13.858442+00	717f97b9-6de0-4c33-8c5c-61c9abdebed4	d5626e1d-fd73-4d98-8086-552536eadf39	bb632acc-d1e1-47d3-86f9-32484f9bffdd	14b0554b-06b5-4acd-8258-9bcae096eacd
+ac6f5344-2544-4f02-9a98-c4ac871b7234	2026-06-10 14:25:30.785512+00	2026-06-11 17:04:51.673299+00	\N	88	FINISHED	2026-05-26 14:25:13.858442+00	a097155f-18d3-401f-b023-a0e05b8a6753	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	d50cdd95-63e8-4e88-a868-8900fa07777c	\N
+b3d8fc07-e68a-4470-8c6d-9801184492c0	2026-06-10 14:25:30.915188+00	2026-06-11 17:04:51.737029+00	\N	45	REJECTED	2026-05-23 14:25:13.858442+00	2e624d5c-4afa-475d-9083-9877614d6d06	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363	84f078d6-1436-4b7a-a84e-3775b3148f3e	\N
+5e1268af-d7f2-47c8-ab02-effa59a0786a	2026-06-11 17:11:54.818367+00	2026-06-11 17:11:54.818391+00	\N	49.5	PENDING	2026-06-11 17:11:54.818445+00	3f1f157d-98f6-4907-8c7c-165e573a186a	27517d56-3f32-4ff1-a77e-ec55d96f903a	10c91a51-8cb5-49df-9c5f-4a656d476bea	\N
+d5c12c10-c2e0-4774-9d23-1d0414c4faf0	2026-06-11 17:11:54.891385+00	2026-06-11 17:11:54.891406+00	\N	29.67	PENDING	2026-06-11 17:11:54.89145+00	a097155f-18d3-401f-b023-a0e05b8a6753	27517d56-3f32-4ff1-a77e-ec55d96f903a	10c91a51-8cb5-49df-9c5f-4a656d476bea	\N
+affbcefc-b9f4-4596-921b-f2d2ab2fd315	2026-06-11 17:11:54.984802+00	2026-06-11 17:11:54.984821+00	\N	25.33	PENDING	2026-06-11 17:11:54.984859+00	2e624d5c-4afa-475d-9083-9877614d6d06	27517d56-3f32-4ff1-a77e-ec55d96f903a	10c91a51-8cb5-49df-9c5f-4a656d476bea	\N
+c55cc5d6-f16c-4cd0-9aed-9031a7a81b8b	2026-06-11 17:11:55.083036+00	2026-06-11 17:11:55.08313+00	\N	19.71	PENDING	2026-06-11 17:11:55.083202+00	717f97b9-6de0-4c33-8c5c-61c9abdebed4	27517d56-3f32-4ff1-a77e-ec55d96f903a	10c91a51-8cb5-49df-9c5f-4a656d476bea	\N
+\.
+
+
+--
+-- Data for Name: mentorship_posts; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.mentorship_posts (id, created_at, updated_at, deleted_at, type, subject, description, format, status, creator_id) FROM stdin;
@@ -1822,45 +1076,27 @@ d43cd568-4f88-46c3-b928-d58bd86e94f3	2026-06-10 14:25:29.943633+00	2026-06-10 14
 84c49969-096d-4b99-98f1-2c8fd92b7406	2026-06-10 14:25:30.064166+00	2026-06-10 14:25:30.064184+00	\N	REQUEST	React.js Learning Partner	Looking for someone to learn React with.	BOTH	OPEN	717f97b9-6de0-4c33-8c5c-61c9abdebed4
 d8b2ab92-a078-43b1-9b18-fa13be4f48bb	2026-06-10 17:49:37.895619+00	2026-06-10 17:49:37.895656+00	\N	OFFER	bhjk,lm	hijokplé	ONLINE	OPEN	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 ab6af5cc-90cf-4f15-ae18-4b7a9a8b2efc	2026-06-10 18:09:10.948289+00	2026-06-10 18:09:10.948305+00	\N	OFFER	Alex		ONLINE	OPEN	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+10c91a51-8cb5-49df-9c5f-4a656d476bea	2026-06-11 17:11:31.344944+00	2026-06-11 17:11:31.344959+00	\N	OFFER	Python & JavaScript Mentoring	I can help with Python and JavaScript programming.	ONLINE	OPEN	27517d56-3f32-4ff1-a77e-ec55d96f903a
 \.
 
 
 --
--- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.matches (id, created_at, updated_at, deleted_at, compatibility_score, status, matched_at, mentee_id, mentor_id, offer_id, request_id) FROM stdin;
-d1ccb750-5cff-433e-af22-e5da0c76b1a7	2026-06-10 14:25:30.125632+00	2026-06-10 14:25:30.12567+00	\N	85.5	PENDING	2026-06-10 14:25:13.858442+00	3f1f157d-98f6-4907-8c7c-165e573a186a	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	c3fb5fb5-65e4-482d-8b02-3d43a6e07604	32933d29-3c36-4355-b3ed-7262e6dc3cb0
-729ebb4c-d6c5-4515-9d7e-ccf87cf668a0	2026-06-10 14:25:30.26604+00	2026-06-10 14:25:30.266077+00	\N	92	ACCEPTED	2026-06-07 14:25:13.858442+00	a097155f-18d3-401f-b023-a0e05b8a6753	e876f033-f143-4f4b-9adc-71642419144a	89fb4e17-f6ef-4c3a-942d-c770803925db	43e607af-f3d7-4668-b8ed-4450c4ec8501
-3147eb6e-86a9-4dea-9a48-bd75a4bbfac8	2026-06-10 14:25:30.421272+00	2026-06-10 14:25:30.421309+00	\N	78	ACCEPTED	2026-06-04 14:25:13.858442+00	3f1f157d-98f6-4907-8c7c-165e573a186a	7d28b09c-b8fd-45bf-806d-ad82d4884774	9f2c7ea6-484e-4b8b-81e0-d75ef4ee241e	\N
-4d1a5c0a-b84b-403b-b6d9-8dd412065a3f	2026-06-10 14:25:30.552605+00	2026-06-10 14:25:30.552637+00	\N	65	PENDING	2026-06-01 14:25:13.858442+00	2e624d5c-4afa-475d-9083-9877614d6d06	02d56625-7584-447e-8ad0-838c2beeaaf4	0bc73ee9-88d4-47ce-a072-cd77aab3c0bd	a59b5500-b50a-492a-8601-e7ab2f88b540
-08242230-05c5-4f04-b41a-18e6ea54559b	2026-06-10 14:25:30.663322+00	2026-06-10 14:25:30.663358+00	\N	71	ACCEPTED	2026-05-29 14:25:13.858442+00	717f97b9-6de0-4c33-8c5c-61c9abdebed4	d5626e1d-fd73-4d98-8086-552536eadf39	bb632acc-d1e1-47d3-86f9-32484f9bffdd	14b0554b-06b5-4acd-8258-9bcae096eacd
-ac6f5344-2544-4f02-9a98-c4ac871b7234	2026-06-10 14:25:30.785512+00	2026-06-10 14:25:30.78555+00	\N	88	FINISHED	2026-05-26 14:25:13.858442+00	a097155f-18d3-401f-b023-a0e05b8a6753	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	d50cdd95-63e8-4e88-a868-8900fa07777c	\N
-b3d8fc07-e68a-4470-8c6d-9801184492c0	2026-06-10 14:25:30.915188+00	2026-06-10 14:25:30.915201+00	\N	45	REJECTED	2026-05-23 14:25:13.858442+00	2e624d5c-4afa-475d-9083-9877614d6d06	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363	84f078d6-1436-4b7a-a84e-3775b3148f3e	\N
-\.
-
-
---
--- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: messages; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.messages (id, created_at, updated_at, deleted_at, content, read_at, conversation_id, sender_id) FROM stdin;
 6106a5de-7f9a-43a9-8ffb-8f3c5aaffd87	2026-06-10 15:41:30.8807+00	2026-06-10 15:41:30.88072+00	\N	Test message from API at 16:41:30	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 f5b5deb0-98cd-42cb-84ab-04c3702f5d11	2026-05-28 12:25:13.858442+00	2026-06-10 14:25:31.191353+00	\N	Hi Bob! I saw your request for a Python mentor. I'd be happy to help you!	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 89224ed1-51eb-4507-b119-ccd0c6b652f9	2026-06-10 15:42:52.509187+00	2026-06-10 15:42:52.509211+00	\N	Test depuis le navigateur virtuel	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
-758608b6-2fb0-4a82-a9a2-7ea0e0f115b4	2026-05-28 13:25:13.858442+00	2026-06-10 14:25:31.334786+00	\N	Hey Alice! That would be great! I'm really struggling with Python classes and OOP.	\N	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
 d1066d1b-1bd5-47a9-b7db-70980960233b	2026-06-10 16:07:57.993807+00	2026-06-10 16:07:57.993822+00	\N	Bonjour via WebSocket!	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 d8d70f86-8739-4c30-bf76-dbcfdc58acad	2026-05-28 14:25:13.858442+00	2026-06-10 14:25:31.479511+00	\N	No worries, we all start somewhere. Let's begin with the basics of Python syntax and gradually move to OOP. Are you free this Monday?	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 45821a7d-2ad7-421e-8412-ecae34b9a165	2026-06-10 16:28:31.984819+00	2026-06-10 16:28:31.984847+00	\N	Message test depuis le script!	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
-3564aa81-462f-437e-ab7d-b1556dcd8b19	2026-05-28 18:25:13.858442+00	2026-06-10 14:25:31.62239+00	\N	Yes, Monday works for me! I'm free from 10am to 12pm.	\N	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
 a3fc4a96-15f8-412c-b021-d81e3be146c6	2026-06-10 16:28:32.069428+00	2026-06-10 16:28:32.069443+00	\N	Hello via WebSocket!	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 c467baca-6b72-4645-96ec-9511acfc66c0	2026-05-28 20:25:13.858442+00	2026-06-10 14:25:31.766387+00	\N	Perfect! Let's meet Monday at 10am. I'll send you a Google Meet link. For the first session, please review Python data types and loops.	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 08f87e25-b4fd-42df-b5e4-700b71b9df6e	2026-06-10 16:31:20.09071+00	2026-06-10 16:31:20.090729+00	\N	Test message via WS!	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
-97bd3c89-6324-4961-99ce-5b9a4c6706d3	2026-05-28 21:25:13.858442+00	2026-06-10 14:25:31.89911+00	\N	Got it, I'll review those. Thanks so much Alice!	\N	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
 b7cad75c-311e-4b37-9d25-63d9adac29fb	2026-06-10 16:31:20.186929+00	2026-06-10 16:31:20.186942+00	\N	Message via REST API!	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 2f17d7e6-9dd4-4f36-8cca-93be0cf8a30e	2026-05-31 13:25:13.858442+00	2026-06-10 14:25:32.009311+00	\N	Great session today Bob! You did well with the exercises. For next time, practice classes and inheritance.	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 e9e087bc-996e-48a8-927c-d234e4eb4a19	2026-06-10 17:12:27.366227+00	2026-06-10 17:12:27.366243+00	\N	Salut	\N	cec86833-fedb-4c98-8c71-70409ef56abf	c156fde9-c5db-49d6-bd58-2844fd4ef021
-b1bfc8e0-9711-4bce-b55d-82588792374c	2026-05-31 14:25:13.858442+00	2026-06-10 14:25:32.131128+00	\N	Thanks Alice! The session was really helpful. I'll practice classes this week.	\N	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
 b0b423dd-e0e6-469c-8387-7536e3060048	2026-06-10 17:51:50.558445+00	2026-06-10 17:51:50.558464+00	\N	E,fo	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 3ce145a9-1a3e-4a89-aed3-b090b8e2e882	2026-06-02 11:25:13.858442+00	2026-06-10 14:25:32.397245+00	\N	Hey Dave! I saw you need help with web development. I'm a full-stack dev, happy to mentor you!	\N	6f543bb5-f963-4abf-be67-017313aa693a	e876f033-f143-4f4b-9adc-71642419144a
 cfcba480-4d27-4003-8011-5a4bb3396508	2026-06-10 17:51:55.536718+00	2026-06-10 17:51:55.536743+00	\N	f	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
@@ -1871,7 +1107,6 @@ ffb05922-087f-4a7c-8727-64dea88a3229	2026-06-11 15:27:12.890114+00	2026-06-11 15
 51b0afc1-6707-4b8a-9eb3-dfca23b5a70b	2026-06-02 14:25:13.858442+00	2026-06-10 14:25:32.795802+00	\N	I know some HTML and CSS from class, but JavaScript is new to me.	\N	6f543bb5-f963-4abf-be67-017313aa693a	a097155f-18d3-401f-b023-a0e05b8a6753
 e15fa150-c195-4077-adb2-69cfebb25774	2026-06-11 15:33:32.008928+00	2026-06-11 15:33:32.008944+00	\N	CC	\N	d9e83586-f916-4f41-8203-7cfd7d44d018	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 09ba84dc-3038-48a5-b61d-30344703db0d	2026-06-02 16:25:13.858442+00	2026-06-10 14:25:32.93941+00	\N	Perfect! That's a good start. Let me create a roadmap for you. First two weeks: JavaScript fundamentals. Then we'll move to React.	\N	6f543bb5-f963-4abf-be67-017313aa693a	e876f033-f143-4f4b-9adc-71642419144a
-32dffcba-2c5f-4d08-b352-d70ae6b649c9	2026-06-11 15:45:33.769483+00	2026-06-11 15:45:33.769498+00	\N	Salut Alex. C'est Alice	\N	73dec969-ad14-413e-9151-28dfdcad917c	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 62f877aa-3e30-450b-9c73-fdfa3a3b3814	2026-06-02 17:25:13.858442+00	2026-06-10 14:25:33.050281+00	\N	Here's a good resource: https://javascript.info/ — start with the first 5 chapters.	\N	6f543bb5-f963-4abf-be67-017313aa693a	e876f033-f143-4f4b-9adc-71642419144a
 232eb4c0-1555-4354-9242-814690a38083	2026-06-04 02:25:13.858442+00	2026-06-10 14:25:33.172177+00	\N	Thanks Frank! I've started reading. The explanations are really clear.	\N	6f543bb5-f963-4abf-be67-017313aa693a	a097155f-18d3-401f-b023-a0e05b8a6753
 d55679c1-865b-406e-bad1-dff766ac49a7	2026-06-08 13:25:13.858442+00	2026-06-10 14:25:33.304927+00	\N	Great progress Dave! Your JavaScript is coming along nicely. Next week we start React!	\N	6f543bb5-f963-4abf-be67-017313aa693a	e876f033-f143-4f4b-9adc-71642419144a
@@ -1894,45 +1129,149 @@ e8c52bcc-a720-4f25-89ad-60d75deaaca4	2026-06-09 08:25:13.858442+00	2026-06-10 14
 f1780d26-3476-4ca5-a24a-3a3f097ffd83	2026-06-09 11:25:13.858442+00	2026-06-10 14:25:38.375073+00	\N	That's a great approach! When can we start?	\N	f6247269-527c-4758-a721-d4f334b9d278	2e624d5c-4afa-475d-9083-9877614d6d06
 32825bb6-92ac-4a72-8fa0-79268ebc7fe2	2026-06-09 12:25:13.858442+00	2026-06-10 14:25:38.507925+00	\N	Let's meet this Wednesday at 2pm. I'll prepare a Java security beginner roadmap.	\N	f6247269-527c-4758-a721-d4f334b9d278	02d56625-7584-447e-8ad0-838c2beeaaf4
 a615db17-eeac-4057-bda8-8596099b4e1a	2026-06-09 13:25:13.858442+00	2026-06-10 14:25:38.629551+00	\N	Perfect, see you Wednesday!	\N	f6247269-527c-4758-a721-d4f334b9d278	2e624d5c-4afa-475d-9083-9877614d6d06
-388e2342-4493-424f-b11d-6ca73722abeb	2026-06-11 15:57:05.19724+00	2026-06-11 15:57:05.197257+00	\N	Ok que puis-je faire pour vous ?	\N	73dec969-ad14-413e-9151-28dfdcad917c	cd9bd543-becf-4a12-b672-47bcd0d4c95e
 2c441fd3-1681-420f-8fc7-3d385ce32850	2026-06-11 16:04:56.044039+00	2026-06-11 16:04:56.044055+00	\N	cc	\N	a3bbcaeb-e60b-4fdf-b03f-d88dcf00549e	cd9bd543-becf-4a12-b672-47bcd0d4c95e
-9e57b184-9fdb-4160-8da5-f246f6a9c3cb	2026-06-11 16:05:53.412755+00	2026-06-11 16:05:53.412771+00	\N	J'ai des difficulté en Mathématique	\N	73dec969-ad14-413e-9151-28dfdcad917c	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+fcea23fc-6839-4f77-9e6d-08afc53070e0	2026-05-29 15:04:43.009454+00	2026-06-11 17:04:52.013246+00	\N	Hi Bob! I saw your request for a Python mentor. I'd be happy to help you!	\N	b9aa586f-25e1-442e-8966-04f97cac29e0	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+48596780-3c00-4d80-a70b-c040842ae5e3	2026-05-29 17:04:43.009454+00	2026-06-11 17:04:52.289274+00	\N	No worries, we all start somewhere. Let's begin with the basics of Python syntax and gradually move to OOP. Are you free this Monday?	\N	b9aa586f-25e1-442e-8966-04f97cac29e0	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+b5b02d79-9aa9-4438-a7fb-bda903cc2631	2026-05-29 23:04:43.009454+00	2026-06-11 17:04:52.532738+00	\N	Perfect! Let's meet Monday at 10am. I'll send you a Google Meet link. For the first session, please review Python data types and loops.	\N	b9aa586f-25e1-442e-8966-04f97cac29e0	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+1c096e9e-3192-4178-8425-5e666ca37566	2026-06-01 16:04:43.009454+00	2026-06-11 17:04:52.820076+00	\N	Great session today Bob! You did well with the exercises. For next time, practice classes and inheritance.	\N	b9aa586f-25e1-442e-8966-04f97cac29e0	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+5511a314-039e-453d-bd23-79f6540a87cb	2026-06-03 14:04:43.009454+00	2026-06-11 17:04:53.273968+00	\N	Hey Dave! I saw you need help with web development. I'm a full-stack dev, happy to mentor you!	\N	707c9a99-965b-457d-8795-a991136438d3	e876f033-f143-4f4b-9adc-71642419144a
+bc4f3081-9056-4116-a46f-8da7603f35ec	2026-06-03 15:04:43.009454+00	2026-06-11 17:04:53.407221+00	\N	Awesome Frank! I've been trying to build a portfolio site but I'm stuck.	\N	707c9a99-965b-457d-8795-a991136438d3	a097155f-18d3-401f-b023-a0e05b8a6753
+7a913e13-90c0-4976-91db-df305d10805c	2026-06-03 16:04:43.009454+00	2026-06-11 17:04:53.519001+00	\N	Let's start with the basics. Have you worked with HTML, CSS, and JavaScript yet?	\N	707c9a99-965b-457d-8795-a991136438d3	e876f033-f143-4f4b-9adc-71642419144a
+8806b6fe-888f-46fe-8fea-c1d1d13603db	2026-06-03 17:04:43.009454+00	2026-06-11 17:04:53.639311+00	\N	I know some HTML and CSS from class, but JavaScript is new to me.	\N	707c9a99-965b-457d-8795-a991136438d3	a097155f-18d3-401f-b023-a0e05b8a6753
+780a9140-589a-4680-8763-12ba995339c1	2026-06-03 19:04:43.009454+00	2026-06-11 17:04:53.761654+00	\N	Perfect! That's a good start. Let me create a roadmap for you. First two weeks: JavaScript fundamentals. Then we'll move to React.	\N	707c9a99-965b-457d-8795-a991136438d3	e876f033-f143-4f4b-9adc-71642419144a
+ee460b65-9be8-4da5-95dc-abc183906b73	2026-06-03 20:04:43.009454+00	2026-06-11 17:04:53.872293+00	\N	Here's a good resource: https://javascript.info/ — start with the first 5 chapters.	\N	707c9a99-965b-457d-8795-a991136438d3	e876f033-f143-4f4b-9adc-71642419144a
+87e46a3f-d132-44e1-9832-dd489a5be15e	2026-06-05 05:04:43.009454+00	2026-06-11 17:04:54.005288+00	\N	Thanks Frank! I've started reading. The explanations are really clear.	\N	707c9a99-965b-457d-8795-a991136438d3	a097155f-18d3-401f-b023-a0e05b8a6753
+57e5108b-c178-4ef4-97dc-5f02bbfe81d6	2026-06-09 16:04:43.009454+00	2026-06-11 17:04:54.137613+00	\N	Great progress Dave! Your JavaScript is coming along nicely. Next week we start React!	\N	707c9a99-965b-457d-8795-a991136438d3	e876f033-f143-4f4b-9adc-71642419144a
+7eccab2b-2a4f-4c27-88c6-911c86377538	2026-06-09 17:04:43.009454+00	2026-06-11 17:04:54.247976+00	\N	Can't wait! I built a small calculator project with vanilla JS this week.	\N	707c9a99-965b-457d-8795-a991136438d3	a097155f-18d3-401f-b023-a0e05b8a6753
+397e5ee1-c8cc-42d0-803a-55d0bedd2d99	2026-06-09 19:04:43.009454+00	2026-06-11 17:04:54.381484+00	\N	That's excellent! Share it with me, I'll review the code.	\N	707c9a99-965b-457d-8795-a991136438d3	e876f033-f143-4f4b-9adc-71642419144a
+865a73c8-4572-45aa-a730-b7494eec67e7	2026-06-06 13:04:43.009454+00	2026-06-11 17:04:54.713578+00	\N	Hi Bob! I'm available to help you with mathematics. What topics are you working on?	\N	cad3c041-8738-4441-9dbf-9b58d15fa1ae	7d28b09c-b8fd-45bf-806d-ad82d4884774
+62808fbd-d13e-4ca3-80c5-f73d0a55eb82	2026-06-06 14:04:43.009454+00	2026-06-11 17:04:54.846163+00	\N	Hi Carol! I need help with statistics and probability for my data science class.	\N	cad3c041-8738-4441-9dbf-9b58d15fa1ae	3f1f157d-98f6-4907-8c7c-165e573a186a
+41154d9d-2a23-48fd-9dcd-041e5bb9a8bb	2026-06-06 15:04:43.009454+00	2026-06-11 17:04:54.967763+00	\N	Great, statistics is my favorite! Let's start with descriptive statistics and probability distributions.	\N	cad3c041-8738-4441-9dbf-9b58d15fa1ae	7d28b09c-b8fd-45bf-806d-ad82d4884774
+770abefe-2369-46fc-bae4-2c11dab520d9	2026-06-06 17:04:43.009454+00	2026-06-11 17:04:55.090062+00	\N	Perfect, I have an exam in 3 weeks so the sooner the better!	\N	cad3c041-8738-4441-9dbf-9b58d15fa1ae	3f1f157d-98f6-4907-8c7c-165e573a186a
+3da5424f-b27a-4620-8845-4c1ff1f753b2	2026-06-06 21:04:43.009454+00	2026-06-11 17:04:55.465924+00	\N	We have plenty of time. I'll prepare some exercises for our first session.	\N	cad3c041-8738-4441-9dbf-9b58d15fa1ae	7d28b09c-b8fd-45bf-806d-ad82d4884774
+c55a7cd1-5c20-4913-bbcc-1cc24ee24d49	2026-06-06 23:04:43.009454+00	2026-06-11 17:04:55.599218+00	\N	Thank you Carol! See you Thursday.	\N	cad3c041-8738-4441-9dbf-9b58d15fa1ae	3f1f157d-98f6-4907-8c7c-165e573a186a
+e0f44371-abf9-408d-a101-e84cf0d3d9e8	2026-06-08 12:04:43.009454+00	2026-06-11 17:04:55.908591+00	\N	Hi Iris! I saw we matched. Even though my expertise is data science, I can help you with Python basics which is useful for web dev too!	\N	1d2d0710-2060-427d-95c3-71a04ad40cf8	d5626e1d-fd73-4d98-8086-552536eadf39
+d92311ec-9219-478e-9e81-d376f567e21d	2026-06-08 13:04:43.009454+00	2026-06-11 17:04:56.030478+00	\N	Hi James! That sounds good. I actually want to understand how to make data visualizations for my portfolio.	\N	1d2d0710-2060-427d-95c3-71a04ad40cf8	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+c78112eb-904f-4167-b7ef-0f853eb2ebf3	2026-06-08 14:04:43.009454+00	2026-06-11 17:04:56.152872+00	\N	Perfect! Python has great libraries for data viz. Let me show you Matplotlib and Plotly.	\N	1d2d0710-2060-427d-95c3-71a04ad40cf8	d5626e1d-fd73-4d98-8086-552536eadf39
+5162d2a2-55ce-4dff-aba4-4c7b52333ab5	2026-06-08 15:04:43.009454+00	2026-06-11 17:04:56.285609+00	\N	I love design, and I think data visualization combines both design and programming perfectly!	\N	1d2d0710-2060-427d-95c3-71a04ad40cf8	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+64cb5b35-7720-4345-9a64-e1c24a0df65f	2026-06-08 16:04:43.009454+00	2026-06-11 17:04:56.41847+00	\N	Absolutely! Good design is crucial for data viz. We'll work on both the technical and visual aspects.	\N	1d2d0710-2060-427d-95c3-71a04ad40cf8	d5626e1d-fd73-4d98-8086-552536eadf39
+dc56a2e0-3413-4ae9-afad-825b9d7a0f69	2026-06-10 11:04:43.009454+00	2026-06-11 17:04:56.73895+00	\N	Hello Grace! I saw you need a Java tutor, but I also offer cybersecurity mentoring if you're interested.	\N	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	02d56625-7584-447e-8ad0-838c2beeaaf4
+d3fcf043-b986-4b2f-8cf9-1f6dde487562	2026-06-10 12:04:43.009454+00	2026-06-11 17:04:56.8605+00	\N	Hi Henry! Cybersecurity sounds really interesting! Can I try both Java and security?	\N	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	2e624d5c-4afa-475d-9083-9877614d6d06
+9f96d430-2ae9-46e2-8f73-31459dfa46bd	2026-06-10 13:04:43.009454+00	2026-06-11 17:04:57.004683+00	\N	Of course! Java is actually widely used in security. We can learn Java by building security tools!	\N	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	02d56625-7584-447e-8ad0-838c2beeaaf4
+8f5475e4-8dc1-4728-be9d-09832ca07d84	2026-06-10 14:04:43.009454+00	2026-06-11 17:04:57.115381+00	\N	That's a great approach! When can we start?	\N	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	2e624d5c-4afa-475d-9083-9877614d6d06
+4c77d0bc-7730-4194-98f7-8e729d43d935	2026-06-10 15:04:43.009454+00	2026-06-11 17:04:57.890118+00	\N	Let's meet this Wednesday at 2pm. I'll prepare a Java security beginner roadmap.	\N	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	02d56625-7584-447e-8ad0-838c2beeaaf4
+764f8308-2663-494b-8cb8-c6f49f3c9a7c	2026-06-10 16:04:43.009454+00	2026-06-11 17:04:58.011976+00	\N	Perfect, see you Wednesday!	\N	3ba92218-b98c-4eab-84b7-0d76f4cd8b2f	2e624d5c-4afa-475d-9083-9877614d6d06
+32dffcba-2c5f-4d08-b352-d70ae6b649c9	2026-06-11 15:45:33.769483+00	2026-06-11 15:45:33.769498+00	\N	Salut Alex. C'est Alice	2026-06-11 17:24:08.301909+00	73dec969-ad14-413e-9151-28dfdcad917c	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+9e57b184-9fdb-4160-8da5-f246f6a9c3cb	2026-06-11 16:05:53.412755+00	2026-06-11 16:05:53.412771+00	\N	J'ai des difficulté en Mathématique	2026-06-11 17:24:08.301909+00	73dec969-ad14-413e-9151-28dfdcad917c	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+388e2342-4493-424f-b11d-6ca73722abeb	2026-06-11 15:57:05.19724+00	2026-06-11 15:57:05.197257+00	\N	Ok que puis-je faire pour vous ?	2026-06-11 17:26:26.039963+00	73dec969-ad14-413e-9151-28dfdcad917c	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+b6c02c91-5c20-448b-99c1-657757b2bdc6	2026-06-11 17:24:18.142904+00	2026-06-11 17:24:18.142919+00	\N	Ok je vois	2026-06-11 17:26:26.039963+00	73dec969-ad14-413e-9151-28dfdcad917c	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+758608b6-2fb0-4a82-a9a2-7ea0e0f115b4	2026-05-28 13:25:13.858442+00	2026-06-10 14:25:31.334786+00	\N	Hey Alice! That would be great! I'm really struggling with Python classes and OOP.	2026-06-11 17:27:16.501969+00	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
+3564aa81-462f-437e-ab7d-b1556dcd8b19	2026-05-28 18:25:13.858442+00	2026-06-10 14:25:31.62239+00	\N	Yes, Monday works for me! I'm free from 10am to 12pm.	2026-06-11 17:27:16.501969+00	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
+97bd3c89-6324-4961-99ce-5b9a4c6706d3	2026-05-28 21:25:13.858442+00	2026-06-10 14:25:31.89911+00	\N	Got it, I'll review those. Thanks so much Alice!	2026-06-11 17:27:16.501969+00	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
+b1bfc8e0-9711-4bce-b55d-82588792374c	2026-05-31 14:25:13.858442+00	2026-06-10 14:25:32.131128+00	\N	Thanks Alice! The session was really helpful. I'll practice classes this week.	2026-06-11 17:27:16.501969+00	c6adebb0-838a-4574-ae2b-332258d320db	3f1f157d-98f6-4907-8c7c-165e573a186a
+a527b5c7-1965-4ac5-8e19-634b94fa8fc7	2026-05-29 16:04:43.009454+00	2026-06-11 17:04:52.167033+00	\N	Hey Alice! That would be great! I'm really struggling with Python classes and OOP.	2026-06-11 17:27:18.574027+00	b9aa586f-25e1-442e-8966-04f97cac29e0	3f1f157d-98f6-4907-8c7c-165e573a186a
+e6ad4322-755b-40c8-b0af-2723cc75632c	2026-05-29 21:04:43.009454+00	2026-06-11 17:04:52.421662+00	\N	Yes, Monday works for me! I'm free from 10am to 12pm.	2026-06-11 17:27:18.574027+00	b9aa586f-25e1-442e-8966-04f97cac29e0	3f1f157d-98f6-4907-8c7c-165e573a186a
+b0d54fe7-cd06-46b7-9a7a-b545f45de3be	2026-05-30 00:04:43.009454+00	2026-06-11 17:04:52.665173+00	\N	Got it, I'll review those. Thanks so much Alice!	2026-06-11 17:27:18.574027+00	b9aa586f-25e1-442e-8966-04f97cac29e0	3f1f157d-98f6-4907-8c7c-165e573a186a
+fd3d1cc1-2f2f-49a3-9019-508964dc952b	2026-06-01 17:04:43.009454+00	2026-06-11 17:04:52.953393+00	\N	Thanks Alice! The session was really helpful. I'll practice classes this week.	2026-06-11 17:27:18.574027+00	b9aa586f-25e1-442e-8966-04f97cac29e0	3f1f157d-98f6-4907-8c7c-165e573a186a
+30247ce5-7d2c-4acc-9589-9f12a6a26b24	2026-06-11 18:17:03.956819+00	2026-06-11 18:17:03.956844+00	\N	OUI Je suis dispo pour t'aider	\N	8d71e52f-e705-4a32-9b38-40223ef36869	db488050-f420-4024-830b-bc6b7507ac94
+886dd033-b3d0-4e66-91fe-7afef80be488	2026-06-11 18:17:44.975167+00	2026-06-11 18:17:44.975184+00	\N	je suis iteresser	\N	2d897011-eaba-4425-83e6-75fcc271a691	db488050-f420-4024-830b-bc6b7507ac94
+3ad113b3-ad8b-4202-9c6e-e309fb8c5541	2026-06-11 18:20:35.071955+00	2026-06-11 18:20:35.071997+00	\N	je suis interer	2026-06-11 18:21:33.173298+00	324e5a64-6a9c-41ad-bfe6-f59182af1ebe	db488050-f420-4024-830b-bc6b7507ac94
+652a0b28-4996-40ae-b504-73a2e06caab1	2026-06-11 18:21:43.321654+00	2026-06-11 18:21:43.321674+00	\N	ok vous est enregistrer	2026-06-11 18:22:17.312376+00	324e5a64-6a9c-41ad-bfe6-f59182af1ebe	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+9ae479e8-c5b2-45d1-a41e-dda3adfb2dab	2026-06-11 18:25:02.846109+00	2026-06-11 18:25:02.846134+00	\N	gjhjjhjjhjjhkj	\N	c6adebb0-838a-4574-ae2b-332258d320db	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+c6f844ae-fe97-46e2-ac0d-3d0d244f8e53	2026-06-11 20:54:48.974454+00	2026-06-11 20:54:48.974481+00	\N	hdhhhdhd	\N	8f45415d-edce-47ab-be91-1b325b5d763f	0289dffa-d174-4241-95e2-a6e004cfa72c
+775b556f-a2be-47f3-ab06-bbb746f25686	2026-06-11 20:55:31.892795+00	2026-06-11 20:55:31.892819+00	\N	je sui interece	2026-06-11 20:57:41.161804+00	4bc171e0-37ed-45de-a893-8fbc7e23fb9f	0289dffa-d174-4241-95e2-a6e004cfa72c
+23e82346-06b2-44e2-8076-123c00fc4ab5	2026-06-11 20:57:55.890742+00	2026-06-11 20:57:55.890782+00	\N	ok tu es enregistre	\N	4bc171e0-37ed-45de-a893-8fbc7e23fb9f	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+c5b046a0-de0f-48b6-a055-2186af036d88	2026-06-11 20:58:12.966576+00	2026-06-11 20:58:12.966602+00	\N	ggg	\N	4bc171e0-37ed-45de-a893-8fbc7e23fb9f	0289dffa-d174-4241-95e2-a6e004cfa72c
 \.
 
 
 --
--- Data for Name: notifications; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: notifications; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.notifications (id, created_at, updated_at, deleted_at, type, title, content, is_read, metadata, user_id) FROM stdin;
-172e4bf9-86e6-4ab4-8a82-fbbaf8ee85dc	2026-06-10 11:25:13.858442+00	2026-06-10 14:25:38.950314+00	\N	MATCH_ACCEPTED	Match Accepted: Dave Traore	Dave Traore has accepted your Java Fundamentals offer. You can now start mentoring!	f	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
-2bcdaec8-28c8-4979-9611-d28bb786658e	2026-06-10 08:25:13.858442+00	2026-06-10 14:25:39.094587+00	\N	NEW_MESSAGE	New message from Bob Kouassi	Bob sent you a message in your conversation.	f	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
-3e62804f-53c0-4db4-8057-461eaae2248c	2026-06-10 05:25:13.858442+00	2026-06-10 14:25:39.205159+00	\N	NEW_MATCH	New Match: Alice Konan	You have been matched with Alice Konan for your Python mentoring request (85.5% compatibility).	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
-6cc62268-32ef-4d61-a5f4-ea1ddf4f9e3c	2026-06-10 02:25:13.858442+00	2026-06-10 14:25:39.349116+00	\N	NEW_MATCH	New Match: Carol Diallo	You have been matched with Carol Diallo for Mathematics Tutoring (78.0% compatibility).	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
-bc13fc50-f392-4cab-b30b-ccaf0b479bba	2026-06-09 23:25:13.858442+00	2026-06-10 14:25:39.47094+00	\N	NEW_MESSAGE	New message from Alice Konan	Alice sent you a message in your conversation.	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
-712d8889-4e7b-421f-8840-9100c97f93b5	2026-06-09 20:25:13.858442+00	2026-06-10 14:25:39.592093+00	\N	NEW_MATCH	New Mentee: Bob Kouassi	Bob Kouassi has been matched with you for Mathematics Tutoring (78.0% compatibility).	f	\N	7d28b09c-b8fd-45bf-806d-ad82d4884774
-073b8539-2546-447a-aaa1-17b37b1a2219	2026-06-09 17:25:13.858442+00	2026-06-10 14:25:39.71462+00	\N	NEW_MESSAGE	New message from Bob Kouassi	Bob sent you a message.	f	\N	7d28b09c-b8fd-45bf-806d-ad82d4884774
-431cee5a-9536-4902-9840-e98cb3b6a92a	2026-06-09 14:25:13.858442+00	2026-06-10 14:25:39.846836+00	\N	NEW_MATCH	New Match: Frank Soro	You have been matched with Frank Soro for Full-Stack Web Development (92.0% compatibility).	f	\N	a097155f-18d3-401f-b023-a0e05b8a6753
-ba43aafa-a611-433f-b271-346fef7e1c41	2026-06-09 11:25:13.858442+00	2026-06-10 14:25:39.957663+00	\N	MATCH_ACCEPTED	Match Accepted!	Frank Soro has accepted your Web Development Help request. Start your mentorship!	t	\N	a097155f-18d3-401f-b023-a0e05b8a6753
-677c42ab-0661-43a9-953c-a251a276be43	2026-06-09 08:25:13.858442+00	2026-06-10 14:25:40.079477+00	\N	NEW_MESSAGE	New message from Frank Soro	Frank sent you a message in your conversation.	t	\N	a097155f-18d3-401f-b023-a0e05b8a6753
-80ba0f4f-9d70-46c1-bbd4-09a45dfa2f04	2026-06-09 05:25:13.858442+00	2026-06-10 14:25:40.190476+00	\N	NEW_MATCH	New Mentee: Dave Traore	Dave Traore has been matched with you for Full-Stack Web Development (92.0% compatibility).	t	\N	e876f033-f143-4f4b-9adc-71642419144a
-e780f2d4-a503-40fe-8c55-77ce3723bf5b	2026-06-09 02:25:13.858442+00	2026-06-10 14:25:40.323321+00	\N	NEW_MESSAGE	New message from Dave Traore	Dave sent you a message.	t	\N	e876f033-f143-4f4b-9adc-71642419144a
-7ae26afb-a560-410c-8691-fbae33d0cb4e	2026-06-08 23:25:13.858442+00	2026-06-10 14:25:40.467321+00	\N	MATCH_REJECTED	Match Rejected: Grace Koffi	Grace Koffi has rejected your Quantum Physics Mentorship offer.	t	\N	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363
-7a45bd06-87fa-4655-934a-da65ba0e9a84	2026-06-08 20:25:13.858442+00	2026-06-10 14:25:40.599972+00	\N	NEW_MATCH	New Mentee: Grace Koffi	Grace Koffi has been matched with you for Cybersecurity 101 (65.0% compatibility).	t	\N	02d56625-7584-447e-8ad0-838c2beeaaf4
-08a9a759-be55-4bb5-84a5-3221c031b5be	2026-06-08 17:25:13.858442+00	2026-06-10 14:25:40.710753+00	\N	NEW_MATCH	New Mentee: Iris Bamba	Iris Bamba has been matched with you for Data Science with Python (71.0% compatibility).	t	\N	d5626e1d-fd73-4d98-8086-552536eadf39
-b1a00354-6bdf-4504-806b-e918dc7e9a7f	2026-06-08 14:25:13.858442+00	2026-06-10 14:25:40.832539+00	\N	NEW_MESSAGE	New message from Iris Bamba	Iris sent you a message.	t	\N	d5626e1d-fd73-4d98-8086-552536eadf39
-9b5ab5af-e809-4eab-bc22-7cc112c24130	2026-06-08 11:25:13.858442+00	2026-06-10 14:25:40.954071+00	\N	NEW_MATCH	New Match: Henry Zadi	You have been matched with Henry Zadi for Cybersecurity 101 (65.0% compatibility).	t	\N	2e624d5c-4afa-475d-9083-9877614d6d06
-9e142a59-692a-4f70-bb64-042d5ee7dfc2	2026-06-08 08:25:13.858442+00	2026-06-10 14:25:41.064445+00	\N	MATCH_REJECTED	Quantum Physics Match Rejected	Your match with Eve NGuessan for Quantum Physics Mentorship has been rejected.	t	\N	2e624d5c-4afa-475d-9083-9877614d6d06
-3c27d9f3-c297-46fc-9f1d-2d9ce0d747a0	2026-06-08 05:25:13.858442+00	2026-06-10 14:25:41.175722+00	\N	NEW_MATCH	New Match: James Toure	You have been matched with James Toure for Data Science with Python (71.0% compatibility).	t	\N	717f97b9-6de0-4c33-8c5c-61c9abdebed4
-02fdecf9-7755-4f30-9c75-79e631df9ef0	2026-06-08 02:25:13.858442+00	2026-06-10 14:25:41.286265+00	\N	NEW_MESSAGE	New message from James Toure	James sent you a message in your conversation.	t	\N	717f97b9-6de0-4c33-8c5c-61c9abdebed4
-55cb7c25-17dc-4d77-9bcd-99f5ff81be55	2026-06-10 14:25:13.858442+00	2026-06-10 14:25:38.762759+00	\N	NEW_MATCH	New Match: Bob Kouassi	You have been matched with Bob Kouassi for Python Mentoring for Beginners (85.5% compatibility).	t	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+abf7001a-e80e-4360-a176-23480fc05d57	2026-06-11 17:04:43.009454+00	2026-06-11 17:04:58.123784+00	\N	NEW_MATCH	New Match: Bob Kouassi	You have been matched with Bob Kouassi for Python Mentoring for Beginners (85.5% compatibility).	t	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+172e4bf9-86e6-4ab4-8a82-fbbaf8ee85dc	2026-06-11 14:04:43.009454+00	2026-06-10 14:25:38.950314+00	\N	MATCH_ACCEPTED	Match Accepted: Dave Traore	Dave Traore has accepted your Java Fundamentals offer. You can now start mentoring!	t	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+761a4b21-6e95-4700-ad99-5fb467c492f9	2026-06-11 14:04:43.009454+00	2026-06-11 17:04:58.277679+00	\N	MATCH_ACCEPTED	Match Accepted: Dave Traore	Dave Traore has accepted your Java Fundamentals offer. You can now start mentoring!	t	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+2bcdaec8-28c8-4979-9611-d28bb786658e	2026-06-11 11:04:43.009454+00	2026-06-10 14:25:39.094587+00	\N	NEW_MESSAGE	New message from Bob Kouassi	Bob sent you a message in your conversation.	t	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+df8d8f4e-791b-419f-8ee4-9c588958ebea	2026-06-11 11:04:43.009454+00	2026-06-11 17:04:58.410663+00	\N	NEW_MESSAGE	New message from Bob Kouassi	Bob sent you a message in your conversation.	t	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+1fcd6380-1649-41d6-a103-f742ac17dad3	2026-06-11 18:17:04.054318+00	2026-06-11 18:17:04.054364+00	\N	NEW_MESSAGE	Nouveau message de Rodolf AGBO	OUI Je suis dispo pour t'aider	f	{"sender_id": "db488050-f420-4024-830b-bc6b7507ac94", "conversation_id": "8d71e52f-e705-4a32-9b38-40223ef36869"}	717f97b9-6de0-4c33-8c5c-61c9abdebed4
 a236c999-47b5-4269-9491-be60c82bfe7a	2026-06-11 16:04:56.183499+00	2026-06-11 16:04:56.183526+00	\N	NEW_MESSAGE	Nouveau message de AGO Alex	cc	f	{"sender_id": "cd9bd543-becf-4a12-b672-47bcd0d4c95e", "conversation_id": "a3bbcaeb-e60b-4fdf-b03f-d88dcf00549e"}	717f97b9-6de0-4c33-8c5c-61c9abdebed4
 a603ca16-d128-4b7c-9ada-32b7a9bf330a	2026-06-11 16:05:53.482267+00	2026-06-11 16:05:53.482286+00	\N	NEW_MESSAGE	Nouveau message de Alice Konan	J'ai des difficulté en Mathématique	f	{"sender_id": "4e8c1fcf-a156-44f2-bf16-9fa3b37d3977", "conversation_id": "73dec969-ad14-413e-9151-28dfdcad917c"}	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+55cb7c25-17dc-4d77-9bcd-99f5ff81be55	2026-06-11 17:04:43.009454+00	2026-06-10 14:25:38.762759+00	\N	NEW_MATCH	New Match: Bob Kouassi	You have been matched with Bob Kouassi for Python Mentoring for Beginners (85.5% compatibility).	t	\N	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+3e62804f-53c0-4db4-8057-461eaae2248c	2026-06-11 08:04:43.009454+00	2026-06-10 14:25:39.205159+00	\N	NEW_MATCH	New Match: Alice Konan	You have been matched with Alice Konan for your Python mentoring request (85.5% compatibility).	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
+56bc0d4b-8508-4748-8752-4205423c52e2	2026-06-11 08:04:43.009454+00	2026-06-11 17:04:58.543143+00	\N	NEW_MATCH	New Match: Alice Konan	You have been matched with Alice Konan for your Python mentoring request (85.5% compatibility).	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
+6cc62268-32ef-4d61-a5f4-ea1ddf4f9e3c	2026-06-11 05:04:43.009454+00	2026-06-10 14:25:39.349116+00	\N	NEW_MATCH	New Match: Carol Diallo	You have been matched with Carol Diallo for Mathematics Tutoring (78.0% compatibility).	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
+2ddb96f3-7ff6-4545-8298-a7c557cac710	2026-06-11 05:04:43.009454+00	2026-06-11 17:04:58.66546+00	\N	NEW_MATCH	New Match: Carol Diallo	You have been matched with Carol Diallo for Mathematics Tutoring (78.0% compatibility).	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
+bc13fc50-f392-4cab-b30b-ccaf0b479bba	2026-06-11 02:04:43.009454+00	2026-06-10 14:25:39.47094+00	\N	NEW_MESSAGE	New message from Alice Konan	Alice sent you a message in your conversation.	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
+3ecb3af6-b8f4-44a9-8b02-5de54dfe1bb9	2026-06-11 02:04:43.009454+00	2026-06-11 17:04:58.787128+00	\N	NEW_MESSAGE	New message from Alice Konan	Alice sent you a message in your conversation.	f	\N	3f1f157d-98f6-4907-8c7c-165e573a186a
+712d8889-4e7b-421f-8840-9100c97f93b5	2026-06-10 23:04:43.009454+00	2026-06-10 14:25:39.592093+00	\N	NEW_MATCH	New Mentee: Bob Kouassi	Bob Kouassi has been matched with you for Mathematics Tutoring (78.0% compatibility).	f	\N	7d28b09c-b8fd-45bf-806d-ad82d4884774
+643701d7-7c8d-46c4-a303-320999438039	2026-06-10 23:04:43.009454+00	2026-06-11 17:04:58.919619+00	\N	NEW_MATCH	New Mentee: Bob Kouassi	Bob Kouassi has been matched with you for Mathematics Tutoring (78.0% compatibility).	f	\N	7d28b09c-b8fd-45bf-806d-ad82d4884774
+073b8539-2546-447a-aaa1-17b37b1a2219	2026-06-10 20:04:43.009454+00	2026-06-10 14:25:39.71462+00	\N	NEW_MESSAGE	New message from Bob Kouassi	Bob sent you a message.	f	\N	7d28b09c-b8fd-45bf-806d-ad82d4884774
+80e0442a-a952-4adb-92e0-8603a8b89a8f	2026-06-10 20:04:43.009454+00	2026-06-11 17:04:59.053523+00	\N	NEW_MESSAGE	New message from Bob Kouassi	Bob sent you a message.	f	\N	7d28b09c-b8fd-45bf-806d-ad82d4884774
+431cee5a-9536-4902-9840-e98cb3b6a92a	2026-06-10 17:04:43.009454+00	2026-06-10 14:25:39.846836+00	\N	NEW_MATCH	New Match: Frank Soro	You have been matched with Frank Soro for Full-Stack Web Development (92.0% compatibility).	f	\N	a097155f-18d3-401f-b023-a0e05b8a6753
+19f820d9-8b81-490d-ad06-8bd2e798a462	2026-06-10 17:04:43.009454+00	2026-06-11 17:04:59.163844+00	\N	NEW_MATCH	New Match: Frank Soro	You have been matched with Frank Soro for Full-Stack Web Development (92.0% compatibility).	f	\N	a097155f-18d3-401f-b023-a0e05b8a6753
+ba43aafa-a611-433f-b271-346fef7e1c41	2026-06-10 14:04:43.009454+00	2026-06-10 14:25:39.957663+00	\N	MATCH_ACCEPTED	Match Accepted!	Frank Soro has accepted your Web Development Help request. Start your mentorship!	t	\N	a097155f-18d3-401f-b023-a0e05b8a6753
+2991399f-3c89-4430-8fa7-fda69ac36e4a	2026-06-10 14:04:43.009454+00	2026-06-11 17:04:59.285445+00	\N	MATCH_ACCEPTED	Match Accepted!	Frank Soro has accepted your Web Development Help request. Start your mentorship!	t	\N	a097155f-18d3-401f-b023-a0e05b8a6753
+677c42ab-0661-43a9-953c-a251a276be43	2026-06-10 11:04:43.009454+00	2026-06-10 14:25:40.079477+00	\N	NEW_MESSAGE	New message from Frank Soro	Frank sent you a message in your conversation.	t	\N	a097155f-18d3-401f-b023-a0e05b8a6753
+70b0b0f1-d57c-44e7-a90e-80fe335aea36	2026-06-10 11:04:43.009454+00	2026-06-11 17:04:59.40661+00	\N	NEW_MESSAGE	New message from Frank Soro	Frank sent you a message in your conversation.	t	\N	a097155f-18d3-401f-b023-a0e05b8a6753
+80ba0f4f-9d70-46c1-bbd4-09a45dfa2f04	2026-06-10 08:04:43.009454+00	2026-06-10 14:25:40.190476+00	\N	NEW_MATCH	New Mentee: Dave Traore	Dave Traore has been matched with you for Full-Stack Web Development (92.0% compatibility).	t	\N	e876f033-f143-4f4b-9adc-71642419144a
+950c1728-2bb1-4252-95bb-f500c2b2b62c	2026-06-10 08:04:43.009454+00	2026-06-11 17:04:59.528742+00	\N	NEW_MATCH	New Mentee: Dave Traore	Dave Traore has been matched with you for Full-Stack Web Development (92.0% compatibility).	t	\N	e876f033-f143-4f4b-9adc-71642419144a
+e780f2d4-a503-40fe-8c55-77ce3723bf5b	2026-06-10 05:04:43.009454+00	2026-06-10 14:25:40.323321+00	\N	NEW_MESSAGE	New message from Dave Traore	Dave sent you a message.	t	\N	e876f033-f143-4f4b-9adc-71642419144a
+a01fad29-d9fd-4b9d-99bb-4257b6c4d268	2026-06-10 05:04:43.009454+00	2026-06-11 17:04:59.661255+00	\N	NEW_MESSAGE	New message from Dave Traore	Dave sent you a message.	t	\N	e876f033-f143-4f4b-9adc-71642419144a
+7ae26afb-a560-410c-8691-fbae33d0cb4e	2026-06-10 02:04:43.009454+00	2026-06-10 14:25:40.467321+00	\N	MATCH_REJECTED	Match Rejected: Grace Koffi	Grace Koffi has rejected your Quantum Physics Mentorship offer.	t	\N	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363
+0cb8b069-26c2-4c21-8275-12082e12444f	2026-06-10 02:04:43.009454+00	2026-06-11 17:04:59.783719+00	\N	MATCH_REJECTED	Match Rejected: Grace Koffi	Grace Koffi has rejected your Quantum Physics Mentorship offer.	t	\N	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363
+7a45bd06-87fa-4655-934a-da65ba0e9a84	2026-06-09 23:04:43.009454+00	2026-06-10 14:25:40.599972+00	\N	NEW_MATCH	New Mentee: Grace Koffi	Grace Koffi has been matched with you for Cybersecurity 101 (65.0% compatibility).	t	\N	02d56625-7584-447e-8ad0-838c2beeaaf4
+08a9a759-be55-4bb5-84a5-3221c031b5be	2026-06-09 20:04:43.009454+00	2026-06-10 14:25:40.710753+00	\N	NEW_MATCH	New Mentee: Iris Bamba	Iris Bamba has been matched with you for Data Science with Python (71.0% compatibility).	t	\N	d5626e1d-fd73-4d98-8086-552536eadf39
+b1a00354-6bdf-4504-806b-e918dc7e9a7f	2026-06-09 17:04:43.009454+00	2026-06-10 14:25:40.832539+00	\N	NEW_MESSAGE	New message from Iris Bamba	Iris sent you a message.	t	\N	d5626e1d-fd73-4d98-8086-552536eadf39
+9b5ab5af-e809-4eab-bc22-7cc112c24130	2026-06-09 14:04:43.009454+00	2026-06-10 14:25:40.954071+00	\N	NEW_MATCH	New Match: Henry Zadi	You have been matched with Henry Zadi for Cybersecurity 101 (65.0% compatibility).	t	\N	2e624d5c-4afa-475d-9083-9877614d6d06
+9e142a59-692a-4f70-bb64-042d5ee7dfc2	2026-06-09 11:04:43.009454+00	2026-06-10 14:25:41.064445+00	\N	MATCH_REJECTED	Quantum Physics Match Rejected	Your match with Eve NGuessan for Quantum Physics Mentorship has been rejected.	t	\N	2e624d5c-4afa-475d-9083-9877614d6d06
+3c27d9f3-c297-46fc-9f1d-2d9ce0d747a0	2026-06-09 08:04:43.009454+00	2026-06-10 14:25:41.175722+00	\N	NEW_MATCH	New Match: James Toure	You have been matched with James Toure for Data Science with Python (71.0% compatibility).	t	\N	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+02fdecf9-7755-4f30-9c75-79e631df9ef0	2026-06-09 05:04:43.009454+00	2026-06-10 14:25:41.286265+00	\N	NEW_MESSAGE	New message from James Toure	James sent you a message in your conversation.	t	\N	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+ad92bbd3-ac37-4f7f-823b-9a40eacdbebf	2026-06-11 17:24:18.632946+00	2026-06-11 17:24:18.632986+00	\N	NEW_MESSAGE	Nouveau message de AGO Alex	Ok je vois	t	{"sender_id": "cd9bd543-becf-4a12-b672-47bcd0d4c95e", "conversation_id": "73dec969-ad14-413e-9151-28dfdcad917c"}	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+ee2706db-539c-4b1b-a6b1-823a0da65041	2026-06-09 23:04:43.009454+00	2026-06-11 17:04:59.893757+00	\N	NEW_MATCH	New Mentee: Grace Koffi	Grace Koffi has been matched with you for Cybersecurity 101 (65.0% compatibility).	t	\N	02d56625-7584-447e-8ad0-838c2beeaaf4
+0217f855-409f-4c5b-8d50-400aba9f2738	2026-06-11 18:17:45.077215+00	2026-06-11 18:17:45.077239+00	\N	NEW_MESSAGE	Nouveau message de Rodolf AGBO	je suis iteresser	f	{"sender_id": "db488050-f420-4024-830b-bc6b7507ac94", "conversation_id": "2d897011-eaba-4425-83e6-75fcc271a691"}	27517d56-3f32-4ff1-a77e-ec55d96f903a
+99d29539-53b4-4dcf-aacb-902504e6b9ff	2026-06-09 20:04:43.009454+00	2026-06-11 17:05:00.01626+00	\N	NEW_MATCH	New Mentee: Iris Bamba	Iris Bamba has been matched with you for Data Science with Python (71.0% compatibility).	t	\N	d5626e1d-fd73-4d98-8086-552536eadf39
+b459cb94-6e86-443e-92a4-35fa2e15e11c	2026-06-11 18:20:35.145395+00	2026-06-11 18:20:35.14543+00	\N	NEW_MESSAGE	Nouveau message de Rodolf AGBO	je suis interer	f	{"sender_id": "db488050-f420-4024-830b-bc6b7507ac94", "conversation_id": "324e5a64-6a9c-41ad-bfe6-f59182af1ebe"}	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+7d2a225c-98d8-42e2-9965-153bcd463929	2026-06-09 17:04:43.009454+00	2026-06-11 17:05:00.138299+00	\N	NEW_MESSAGE	New message from Iris Bamba	Iris sent you a message.	t	\N	d5626e1d-fd73-4d98-8086-552536eadf39
+a7da25b2-b2ed-4d4c-8cc7-b2dc852b307f	2026-06-11 18:21:43.417491+00	2026-06-11 18:21:43.417517+00	\N	NEW_MESSAGE	Nouveau message de AGO Alex	ok vous est enregistrer	f	{"sender_id": "cd9bd543-becf-4a12-b672-47bcd0d4c95e", "conversation_id": "324e5a64-6a9c-41ad-bfe6-f59182af1ebe"}	db488050-f420-4024-830b-bc6b7507ac94
+fe82ac65-719d-4296-8f59-d310b0606e9d	2026-06-09 14:04:43.009454+00	2026-06-11 17:05:00.248254+00	\N	NEW_MATCH	New Match: Henry Zadi	You have been matched with Henry Zadi for Cybersecurity 101 (65.0% compatibility).	t	\N	2e624d5c-4afa-475d-9083-9877614d6d06
+02df4361-1ae6-4857-84b7-32e45b9d6b14	2026-06-11 18:25:02.940666+00	2026-06-11 18:25:02.940699+00	\N	NEW_MESSAGE	Nouveau message de Alice Konan	gjhjjhjjhjjhkj	f	{"sender_id": "4e8c1fcf-a156-44f2-bf16-9fa3b37d3977", "conversation_id": "c6adebb0-838a-4574-ae2b-332258d320db"}	3f1f157d-98f6-4907-8c7c-165e573a186a
+85f7b7bf-cfc9-4263-8ff2-cf01bacee43f	2026-06-09 11:04:43.009454+00	2026-06-11 17:05:00.358913+00	\N	MATCH_REJECTED	Quantum Physics Match Rejected	Your match with Eve NGuessan for Quantum Physics Mentorship has been rejected.	t	\N	2e624d5c-4afa-475d-9083-9877614d6d06
+9a66445a-6ad1-49d1-a253-f86b262a1360	2026-06-11 20:54:49.097843+00	2026-06-11 20:54:49.097867+00	\N	NEW_MESSAGE	Nouveau message de ggg hhhh	hdhhhdhd	f	{"sender_id": "0289dffa-d174-4241-95e2-a6e004cfa72c", "conversation_id": "8f45415d-edce-47ab-be91-1b325b5d763f"}	27517d56-3f32-4ff1-a77e-ec55d96f903a
+4d023317-b89c-4fd5-b980-e3230073ba7a	2026-06-09 08:04:43.009454+00	2026-06-11 17:05:00.480516+00	\N	NEW_MATCH	New Match: James Toure	You have been matched with James Toure for Data Science with Python (71.0% compatibility).	t	\N	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+9c56a514-635c-41a9-b0dc-ba982faeb3ee	2026-06-11 20:55:31.970787+00	2026-06-11 20:55:31.970827+00	\N	NEW_MESSAGE	Nouveau message de ggg hhhh	je sui interece	f	{"sender_id": "0289dffa-d174-4241-95e2-a6e004cfa72c", "conversation_id": "4bc171e0-37ed-45de-a893-8fbc7e23fb9f"}	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+4d5faf57-65eb-4ecc-b06f-366bab72fd11	2026-06-09 05:04:43.009454+00	2026-06-11 17:05:00.613972+00	\N	NEW_MESSAGE	New message from James Toure	James sent you a message in your conversation.	t	\N	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+89d525da-3a93-46a7-aa39-b8dd2d9b335f	2026-06-11 20:57:55.95997+00	2026-06-11 20:57:55.959986+00	\N	NEW_MESSAGE	Nouveau message de Alice Konan	ok tu es enregistre	f	{"sender_id": "4e8c1fcf-a156-44f2-bf16-9fa3b37d3977", "conversation_id": "4bc171e0-37ed-45de-a893-8fbc7e23fb9f"}	0289dffa-d174-4241-95e2-a6e004cfa72c
+55ff1b05-1edd-4dc5-ab19-5c94decda5a0	2026-06-11 20:58:13.054503+00	2026-06-11 20:58:13.05453+00	\N	NEW_MESSAGE	Nouveau message de ggg hhhh	ggg	f	{"sender_id": "0289dffa-d174-4241-95e2-a6e004cfa72c", "conversation_id": "4bc171e0-37ed-45de-a893-8fbc7e23fb9f"}	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
 \.
 
 
 --
--- Data for Name: reviews; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: mentorlink
+--
+
+COPY public.profiles (id, created_at, updated_at, deleted_at, profile_photo, department, academic_level, bio, user_id) FROM stdin;
+e6fc12d2-364c-48b3-b630-6103216ca9a2	2026-06-11 17:07:40.830291+00	2026-06-11 17:07:40.830314+00	\N		Informatique	M1	Test bio	27517d56-3f32-4ff1-a77e-ec55d96f903a
+6da8523a-b47c-4702-b967-6c64655652b8	2026-06-10 15:00:11.24873+00	2026-06-10 15:00:11.248758+00	\N		Génie Logiciel	Master 1	J'aime l'IA	cd9bd543-becf-4a12-b672-47bcd0d4c95e
+fed01f0f-b793-46d1-8d8c-f316f8524c1b	2026-06-11 18:14:45.840153+00	2026-06-11 18:14:45.840187+00	\N		\N	\N	\N	db488050-f420-4024-830b-bc6b7507ac94
+7755ace6-f06f-4970-98f1-9476fd504737	2026-06-11 20:53:27.050309+00	2026-06-11 20:53:27.050333+00	\N		\N	\N	\N	0289dffa-d174-4241-95e2-a6e004cfa72c
+9ec37782-f01d-4322-b5a2-b00a5f83ad6e	2026-06-10 14:25:15.715541+00	2026-06-10 14:25:15.780743+00	\N		Informatique	L3	Looking to improve my programming skills. Interested in Python and web dev.	3f1f157d-98f6-4907-8c7c-165e573a186a
+aa841022-0523-4f34-bed7-b6960d284da4	2026-06-10 14:25:16.578845+00	2026-06-10 14:25:16.821267+00	\N		Mathematiques	M1	Math tutor available for mentoring. Can help with statistics and physics too.	7d28b09c-b8fd-45bf-806d-ad82d4884774
+757c574b-9719-4c7b-9e00-21a7ee1d4093	2026-06-10 14:25:17.730918+00	2026-06-10 14:25:17.795401+00	\N		Informatique	L2	Want to learn web development and Python. Motivated and curious.	a097155f-18d3-401f-b023-a0e05b8a6753
+48969b1c-1316-4814-b05a-2fcb821d31a1	2026-06-10 14:25:18.516384+00	2026-06-10 14:25:18.570479+00	\N		Physique	M2	Physics researcher offering mentorship in quantum mechanics and ML.	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363
+bf8442cd-e57f-4394-bc9f-f711703cb479	2026-06-10 14:25:19.346441+00	2026-06-10 14:25:19.412105+00	\N		Informatique	M1	Full-stack developer with 3 years experience. Love React and TypeScript.	e876f033-f143-4f4b-9adc-71642419144a
+181e73d9-825b-445a-9989-6c195b2c3054	2026-06-10 14:25:20.299028+00	2026-06-10 14:25:20.363917+00	\N		Informatique	L3	Beginner in programming. Want to learn Java and mobile development.	2e624d5c-4afa-475d-9083-9877614d6d06
+ac24a8bd-3c25-4af6-b72b-1da9e004200e	2026-06-10 14:25:21.360966+00	2026-06-10 14:25:21.415412+00	\N		Reseaux	M2	Cybersecurity expert. Can mentor in networking, security, and DevOps.	02d56625-7584-447e-8ad0-838c2beeaaf4
+c20a1276-4b3b-442c-a33f-03039f42eb8b	2026-06-10 14:25:22.292122+00	2026-06-10 14:25:22.345189+00	\N		Design	L3	UI/UX designer looking for mentorship in frontend development.	717f97b9-6de0-4c33-8c5c-61c9abdebed4
+173ed165-b675-4ef2-b46b-693495010ef5	2026-06-10 14:25:23.266641+00	2026-06-10 14:25:23.341515+00	\N		Informatique	M1	Machine learning enthusiast. Can mentor in data science and AI.	d5626e1d-fd73-4d98-8086-552536eadf39
+4e4e056e-ae17-4f9d-8869-ae8fb92a87d6	2026-06-10 17:09:13.87381+00	2026-06-10 17:09:13.873834+00	\N		Génie Logiciel	Master 1		c156fde9-c5db-49d6-bd58-2844fd4ef021
+08ac6245-6b77-45f1-9893-a3c923dc507e	2026-06-10 14:25:14.843326+00	2026-06-10 14:25:14.906289+00	\N		Génie Logiciel	Master 1	Bio test via browser	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977
+\.
+
+
+--
+-- Data for Name: reviews; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.reviews (id, created_at, updated_at, deleted_at, rating, content, session_type, match_id, reviewed_id, reviewer_id) FROM stdin;
@@ -1940,7 +1279,7 @@ COPY public.reviews (id, created_at, updated_at, deleted_at, rating, content, se
 
 
 --
--- Data for Name: skills; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: skills; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.skills (id, name) FROM stdin;
@@ -1972,7 +1311,15 @@ c0af0816-e957-4f64-8d5f-052141d1672e	UI/UX Design
 
 
 --
--- Data for Name: token_blacklist_outstandingtoken; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: token_blacklist_blacklistedtoken; Type: TABLE DATA; Schema: public; Owner: mentorlink
+--
+
+COPY public.token_blacklist_blacklistedtoken (id, blacklisted_at, token_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: token_blacklist_outstandingtoken; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.token_blacklist_outstandingtoken (id, token, created_at, expires_at, user_id, jti) FROM stdin;
@@ -2042,25 +1389,40 @@ COPY public.token_blacklist_outstandingtoken (id, token, created_at, expires_at,
 64	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4MzU2NywiaWF0IjoxNzgxMTkxNTY3LCJqdGkiOiI3NGNlODkxNTI1NTc0YmY3YjVjYTY1NTNiNmRjMDJkNSIsInVzZXJfaWQiOiI0ZThjMWZjZi1hMTU2LTQ0ZjItYmYxNi05ZmEzYjM3ZDM5NzcifQ.dF9uN-R8WGVQJX8Dq69GmpTWavUiHiZBM8XLQMtBw1I	2026-06-11 15:26:07.909805+00	2026-07-11 15:26:07+00	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	74ce891525574bf7b5ca6553b6dc02d5
 65	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4NDc3MCwiaWF0IjoxNzgxMTkyNzcwLCJqdGkiOiJjNzZiNWZkMTA2Mzg0ZWI4YjhlMjI4NTBlZDlkYTQ0OSIsInVzZXJfaWQiOiJjZDliZDU0My1iZWNmLTRhMTItYjY3Mi00N2JjZDBkNGM5NWUifQ.qK8T5q8FM7A-XY4RWfGLSssAoSMo02GvpTO0IaV-zI8	2026-06-11 15:46:10.789499+00	2026-07-11 15:46:10+00	cd9bd543-becf-4a12-b672-47bcd0d4c95e	c76b5fd106384eb8b8e22850ed9da449
 66	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4NTMzMCwiaWF0IjoxNzgxMTkzMzMwLCJqdGkiOiJjMTRlNzUyNDZjZmQ0MzJiODEwMzQxYjgxYWNiYTkxNCIsInVzZXJfaWQiOiI0ZThjMWZjZi1hMTU2LTQ0ZjItYmYxNi05ZmEzYjM3ZDM5NzcifQ.XHmKw0oS351jPX8N_r8asiquab44wZYB3CunZI_ALZI	2026-06-11 15:55:30.834538+00	2026-07-11 15:55:30+00	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	c14e75246cfd432b810341b81acba914
+67	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4OTYxNSwiaWF0IjoxNzgxMTk3NjE1LCJqdGkiOiJjZTM0YzUwNDczMjg0NGFhYjM0OWM5MDhjMDI0YWVjMyIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.fGqu952jGgawJV51SgsOfuL2trs5cTIoZDYn87SpNXk	2026-06-11 17:06:55.926532+00	2026-07-11 17:06:55+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	ce34c504732844aab349c908c024aec3
+68	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4OTYzMywiaWF0IjoxNzgxMTk3NjMzLCJqdGkiOiI4OGY5M2Q1OWQxNmE0OGVlYjdlZGM5Yjc5ZjU0NjJlNSIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.LfIDqEnnYHA_mDN09aC-yKMxcRw0FFP17pdIJ35dFb4	2026-06-11 17:07:13.401243+00	2026-07-11 17:07:13+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	88f93d59d16a48eeb7edc9b79f5462e5
+69	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4OTY2MCwiaWF0IjoxNzgxMTk3NjYwLCJqdGkiOiIzMjIzYmIxY2Q2NGY0MzBmYTRlZDc0MGE4OTUxNzIxMiIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.3QiODX6EYNPvndAnKiSTjqEjCFSNj0b71byL6_pF4pQ	2026-06-11 17:07:40.671234+00	2026-07-11 17:07:40+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	3223bb1cd64f430fa4ed740a89517212
+70	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4OTY3OCwiaWF0IjoxNzgxMTk3Njc4LCJqdGkiOiJiMTkzMWEyNTM1OGU0MDY2YTViOTJiZWNmZjNhOGQ4MSIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.5VFfCLEfu5XXj-4BhsYbIBH58c2JzMsYo3d-dYAxIY0	2026-06-11 17:07:58.633759+00	2026-07-11 17:07:58+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	b1931a25358e4066a5b92becff3a8d81
+71	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4OTg0OSwiaWF0IjoxNzgxMTk3ODQ5LCJqdGkiOiIwNDcyMjU0Yzg4OTc0NWNkOWQ1MGNhYjI3N2I0ZjcwZSIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.bVxjqPsFKs1iR2wxe6IoZ7-ih_XhUn-bOix0jws8MVE	2026-06-11 17:10:49.798942+00	2026-07-11 17:10:49+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	0472254c889745cd9d50cab277b4f70e
+72	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4OTg5MSwiaWF0IjoxNzgxMTk3ODkxLCJqdGkiOiJlZDJjOGUxYmMzNjA0YjIxODlhZGM2MDBkN2M0YTAwYiIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.0TvcB3jKN_rgVMscWLeCh6dh_nUDqp4R53VPWrKSDgU	2026-06-11 17:11:31.181482+00	2026-07-11 17:11:31+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	ed2c8e1bc3604b2189adc600d7c4a00b
+73	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc4OTkxNCwiaWF0IjoxNzgxMTk3OTE0LCJqdGkiOiI0ZGRiZDI4ZTBkM2U0Zjc4ODJjYTRlMjg2ODFkNjgwNiIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.e60NRW-ICimy3ZqWdY0xNSK0tytyctfEkF1Zc4TxR8M	2026-06-11 17:11:54.658616+00	2026-07-11 17:11:54+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	4ddbd28e0d3e4f7882ca4e28681d6806
+74	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc5MDQ0MSwiaWF0IjoxNzgxMTk4NDQxLCJqdGkiOiJkYWM3MTQxMWI4MzY0OGRiYjM1MjdiNWExMTEyOWRmNSIsInVzZXJfaWQiOiIyNzUxN2Q1Ni0zZjMyLTRmZjEtYTc3ZS1lYzU1ZDk2ZjkwM2EifQ.hqlCnKI64sbJPZr9WEDoT2Qykfde9Qwmhu3IKd_zvA8	2026-06-11 17:20:41.235337+00	2026-07-11 17:20:41+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	dac71411b83648dbb3527b5a11129df5
+75	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc5MzY4MywiaWF0IjoxNzgxMjAxNjgzLCJqdGkiOiI0ZWY5MjY3NjMyOWI0MzQyOTgxOTU2MDBlYzk1Mzc1NiIsInVzZXJfaWQiOiJkYjQ4ODA1MC1mNDIwLTQwMjQtODMwYi1iYzZiNzUwN2FjOTQifQ.MEUB1F4WAN63h7HPMU3xUO-EIeLYRvPBOPWHtBoYe90	2026-06-11 18:14:43.226384+00	2026-07-11 18:14:43+00	db488050-f420-4024-830b-bc6b7507ac94	4ef92676329b434298195600ec953756
+76	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc5NDI1OSwiaWF0IjoxNzgxMjAyMjU5LCJqdGkiOiI2Yjc2ZWM1NTE5MzM0YjIwODkyOWE3MTNiY2I4YzcxZiIsInVzZXJfaWQiOiI0ZThjMWZjZi1hMTU2LTQ0ZjItYmYxNi05ZmEzYjM3ZDM5NzcifQ.EuL3RsO6QBeUAjRdKX3v9gr_s92ZyAWsAyvOkGuEt_A	2026-06-11 18:24:19.232987+00	2026-07-11 18:24:19+00	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	6b76ec5519334b208929a713bcb8c71f
+77	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzc5ODAyMCwiaWF0IjoxNzgxMjA2MDIwLCJqdGkiOiI2ZjdhZjljMmU1MTc0ZTU5OTI3NjAxNjQ5ODMxNzJiNyIsInVzZXJfaWQiOiI0ZThjMWZjZi1hMTU2LTQ0ZjItYmYxNi05ZmEzYjM3ZDM5NzcifQ.aCLXu7Hq2S4SxXEp-4fv4n8urzsTGc7XOUAHuDqMNAk	2026-06-11 19:27:00.0436+00	2026-07-11 19:27:00+00	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	6f7af9c2e5174e5992760164983172b7
+78	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MzgwMzIwMiwiaWF0IjoxNzgxMjExMjAyLCJqdGkiOiJkZTQ3ZjIzYTk3Yzg0ODg3OWM2MmUwM2JkYTVhNzEyMiIsInVzZXJfaWQiOiIwMjg5ZGZmYS1kMTc0LTQyNDEtOTVlMi1hNmUwMDRjZmE3MmMifQ.EfvCNZUmpDyNEULy3uOlhm79Nd110BKko_-xnGPkijE	2026-06-11 20:53:22.360246+00	2026-07-11 20:53:22+00	0289dffa-d174-4241-95e2-a6e004cfa72c	de47f23a97c848879c62e03bda5a7122
+79	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4MzgwMzQ0NSwiaWF0IjoxNzgxMjExNDQ1LCJqdGkiOiIxNGExM2U0ODM5MzA0MDhhYTEwYTE3NWRjNDA2NjI5MiIsInVzZXJfaWQiOiI0ZThjMWZjZi1hMTU2LTQ0ZjItYmYxNi05ZmEzYjM3ZDM5NzcifQ.NdVz8QwTG9eP2pxjnd6o7RGBhBL6wxCFqL1Kis_ZSLk	2026-06-11 20:57:25.392674+00	2026-07-11 20:57:25+00	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	14a13e483930408aa10a175dc4066292
+112	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzg4Mzk4MSwiaWF0IjoxNzgxMjkxOTgxLCJqdGkiOiIyMTgxNGYyMTIyNmU0N2Y5YmQ3YWRjMTcyMjkyNmJiNyIsInVzZXJfaWQiOiJjZDliZDU0My1iZWNmLTRhMTItYjY3Mi00N2JjZDBkNGM5NWUifQ.fQfyCWAjaB3Rkmpz-ZIlV9lgBACssvxMxqP0vyHo82A	2026-06-12 19:19:41.752162+00	2026-07-12 19:19:41+00	cd9bd543-becf-4a12-b672-47bcd0d4c95e	21814f21226e47f9bd7adc1722926bb7
+145	eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc4Mzk0NjY5OCwiaWF0IjoxNzgxMzU0Njk4LCJqdGkiOiI5OWY4YWZhOGFhZDA0MDNkYTQ5ZWI3MjMyMGVkNTdkYyIsInVzZXJfaWQiOiJjZDliZDU0My1iZWNmLTRhMTItYjY3Mi00N2JjZDBkNGM5NWUifQ.yA0upS6wN7s-T-sU4EKitoep0OKDoh1XtQ81-WRrYHQ	2026-06-13 12:44:58.704156+00	2026-07-13 12:44:58+00	cd9bd543-becf-4a12-b672-47bcd0d4c95e	99f8afa8aad0403da49eb72320ed57dc
 \.
 
 
 --
--- Data for Name: token_blacklist_blacklistedtoken; Type: TABLE DATA; Schema: public; Owner: -
---
-
-COPY public.token_blacklist_blacklistedtoken (id, blacklisted_at, token_id) FROM stdin;
-\.
-
-
---
--- Data for Name: user_skills; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: user_skills; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.user_skills (id, created_at, updated_at, deleted_at, type, profile_id, skill_id) FROM stdin;
 5d9163ee-0de1-4426-acf9-39e5215697fc	2026-06-10 17:41:50.416874+00	2026-06-10 17:41:50.416997+00	\N	STRENGTH	08ac6245-6b77-45f1-9893-a3c923dc507e	add56c3c-ed20-4c27-8181-ac64c95a1082
 21bbb51e-397e-4d64-9c2f-4aea5fa6071d	2026-06-10 17:41:50.514224+00	2026-06-10 17:41:50.514242+00	\N	STRENGTH	08ac6245-6b77-45f1-9893-a3c923dc507e	1e7e6270-5ad2-40a6-9dff-d776de212d92
 ac9c4272-f7f9-4bc4-bf18-2e535dfd3d37	2026-06-10 17:41:50.571374+00	2026-06-10 17:41:50.571395+00	\N	WEAKNESS	08ac6245-6b77-45f1-9893-a3c923dc507e	55299383-606b-4d62-b5d9-0eecc2775609
+251597f9-59f9-468b-a18f-bb2a771570eb	2026-06-11 17:04:50.060513+00	2026-06-11 17:04:50.060546+00	\N	STRENGTH	08ac6245-6b77-45f1-9893-a3c923dc507e	20ab197b-eafd-45e3-8645-e542963b790e
+9782cebe-a62c-43b3-9843-91c017f3df7d	2026-06-11 17:04:50.220381+00	2026-06-11 17:04:50.2204+00	\N	STRENGTH	08ac6245-6b77-45f1-9893-a3c923dc507e	48c05667-15b6-4fba-a316-db0e47706de5
+18343c67-cb7f-453e-805d-b92e8d87b81d	2026-06-11 17:04:50.289747+00	2026-06-11 17:04:50.289946+00	\N	STRENGTH	08ac6245-6b77-45f1-9893-a3c923dc507e	89feba35-04e7-4b45-8066-0170a9b3d04e
+748f3e59-42e7-4859-947d-76687071d927	2026-06-11 17:04:50.35519+00	2026-06-11 17:04:50.355227+00	\N	WEAKNESS	08ac6245-6b77-45f1-9893-a3c923dc507e	3809a851-2e12-481f-9e76-9518e8bced07
+8e835903-edf5-4c10-bdb6-0a4342becd64	2026-06-11 17:04:50.421783+00	2026-06-11 17:04:50.421804+00	\N	WEAKNESS	08ac6245-6b77-45f1-9893-a3c923dc507e	30ab5b5e-e14b-48d3-87b4-3a7b40290a29
+bf596286-fffd-46b9-a21b-4557feaf862d	2026-06-11 17:07:41.09048+00	2026-06-11 17:07:41.090499+00	\N	STRENGTH	e6fc12d2-364c-48b3-b630-6103216ca9a2	add56c3c-ed20-4c27-8181-ac64c95a1082
+6ea5775f-9c8e-4ded-9103-04411e93117b	2026-06-11 17:07:41.151712+00	2026-06-11 17:07:41.151738+00	\N	STRENGTH	e6fc12d2-364c-48b3-b630-6103216ca9a2	d7eaff80-e8e0-4018-bfa7-6c283adf0215
+b1975f30-c67b-4cb3-bfcc-9f3b1af952b1	2026-06-11 17:07:41.20974+00	2026-06-11 17:07:41.20977+00	\N	WEAKNESS	e6fc12d2-364c-48b3-b630-6103216ca9a2	30ab5b5e-e14b-48d3-87b4-3a7b40290a29
 27c42d9c-8038-4323-bddb-1e744d72117d	2026-06-10 14:25:23.821139+00	2026-06-10 14:25:23.821163+00	\N	STRENGTH	9ec37782-f01d-4322-b5a2-b00a5f83ad6e	d7eaff80-e8e0-4018-bfa7-6c283adf0215
 c12ae3ff-10f8-4f22-a976-d3c53af6d063	2026-06-10 14:25:23.874681+00	2026-06-10 14:25:23.874702+00	\N	WEAKNESS	9ec37782-f01d-4322-b5a2-b00a5f83ad6e	add56c3c-ed20-4c27-8181-ac64c95a1082
 31e9365f-8771-415f-8a16-ade11d42d3b9	2026-06-10 14:25:23.940946+00	2026-06-10 14:25:23.940965+00	\N	WEAKNESS	9ec37782-f01d-4322-b5a2-b00a5f83ad6e	48c05667-15b6-4fba-a316-db0e47706de5
@@ -2108,7 +1470,31 @@ e8e18452-ca56-496b-9f64-e04df8d0271d	2026-06-10 14:25:27.074723+00	2026-06-10 14
 
 
 --
--- Data for Name: users_groups; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: mentorlink
+--
+
+COPY public.users (password, last_login, is_superuser, first_name, last_name, is_staff, is_active, date_joined, id, email, phone, is_verified, created_at, updated_at) FROM stdin;
+pbkdf2_sha256$870000$ayroh0sFpynYbfkoydyl5C$SGfIhrG3l9H664YzNH8Axk0Co6rfBc1k6+Auhtg0OQ8=	2026-06-10 12:40:14.366078+00	t			t	t	2026-06-10 12:28:46.795582+00	cef5d0be-9064-4305-9468-bd3900d374a1	admin@mentorlink.com	\N	f	2026-06-10 12:28:47.447212+00	2026-06-10 12:28:47.447225+00
+pbkdf2_sha256$870000$nqcZaKwnM0vKXpKn743xbi$SRVqID7LHcrRqI7ObY7KisbbTe58Amfg1cQqWBYllYo=	\N	f	Rodolf	AGBO	f	t	2026-06-11 18:14:40.889625+00	db488050-f420-4024-830b-bc6b7507ac94	rodoll@gmail.com	\N	f	2026-06-11 18:14:40.890516+00	2026-06-11 18:14:40.890533+00
+pbkdf2_sha256$870000$WqelNJUKTRh5LIi5PbfFSb$vlMnJRr1fy1riDAckbyz8Qt0DaCFIotQe3yiJXBEj3g=	\N	f	ggg	hhhh	f	t	2026-06-11 20:53:20.319678+00	0289dffa-d174-4241-95e2-a6e004cfa72c	ggg@gmail.com	45555555	f	2026-06-11 20:53:20.320146+00	2026-06-11 20:53:20.320156+00
+pbkdf2_sha256$870000$NFX7vYDdKjDwOk5isrlWqG$7WmJt+AJap5O2gJNrSBt1g+q9tk1Ylhb8eJCNT/AdT8=	\N	f	Bob	Kouassi	f	t	2026-06-10 14:25:15.647349+00	3f1f157d-98f6-4907-8c7c-165e573a186a	bob@example.com	+22501010102	t	2026-06-10 14:25:15.647572+00	2026-06-10 14:25:15.64758+00
+pbkdf2_sha256$870000$L2GVEsPQqaD0vdpA81mY8v$CJTU7G2FrI4zOOTECQSF0KgffRVsDTfu3ItVzVH06bc=	\N	f	Carol	Diallo	f	t	2026-06-10 14:25:16.490665+00	7d28b09c-b8fd-45bf-806d-ad82d4884774	carol@example.com	+22501010103	t	2026-06-10 14:25:16.490915+00	2026-06-10 14:25:16.490923+00
+pbkdf2_sha256$870000$sHx5oEAohrcVMvze5TPt42$Xi1ueXoqdhYusKEun19+Vc+nvV2t4Jp77CeTYWox2Yw=	\N	f	Dave	Traore	f	t	2026-06-10 14:25:17.664043+00	a097155f-18d3-401f-b023-a0e05b8a6753	dave@example.com	+22501010104	t	2026-06-10 14:25:17.66424+00	2026-06-10 14:25:17.664247+00
+pbkdf2_sha256$870000$IeMgt0mOPpUeru8xEP3BEq$RvkS8A5fpioI8M+1eTTfTCo5+ukSypJfP9R5vQMD8gk=	\N	f	Eve	NGuessan	f	t	2026-06-10 14:25:18.462834+00	3e8bb4c1-0d5a-4bc5-bcd6-95598f4f7363	eve@example.com	+22501010105	t	2026-06-10 14:25:18.463061+00	2026-06-10 14:25:18.463068+00
+pbkdf2_sha256$870000$9yaeADJ0mi0V5hD7Ho71Ex$mdYbLvg3n33JhRXYfN+PwcweNFt+qSAfwgN7XKVwVRA=	\N	f	Frank	Soro	f	t	2026-06-10 14:25:19.266886+00	e876f033-f143-4f4b-9adc-71642419144a	frank@example.com	+22501010106	t	2026-06-10 14:25:19.267116+00	2026-06-10 14:25:19.267123+00
+pbkdf2_sha256$870000$g5KSFVpVZLHfltPeAWtceM$WsVbXwqNn9+u2hmVUOUrvWc55x3NmV5xM2uAMHomzBU=	\N	f	Grace	Koffi	f	t	2026-06-10 14:25:20.238848+00	2e624d5c-4afa-475d-9083-9877614d6d06	grace@example.com	+22501010107	t	2026-06-10 14:25:20.239187+00	2026-06-10 14:25:20.239198+00
+pbkdf2_sha256$870000$RBfnT5rZ4zcsubb0NG0Qle$GBmdpkgzn506d+tJkISo8d+N5NQZUO6Q38ZJ6p3HcWU=	\N	f	Henry	Zadi	f	t	2026-06-10 14:25:21.301309+00	02d56625-7584-447e-8ad0-838c2beeaaf4	henry@example.com	+22501010108	t	2026-06-10 14:25:21.301488+00	2026-06-10 14:25:21.301495+00
+pbkdf2_sha256$870000$DlnNk9dVtdMubmT3LumHb0$9+2j7VlBEbrwtmcQuXhO0CZGyHoon7Kvce6OEjiBuO0=	\N	f	Iris	Bamba	f	t	2026-06-10 14:25:22.171193+00	717f97b9-6de0-4c33-8c5c-61c9abdebed4	iris@example.com	+22501010109	t	2026-06-10 14:25:22.171427+00	2026-06-10 14:25:22.171436+00
+pbkdf2_sha256$870000$YnLzKKArvmo2ONiPAcx5Iu$Hh4VJxGwDo0uKyhJ12ST+5ReoHJ6ei0m4JeKfsfYahI=	\N	f	James	Toure	f	t	2026-06-10 14:25:23.198815+00	d5626e1d-fd73-4d98-8086-552536eadf39	james@example.com	+22501010110	t	2026-06-10 14:25:23.199053+00	2026-06-10 14:25:23.199062+00
+pbkdf2_sha256$870000$TqWDWmszFyIIZQYaZp9BYc$dw3k5XE9p1vCg0oW21ma0DPX/xJxqyk3/L2Mxm3pQjM=	\N	f	Test	User	f	t	2026-06-10 17:08:48.802126+00	c156fde9-c5db-49d6-bd58-2844fd4ef021	browser-test@example.com	\N	f	2026-06-10 17:08:48.8073+00	2026-06-10 17:08:48.807322+00
+pbkdf2_sha256$870000$71uQZkl5WoH1pbTnVkmUqY$qQhRA9lat49L2bMen7daRyiIA5/2wlWZWpERE6hnq0g=	\N	f	Alice	Konan	f	t	2026-06-10 14:25:14.735505+00	4e8c1fcf-a156-44f2-bf16-9fa3b37d3977	alice@example.com	+22501010101	t	2026-06-10 14:25:14.736017+00	2026-06-11 15:25:45.619209+00
+pbkdf2_sha256$870000$otJZHRS56FQjD4b3bnunLn$dQAFrs4BKHkPcQVeUrjtc9CD2JJ4/xNlNE9jywLUtT0=	\N	f	Test	User	f	t	2026-06-11 17:06:55.564396+00	27517d56-3f32-4ff1-a77e-ec55d96f903a	test@test.com	\N	f	2026-06-11 17:06:55.564752+00	2026-06-11 17:06:55.564762+00
+pbkdf2_sha256$870000$MLPCdzRIy53CohAPAmILob$F/5DrF53++2yjr62wXs0zIyueTmXbtO27suKIxu+Wlo=	\N	f	AGO	Alex	f	t	2026-06-10 15:00:05.896682+00	cd9bd543-becf-4a12-b672-47bcd0d4c95e	alexyessougnonago@gmail.com	0153088468	f	2026-06-10 15:00:05.897568+00	2026-06-10 15:00:05.897578+00
+\.
+
+
+--
+-- Data for Name: users_groups; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.users_groups (id, user_id, group_id) FROM stdin;
@@ -2116,7 +1502,7 @@ COPY public.users_groups (id, user_id, group_id) FROM stdin;
 
 
 --
--- Data for Name: users_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: users_user_permissions; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.users_user_permissions (id, user_id, permission_id) FROM stdin;
@@ -2124,7 +1510,7 @@ COPY public.users_user_permissions (id, user_id, permission_id) FROM stdin;
 
 
 --
--- Data for Name: verification_documents; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: verification_documents; Type: TABLE DATA; Schema: public; Owner: mentorlink
 --
 
 COPY public.verification_documents (id, file, status, rejection_reason, reviewed_by_id, created_at, updated_at, user_id) FROM stdin;
@@ -2132,78 +1518,1029 @@ COPY public.verification_documents (id, file, status, rejection_reason, reviewed
 
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.auth_permission_id_seq', 80, true);
 
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, true);
 
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.django_content_type_id_seq', 20, true);
 
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.django_migrations_id_seq', 38, true);
 
 
 --
--- Name: token_blacklist_blacklistedtoken_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: token_blacklist_blacklistedtoken_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.token_blacklist_blacklistedtoken_id_seq', 1, false);
 
 
 --
--- Name: token_blacklist_outstandingtoken_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: token_blacklist_outstandingtoken_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
-SELECT pg_catalog.setval('public.token_blacklist_outstandingtoken_id_seq', 66, true);
+SELECT pg_catalog.setval('public.token_blacklist_outstandingtoken_id_seq', 145, true);
 
 
 --
--- Name: users_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: users_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.users_groups_id_seq', 1, false);
 
 
 --
--- Name: users_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: users_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mentorlink
 --
 
 SELECT pg_catalog.setval('public.users_user_permissions_id_seq', 1, false);
 
 
 --
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: availability_slots availability_slots_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.availability_slots
+    ADD CONSTRAINT availability_slots_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: conversation_members conversation_members_conversation_id_user_id_f14fcbc6_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.conversation_members
+    ADD CONSTRAINT conversation_members_conversation_id_user_id_f14fcbc6_uniq UNIQUE (conversation_id, user_id);
+
+
+--
+-- Name: conversation_members conversation_members_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.conversation_members
+    ADD CONSTRAINT conversation_members_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: conversations conversations_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.conversations
+    ADD CONSTRAINT conversations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: matches matches_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT matches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: mentorship_posts mentorship_posts_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.mentorship_posts
+    ADD CONSTRAINT mentorship_posts_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: notifications notifications_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.notifications
+    ADD CONSTRAINT notifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profiles profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: profiles profiles_user_id_key; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: reviews reviews_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT reviews_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: skills skills_name_key; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.skills
+    ADD CONSTRAINT skills_name_key UNIQUE (name);
+
+
+--
+-- Name: skills skills_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.skills
+    ADD CONSTRAINT skills_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: token_blacklist_blacklistedtoken token_blacklist_blacklistedtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.token_blacklist_blacklistedtoken
+    ADD CONSTRAINT token_blacklist_blacklistedtoken_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: token_blacklist_blacklistedtoken token_blacklist_blacklistedtoken_token_id_key; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.token_blacklist_blacklistedtoken
+    ADD CONSTRAINT token_blacklist_blacklistedtoken_token_id_key UNIQUE (token_id);
+
+
+--
+-- Name: token_blacklist_outstandingtoken token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.token_blacklist_outstandingtoken
+    ADD CONSTRAINT token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_uniq UNIQUE (jti);
+
+
+--
+-- Name: token_blacklist_outstandingtoken token_blacklist_outstandingtoken_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.token_blacklist_outstandingtoken
+    ADD CONSTRAINT token_blacklist_outstandingtoken_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_skills user_skills_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_skills user_skills_profile_id_skill_id_632d0408_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_profile_id_skill_id_632d0408_uniq UNIQUE (profile_id, skill_id);
+
+
+--
+-- Name: users users_email_key; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_email_key UNIQUE (email);
+
+
+--
+-- Name: users_groups users_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_groups
+    ADD CONSTRAINT users_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_groups users_groups_user_id_group_id_fc7788e8_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_groups
+    ADD CONSTRAINT users_groups_user_id_group_id_fc7788e8_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: users users_phone_key; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_phone_key UNIQUE (phone);
+
+
+--
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_permissions users_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_user_permissions
+    ADD CONSTRAINT users_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_user_permissions users_user_permissions_user_id_permission_id_3b86cbdf_uniq; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_user_permissions
+    ADD CONSTRAINT users_user_permissions_user_id_permission_id_3b86cbdf_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: verification_documents verification_documents_pkey; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.verification_documents
+    ADD CONSTRAINT verification_documents_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: verification_documents verification_documents_user_id_key; Type: CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.verification_documents
+    ADD CONSTRAINT verification_documents_user_id_key UNIQUE (user_id);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: availability_slots_profile_id_0c5edf97; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX availability_slots_profile_id_0c5edf97 ON public.availability_slots USING btree (profile_id);
+
+
+--
+-- Name: conversation_members_conversation_id_570068ad; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX conversation_members_conversation_id_570068ad ON public.conversation_members USING btree (conversation_id);
+
+
+--
+-- Name: conversation_members_user_id_3bfe90c8; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX conversation_members_user_id_3bfe90c8 ON public.conversation_members USING btree (user_id);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: matches_compati_0bce3a_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_compati_0bce3a_idx ON public.matches USING btree (compatibility_score);
+
+
+--
+-- Name: matches_mentee__3d25ef_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_mentee__3d25ef_idx ON public.matches USING btree (mentee_id, status);
+
+
+--
+-- Name: matches_mentee_id_d1f950e2; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_mentee_id_d1f950e2 ON public.matches USING btree (mentee_id);
+
+
+--
+-- Name: matches_mentor__fb198d_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_mentor__fb198d_idx ON public.matches USING btree (mentor_id, status);
+
+
+--
+-- Name: matches_mentor_id_59b76bab; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_mentor_id_59b76bab ON public.matches USING btree (mentor_id);
+
+
+--
+-- Name: matches_offer_id_91e0d674; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_offer_id_91e0d674 ON public.matches USING btree (offer_id);
+
+
+--
+-- Name: matches_request_id_b2653ba8; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_request_id_b2653ba8 ON public.matches USING btree (request_id);
+
+
+--
+-- Name: matches_status_639056_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX matches_status_639056_idx ON public.matches USING btree (status);
+
+
+--
+-- Name: mentorship__created_280abb_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX mentorship__created_280abb_idx ON public.mentorship_posts USING btree (created_at);
+
+
+--
+-- Name: mentorship__creator_6feaca_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX mentorship__creator_6feaca_idx ON public.mentorship_posts USING btree (creator_id, status);
+
+
+--
+-- Name: mentorship__subject_4b0ea6_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX mentorship__subject_4b0ea6_idx ON public.mentorship_posts USING btree (subject);
+
+
+--
+-- Name: mentorship__type_2b976d_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX mentorship__type_2b976d_idx ON public.mentorship_posts USING btree (type, status);
+
+
+--
+-- Name: mentorship_posts_creator_id_6ae72afe; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX mentorship_posts_creator_id_6ae72afe ON public.mentorship_posts USING btree (creator_id);
+
+
+--
+-- Name: messages_convers_3ebb41_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX messages_convers_3ebb41_idx ON public.messages USING btree (conversation_id, created_at);
+
+
+--
+-- Name: messages_conversation_id_5ef638db; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX messages_conversation_id_5ef638db ON public.messages USING btree (conversation_id);
+
+
+--
+-- Name: messages_sender__6ae55a_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX messages_sender__6ae55a_idx ON public.messages USING btree (sender_id);
+
+
+--
+-- Name: messages_sender_id_dc5a0bbd; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX messages_sender_id_dc5a0bbd ON public.messages USING btree (sender_id);
+
+
+--
+-- Name: notificatio_created_e4c995_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX notificatio_created_e4c995_idx ON public.notifications USING btree (created_at);
+
+
+--
+-- Name: notificatio_user_id_a4dd5c_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX notificatio_user_id_a4dd5c_idx ON public.notifications USING btree (user_id, is_read);
+
+
+--
+-- Name: notifications_user_id_468e288d; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX notifications_user_id_468e288d ON public.notifications USING btree (user_id);
+
+
+--
+-- Name: profiles_academi_e4a1e1_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX profiles_academi_e4a1e1_idx ON public.profiles USING btree (academic_level);
+
+
+--
+-- Name: profiles_departm_ffdbbc_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX profiles_departm_ffdbbc_idx ON public.profiles USING btree (department);
+
+
+--
+-- Name: reviews_match_id_df422061; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX reviews_match_id_df422061 ON public.reviews USING btree (match_id);
+
+
+--
+-- Name: reviews_rating_17e8a4_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX reviews_rating_17e8a4_idx ON public.reviews USING btree (rating);
+
+
+--
+-- Name: reviews_reviewe_965d53_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX reviews_reviewe_965d53_idx ON public.reviews USING btree (reviewer_id);
+
+
+--
+-- Name: reviews_reviewe_fe0fd6_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX reviews_reviewe_fe0fd6_idx ON public.reviews USING btree (reviewed_id);
+
+
+--
+-- Name: reviews_reviewed_id_26ab5b38; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX reviews_reviewed_id_26ab5b38 ON public.reviews USING btree (reviewed_id);
+
+
+--
+-- Name: reviews_reviewer_id_dbb954a8; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX reviews_reviewer_id_dbb954a8 ON public.reviews USING btree (reviewer_id);
+
+
+--
+-- Name: skills_name_3120df3a_like; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX skills_name_3120df3a_like ON public.skills USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_like; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX token_blacklist_outstandingtoken_jti_hex_d9bdf6f7_like ON public.token_blacklist_outstandingtoken USING btree (jti varchar_pattern_ops);
+
+
+--
+-- Name: token_blacklist_outstandingtoken_user_id_83bc629a; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX token_blacklist_outstandingtoken_user_id_83bc629a ON public.token_blacklist_outstandingtoken USING btree (user_id);
+
+
+--
+-- Name: user_skills_profile_id_4ff2a56e; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX user_skills_profile_id_4ff2a56e ON public.user_skills USING btree (profile_id);
+
+
+--
+-- Name: user_skills_skill_id_1a55c9b3; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX user_skills_skill_id_1a55c9b3 ON public.user_skills USING btree (skill_id);
+
+
+--
+-- Name: users_created_6541e9_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_created_6541e9_idx ON public.users USING btree (created_at);
+
+
+--
+-- Name: users_email_0ea73cca_like; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_email_0ea73cca_like ON public.users USING btree (email varchar_pattern_ops);
+
+
+--
+-- Name: users_email_4b85f2_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_email_4b85f2_idx ON public.users USING btree (email);
+
+
+--
+-- Name: users_groups_group_id_2f3517aa; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_groups_group_id_2f3517aa ON public.users_groups USING btree (group_id);
+
+
+--
+-- Name: users_groups_user_id_f500bee5; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_groups_user_id_f500bee5 ON public.users_groups USING btree (user_id);
+
+
+--
+-- Name: users_is_acti_847b48_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_is_acti_847b48_idx ON public.users USING btree (is_active);
+
+
+--
+-- Name: users_phone_2b77170a_like; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_phone_2b77170a_like ON public.users USING btree (phone varchar_pattern_ops);
+
+
+--
+-- Name: users_phone_af6883_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_phone_af6883_idx ON public.users USING btree (phone);
+
+
+--
+-- Name: users_user_permissions_permission_id_6d08dcd2; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_user_permissions_permission_id_6d08dcd2 ON public.users_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: users_user_permissions_user_id_92473840; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX users_user_permissions_user_id_92473840 ON public.users_user_permissions USING btree (user_id);
+
+
+--
+-- Name: verificatio_status_a43286_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX verificatio_status_a43286_idx ON public.verification_documents USING btree (status);
+
+
+--
+-- Name: verificatio_user_id_d15fbf_idx; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX verificatio_user_id_d15fbf_idx ON public.verification_documents USING btree (user_id, status);
+
+
+--
+-- Name: verification_documents_reviewed_by_id_67481493; Type: INDEX; Schema: public; Owner: mentorlink
+--
+
+CREATE INDEX verification_documents_reviewed_by_id_67481493 ON public.verification_documents USING btree (reviewed_by_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: availability_slots availability_slots_profile_id_0c5edf97_fk_profiles_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.availability_slots
+    ADD CONSTRAINT availability_slots_profile_id_0c5edf97_fk_profiles_id FOREIGN KEY (profile_id) REFERENCES public.profiles(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: conversation_members conversation_members_conversation_id_570068ad_fk_conversat; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.conversation_members
+    ADD CONSTRAINT conversation_members_conversation_id_570068ad_fk_conversat FOREIGN KEY (conversation_id) REFERENCES public.conversations(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: conversation_members conversation_members_user_id_3bfe90c8_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.conversation_members
+    ADD CONSTRAINT conversation_members_user_id_3bfe90c8_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: matches matches_mentee_id_d1f950e2_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT matches_mentee_id_d1f950e2_fk_users_id FOREIGN KEY (mentee_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: matches matches_mentor_id_59b76bab_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT matches_mentor_id_59b76bab_fk_users_id FOREIGN KEY (mentor_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: matches matches_offer_id_91e0d674_fk_mentorship_posts_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT matches_offer_id_91e0d674_fk_mentorship_posts_id FOREIGN KEY (offer_id) REFERENCES public.mentorship_posts(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: matches matches_request_id_b2653ba8_fk_mentorship_posts_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.matches
+    ADD CONSTRAINT matches_request_id_b2653ba8_fk_mentorship_posts_id FOREIGN KEY (request_id) REFERENCES public.mentorship_posts(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: mentorship_posts mentorship_posts_creator_id_6ae72afe_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.mentorship_posts
+    ADD CONSTRAINT mentorship_posts_creator_id_6ae72afe_fk_users_id FOREIGN KEY (creator_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: messages messages_conversation_id_5ef638db_fk_conversations_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_conversation_id_5ef638db_fk_conversations_id FOREIGN KEY (conversation_id) REFERENCES public.conversations(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: messages messages_sender_id_dc5a0bbd_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_sender_id_dc5a0bbd_fk_users_id FOREIGN KEY (sender_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: notifications notifications_user_id_468e288d_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.notifications
+    ADD CONSTRAINT notifications_user_id_468e288d_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: profiles profiles_user_id_36580373_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.profiles
+    ADD CONSTRAINT profiles_user_id_36580373_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: reviews reviews_match_id_df422061_fk_matches_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT reviews_match_id_df422061_fk_matches_id FOREIGN KEY (match_id) REFERENCES public.matches(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: reviews reviews_reviewed_id_26ab5b38_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT reviews_reviewed_id_26ab5b38_fk_users_id FOREIGN KEY (reviewed_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: reviews reviews_reviewer_id_dbb954a8_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.reviews
+    ADD CONSTRAINT reviews_reviewer_id_dbb954a8_fk_users_id FOREIGN KEY (reviewer_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: token_blacklist_blacklistedtoken token_blacklist_blacklistedtoken_token_id_3cc7fe56_fk; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.token_blacklist_blacklistedtoken
+    ADD CONSTRAINT token_blacklist_blacklistedtoken_token_id_3cc7fe56_fk FOREIGN KEY (token_id) REFERENCES public.token_blacklist_outstandingtoken(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: token_blacklist_outstandingtoken token_blacklist_outstandingtoken_user_id_83bc629a_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.token_blacklist_outstandingtoken
+    ADD CONSTRAINT token_blacklist_outstandingtoken_user_id_83bc629a_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: user_skills user_skills_profile_id_4ff2a56e_fk_profiles_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_profile_id_4ff2a56e_fk_profiles_id FOREIGN KEY (profile_id) REFERENCES public.profiles(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: user_skills user_skills_skill_id_1a55c9b3_fk_skills_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.user_skills
+    ADD CONSTRAINT user_skills_skill_id_1a55c9b3_fk_skills_id FOREIGN KEY (skill_id) REFERENCES public.skills(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_groups users_groups_group_id_2f3517aa_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_groups
+    ADD CONSTRAINT users_groups_group_id_2f3517aa_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_groups users_groups_user_id_f500bee5_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_groups
+    ADD CONSTRAINT users_groups_user_id_f500bee5_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_permissions users_user_permissio_permission_id_6d08dcd2_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_user_permissions
+    ADD CONSTRAINT users_user_permissio_permission_id_6d08dcd2_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: users_user_permissions users_user_permissions_user_id_92473840_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.users_user_permissions
+    ADD CONSTRAINT users_user_permissions_user_id_92473840_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: verification_documents verification_documents_reviewed_by_id_67481493_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.verification_documents
+    ADD CONSTRAINT verification_documents_reviewed_by_id_67481493_fk_users_id FOREIGN KEY (reviewed_by_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: verification_documents verification_documents_user_id_adcd77e6_fk_users_id; Type: FK CONSTRAINT; Schema: public; Owner: mentorlink
+--
+
+ALTER TABLE ONLY public.verification_documents
+    ADD CONSTRAINT verification_documents_user_id_adcd77e6_fk_users_id FOREIGN KEY (user_id) REFERENCES public.users(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
 -- PostgreSQL database dump complete
 --
 
-\unrestrict c3RrDI6YcuZYrus7aLebkVnUXPf8EHooyaRa5b7c86qfmxMetdGfLiMdOl4jhL7
+\unrestrict CIQ0ONqjVIJlaL4jWi38p6QAYGmBbotTOuztqilmrSeSO0nY2uFZRhQcIteMqal
 
