@@ -8,29 +8,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const markAllReadBtn = Array.from(document.querySelectorAll('button')).find(btn => /tout marquer lu/i.test(btn.textContent || ''));
 	const badge = document.querySelector('.sidebar-item.active .ml-auto');
 
-	let currentFilter = '';
+	let allNotifications = [];
 
-	const filterMap = {
-		'Toutes': '',
-		'Non lues': 'is_read=false',
-		'Mentorat': 'type=NEW_MATCH,MATCH_REJECTED',
-		'Messages': 'type=NEW_MESSAGE',
-		'Sessions': 'type=MATCH_ACCEPTED,VERIFICATION_APPROVED,VERIFICATION_REJECTED',
-	};
-
-	async function loadNotifications(filter) {
-		try {
-			const endpoint = filter ? `/notifications?${filter}` : '/notifications';
-			const res = await apiRequest(endpoint);
-			if (res.success) {
-				renderNotifications(res.data);
-			}
-		} catch (e) {
-			console.error("Error loading notifications", e);
-		}
-	}
-
-	// --- Setup filter buttons ---
+	// --- Setup filter buttons (client-side) ---
 	const filterBtns = document.querySelectorAll('.flex.gap-1.bg-slate-100 button');
 	filterBtns.forEach(btn => {
 		btn.addEventListener('click', function() {
@@ -41,14 +21,48 @@ document.addEventListener('DOMContentLoaded', async () => {
 			this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
 			this.classList.remove('text-slate-600');
 
-			const label = this.textContent.trim();
-			currentFilter = filterMap[label] || '';
-			loadNotifications(currentFilter);
+			const filter = this.textContent.trim();
+			applyFilter(filter);
 		});
 	});
 
+	function applyFilter(filter) {
+		let filtered = allNotifications;
+		switch (filter) {
+			case 'Non lues':
+				filtered = allNotifications.filter(n => !n.is_read);
+				break;
+			case 'Mentorat':
+				filtered = allNotifications.filter(n => n.type === 'NEW_MATCH' || n.type === 'MATCH_REJECTED');
+				break;
+			case 'Messages':
+				filtered = allNotifications.filter(n => n.type === 'NEW_MESSAGE');
+				break;
+			case 'Sessions':
+				filtered = allNotifications.filter(n => n.type === 'MATCH_ACCEPTED' || n.type === 'VERIFICATION_APPROVED' || n.type === 'VERIFICATION_REJECTED');
+				break;
+		}
+		renderNotifications(filtered);
+	}
+
+	// --- Setup Paramètres button ---
+	const settingsBtn = Array.from(document.querySelectorAll('button')).find(btn => /paramètres|parametres/i.test(btn.textContent || ''));
+	if (settingsBtn) {
+		settingsBtn.addEventListener('click', () => {
+			window.location.href = 'settings.html';
+		});
+	}
+
 	// --- Load Notifications ---
-	loadNotifications(currentFilter);
+	try {
+		const res = await apiRequest('/notifications');
+		if (res.success) {
+			allNotifications = res.data || [];
+			renderNotifications(allNotifications);
+		}
+	} catch (e) {
+		console.error("Error loading notifications", e);
+	}
 
 	function renderNotifications(notifs) {
 		if (!notifContainer) return;
