@@ -1,5 +1,7 @@
 import { apiRequest, requireAuth, updateUserHeader } from './api.js';
 
+let allPosts = [];
+
 document.addEventListener('DOMContentLoaded', async () => {
     if (!requireAuth()) return;
     await updateUserHeader();
@@ -10,9 +12,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     try {
         const res = await apiRequest('/posts?status=OPEN');
         if (res.success) {
-            renderPosts(res.data || [], postsContainer);
+            allPosts = res.data || [];
+            renderPosts(allPosts, postsContainer);
         } else {
-            // API returned error - remove loading, show empty
             const cards = postsContainer.querySelectorAll('.glass-card');
             cards.forEach(card => card.remove());
             postsContainer.innerHTML = '<div class="col-span-1 md:col-span-2 lg:col-span-3 text-center py-12"><span class="material-symbols-outlined text-5xl text-slate-300 mb-3">cloud_off</span><p class="text-sm text-slate-400">Impossible de charger les publications.</p><button onclick="location.reload()" class="mt-4 px-4 py-2 bg-blue-600 text-white text-sm font-semibold rounded-xl hover:bg-blue-700 transition-all">Reessayer</button></div>';
@@ -25,6 +27,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     initTabFiltering();
+    initDropdownFilters();
     initSearchBar();
     initReplyModal();
 
@@ -88,17 +91,55 @@ document.addEventListener('DOMContentLoaded', async () => {
         initReplyModal();
     }
 
+    function getActiveFilters() {
+        const filters = { type: null };
+        document.querySelectorAll('.filter-select').forEach(sel => {
+            const val = sel.value.trim();
+            const placeholder = sel.options[0].text.trim();
+            if (val !== placeholder) {
+                const label = placeholder;
+                if (label === 'Format') {
+                    const map = { 'Sur campus': 'PHYSICAL', 'En ligne': 'ONLINE', 'Hybride': 'BOTH' };
+                    filters.format = map[val];
+                } else if (label === 'Filière') {
+                    filters.department = val;
+                } else if (label === 'Matière IFRI') {
+                    filters.subject = val;
+                }
+            }
+        });
+        return filters;
+    }
+
+    function applyAllFilters() {
+        const filters = getActiveFilters();
+        const tabType = document.querySelector('.flex.gap-1.bg-slate-100.rounded-full.p-1 .bg-blue-600.text-white');
+        const tabText = tabType?.textContent?.trim().toLowerCase() || '';
+        const searchInput = document.querySelector('input[placeholder*="Rechercher"]');
+        const searchQuery = searchInput?.value?.toLowerCase().trim() || '';
+
+        const filtered = allPosts.filter(post => {
+            if (tabText === 'demandes' && post.type !== 'REQUEST') return false;
+            if (tabText === 'offres' && post.type !== 'OFFER') return false;
+            if (filters.format && post.format !== filters.format) return false;
+            if (filters.subject && !post.subject?.toLowerCase().includes(filters.subject.toLowerCase())) return false;
+            if (filters.department && !(post.creator?.department || '').toLowerCase().includes(filters.department.toLowerCase())) return false;
+            if (searchQuery) {
+                const title = post.subject?.toLowerCase() || '';
+                const desc = post.description?.toLowerCase() || '';
+                if (!title.includes(searchQuery) && !desc.includes(searchQuery)) return false;
+            }
+            return true;
+        });
+
+        renderPosts(filtered, document.querySelector('.grid.grid-cols-1.md\\:grid-cols-2.lg\\:grid-cols-3'));
+    }
+
     function initTabFiltering() {
-        const cards = () => document.querySelectorAll('.glass-card');
-        
         document.querySelectorAll('button').forEach(btn => {
             const txt = btn.textContent.trim().toLowerCase();
-            if (txt === 'demandes' || txt === 'toutes' || (txt.includes('demande') && !txt.includes('offre'))) {
+            if ((txt === 'demandes' || txt === 'offres') || (txt.includes('demande') && !txt.includes('offre')) || (txt.includes('offre') && !txt.includes('demande'))) {
                 btn.addEventListener('click', () => {
-                    cards().forEach(c => {
-                        const badge = c.querySelector('.uppercase')?.textContent.toLowerCase() || '';
-                        c.style.display = badge.includes('besoin') ? 'flex' : 'none';
-                    });
                     document.querySelectorAll('[class*="rounded-full"]').forEach(b => {
                         if (b.tagName === 'BUTTON' || b.tagName === 'A') {
                             b.classList.remove('bg-blue-600', 'text-white');
@@ -107,24 +148,15 @@ document.addEventListener('DOMContentLoaded', async () => {
                     });
                     btn.classList.add('bg-blue-600', 'text-white');
                     btn.classList.remove('text-slate-600');
+                    applyAllFilters();
                 });
             }
-            if (txt === 'offres' || (txt.includes('offre') && !txt.includes('demande'))) {
-                btn.addEventListener('click', () => {
-                    cards().forEach(c => {
-                        const badge = c.querySelector('.uppercase')?.textContent.toLowerCase() || '';
-                        c.style.display = badge.includes('expertise') ? 'flex' : 'none';
-                    });
-                    document.querySelectorAll('[class*="rounded-full"]').forEach(b => {
-                        if (b.tagName === 'BUTTON' || b.tagName === 'A') {
-                            b.classList.remove('bg-blue-600', 'text-white');
-                            b.classList.add('text-slate-600');
-                        }
-                    });
-                    btn.classList.add('bg-blue-600', 'text-white');
-                    btn.classList.remove('text-slate-600');
-                });
-            }
+        });
+    }
+
+    function initDropdownFilters() {
+        document.querySelectorAll('.filter-select').forEach(sel => {
+            sel.addEventListener('change', applyAllFilters);
         });
     }
 
@@ -132,13 +164,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const searchInput = document.querySelector('input[placeholder*="Rechercher"]');
         if (!searchInput) return;
 
-        searchInput.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            document.querySelectorAll('.glass-card').forEach(card => {
-                const title = card.querySelector('h4')?.textContent.toLowerCase() || '';
-                const desc = card.querySelector('p.text-sm.text-slate-500')?.textContent.toLowerCase() || '';
-                card.style.display = (title.includes(query) || desc.includes(query)) ? '' : 'none';
-            });
+        searchInput.addEventListener('input', () => {
+            applyAllFilters();
         });
     }
 

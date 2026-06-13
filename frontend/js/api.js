@@ -194,7 +194,7 @@ async function updateBadgeCount() {
         } catch (_) {}
         const total = unreadNotifs + unreadMessages;
         document.querySelectorAll('.sidebar-item .ml-auto, .sidebar-item .bg-blue-100.text-blue-700').forEach(el => {
-            el.textContent = total > 0 ? String(total) : '3';
+            el.textContent = total > 0 ? String(total) : '0';
         });
     } catch (_) {}
 }
