@@ -381,33 +381,8 @@
       observer.observe(notif);
     });
     
-    // Gestion des onglets filtrés
-    document.querySelectorAll('.flex.gap-1 button').forEach(btn => {
-      btn.addEventListener('click', function() {
-        document.querySelectorAll('.flex.gap-1 button').forEach(b => {
-          b.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
-          b.classList.add('text-slate-600');
-        });
-        this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
-        this.classList.remove('text-slate-600');
-        // Ici vous pourriez ajouter une logique de filtrage
-      });
-    });
-    
-    // Bouton "Tout marquer lu"
-    const markAllRead = document.querySelector('.flex.items-center.gap-2 button:first-child');
-    if (markAllRead) {
-      markAllRead.addEventListener('click', () => {
-        document.querySelectorAll('.notif-card.unread').forEach(card => {
-          card.classList.remove('unread');
-          const dot = card.querySelector('.pulse-dot');
-          if (dot) dot.remove();
-        });
-        // Mettre à jour le compteur
-        const badge = document.querySelector('.sidebar-item.active .ml-auto');
-        if (badge) badge.textContent = '0';
-      });
-    }
+    // Les filtres sont gérés par notifs.js
+    // Bouton "Tout marquer lu" - géré par notifs.js
   </script>
   <script type="module" src="../js/notifs.js"></script>
 </body>

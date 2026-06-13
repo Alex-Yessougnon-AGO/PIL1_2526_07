@@ -65,8 +65,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 			hardcodedCards.forEach(card => card.remove());
 
 			if (recs.success && recs.data && recs.data.length > 0) {
+				const currentUserId = localStorage.getItem('user_id');
 				recs.data.forEach((match, index) => {
-					const mentor = match.mentor || {};
+					const isCurrentUserMentor = match.mentor && match.mentor.id === currentUserId;
+					const user = isCurrentUserMentor ? (match.mentee || {}) : (match.mentor || {});
 					const score = match.score || 0;
 					const skills = match.common_skills || [];
 					const card = document.createElement('div');
@@ -74,9 +76,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 					card.innerHTML = `
 						<div class="flex justify-between items-start">
 							<div class="flex gap-4">
-								<img class="w-16 h-16 rounded-full object-cover avatar-ring" src="https://ui-avatars.com/api/?name=${encodeURIComponent((mentor.first_name||'') + '+' + (mentor.last_name||''))}&background=2563EB&color=fff&size=64" alt="mentor">
+								<img class="w-16 h-16 rounded-full object-cover avatar-ring" src="https://ui-avatars.com/api/?name=${encodeURIComponent((user.first_name||'') + '+' + (user.last_name||''))}&background=2563EB&color=fff&size=64" alt="profil">
 								<div>
-									<h4 class="text-xl font-bold text-slate-800">${mentor.first_name || ''} ${mentor.last_name || ''}</h4>
+									<h4 class="text-xl font-bold text-slate-800">${user.first_name || ''} ${user.last_name || ''}</h4>
 									<p class="text-sm text-slate-500 font-medium">Match a ${Math.round(score)}%</p>
 								</div>
 							</div>
@@ -89,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 							${skills.slice(0, 3).map(s => `<span class="bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-full text-xs font-bold">${s}</span>`).join('')}
 							${skills.length === 0 ? '<span class="text-xs text-slate-400">Competences communes a explorer</span>' : ''}
 						</div>
-						<a href="student-profile.html?id=${mentor.id}" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg hover:scale-[1.02] transition-all inline-block text-center">Consulter le profil →</a>
+						<a href="student-profile.html?id=${user.id}" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 text-white py-3 rounded-xl font-bold shadow-md hover:shadow-lg hover:scale-[1.02] transition-all inline-block text-center">Consulter le profil →</a>
 					`;
 					container.appendChild(card);
 				});

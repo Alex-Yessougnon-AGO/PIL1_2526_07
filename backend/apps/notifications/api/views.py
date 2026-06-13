@@ -13,6 +13,19 @@ class NotificationListView(APIView, StandardPagination):
 
     def get(self, request):
         qs = Notification.objects.filter(user=request.user, deleted_at__isnull=True)
+
+        filter_type = request.query_params.get("type")
+        if filter_type:
+            types = [t.strip() for t in filter_type.split(",") if t.strip()]
+            qs = qs.filter(type__in=types)
+
+        is_read = request.query_params.get("is_read")
+        if is_read is not None:
+            if is_read.lower() == "true":
+                qs = qs.filter(is_read=True)
+            elif is_read.lower() == "false":
+                qs = qs.filter(is_read=False)
+
         page = self.paginate_queryset(qs, request)
         if page is not None:
             serializer = NotificationSerializer(page, many=True)

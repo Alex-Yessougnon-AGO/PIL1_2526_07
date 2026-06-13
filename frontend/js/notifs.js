@@ -8,15 +8,47 @@ document.addEventListener('DOMContentLoaded', async () => {
 	const markAllReadBtn = Array.from(document.querySelectorAll('button')).find(btn => /tout marquer lu/i.test(btn.textContent || ''));
 	const badge = document.querySelector('.sidebar-item.active .ml-auto');
 
-	// --- Load Notifications ---
-	try {
-		const res = await apiRequest('/notifications');
-		if (res.success) {
-			renderNotifications(res.data);
+	let currentFilter = '';
+
+	const filterMap = {
+		'Toutes': '',
+		'Non lues': 'is_read=false',
+		'Mentorat': 'type=NEW_MATCH,MATCH_REJECTED',
+		'Messages': 'type=NEW_MESSAGE',
+		'Sessions': 'type=MATCH_ACCEPTED,VERIFICATION_APPROVED,VERIFICATION_REJECTED',
+	};
+
+	async function loadNotifications(filter) {
+		try {
+			const endpoint = filter ? `/notifications?${filter}` : '/notifications';
+			const res = await apiRequest(endpoint);
+			if (res.success) {
+				renderNotifications(res.data);
+			}
+		} catch (e) {
+			console.error("Error loading notifications", e);
 		}
-	} catch (e) {
-		console.error("Error loading notifications", e);
 	}
+
+	// --- Setup filter buttons ---
+	const filterBtns = document.querySelectorAll('.flex.gap-1.bg-slate-100 button');
+	filterBtns.forEach(btn => {
+		btn.addEventListener('click', function() {
+			filterBtns.forEach(b => {
+				b.classList.remove('bg-white', 'text-blue-600', 'shadow-sm');
+				b.classList.add('text-slate-600');
+			});
+			this.classList.add('bg-white', 'text-blue-600', 'shadow-sm');
+			this.classList.remove('text-slate-600');
+
+			const label = this.textContent.trim();
+			currentFilter = filterMap[label] || '';
+			loadNotifications(currentFilter);
+		});
+	});
+
+	// --- Load Notifications ---
+	loadNotifications(currentFilter);
 
 	function renderNotifications(notifs) {
 		if (!notifContainer) return;
